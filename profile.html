@@ -11,37 +11,35 @@
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background-color: #000000;
-      color: #ffffff;
+      background: #000;
+      color: #fff;
       min-height: 100vh;
       padding-top: 70px;
     }
+
     .profile-container {
       max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px 40px;
+      margin: 32px auto;
+      padding: 0 20px 60px;
     }
 
+    /* ── HEADER ─────────────────────────────────────── */
     .profile-header-section {
       position: relative;
-      background: #1a1a1a;
-      border-radius: 12px;
+      background: #111;
+      border-radius: 14px;
       overflow: hidden;
-      margin-bottom: 30px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.6);
     }
 
     .header-image {
       width: 100%;
-      height: 250px;
+      height: 220px;
       background: linear-gradient(135deg, #2C130B, #4a2619);
       background-size: cover;
       background-position: center;
@@ -49,212 +47,164 @@
       cursor: default;
     }
 
-    .header-image.editable {
-      cursor: pointer;
-    }
-
-    .header-image.editable:hover .image-upload-overlay {
-      opacity: 1;
-    }
+    .header-image.editable { cursor: pointer; }
+    .header-image.editable:hover .image-upload-overlay { opacity: 1; }
 
     .image-upload-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,.7);
+      display: flex; align-items: center; justify-content: center;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity .3s;
     }
 
-    .camera-icon {
-      font-size: 3rem;
-      color: white;
-    }
+    .camera-icon { font-size: 2.5rem; color: #fff; }
 
     .profile-info-wrapper {
       position: relative;
-      padding: 80px 30px 30px;
+      padding: 72px 28px 24px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 20px;
-    }
-
-    .profile-main-info {
-      flex: 1;
-      min-width: 250px;
-    }
-
-    .profile-header-stats {
-      display: flex;
-      gap: 15px;
-      flex-shrink: 0;
-    }
-
-    .header-stat {
-      background: rgba(44, 19, 11, 0.3);
-      border: 1px solid #444;
-      border-radius: 8px;
-      padding: 12px 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: center;
-      min-width: 85px;
-    }
-
-    .header-stat:hover {
-      border-color: #C59849;
-      background: rgba(44, 19, 11, 0.5);
-    }
-
-    .header-stat-num {
-      font-family: 'Cinzel', serif;
-      font-size: 1.8rem;
-      color: #C59849;
-      font-weight: 700;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .header-stat-label {
-      color: #C2C2C2;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    @media (max-width: 768px) {
-      .profile-info-wrapper {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .profile-header-stats {
-        width: 100%;
-        justify-content: center;
-      }
+      gap: 16px;
     }
 
     .profile-picture {
       position: absolute;
-      top: -60px;
-      left: 30px;
-      width: 120px;
-      height: 120px;
+      top: -56px; left: 28px;
+      width: 112px; height: 112px;
       border-radius: 50%;
       background: linear-gradient(135deg, #2C130B, #4a2619);
-      background-size: cover;
-      background-position: center;
-      border: 5px solid #1a1a1a;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      background-size: cover; background-position: center;
+      border: 4px solid #111;
+      box-shadow: 0 4px 16px rgba(0,0,0,.5);
       cursor: default;
     }
 
-    .profile-picture.editable {
-      cursor: pointer;
-    }
+    .profile-picture.editable { cursor: pointer; }
+    .profile-picture.editable:hover .image-upload-overlay { opacity: 1; }
 
-    .profile-picture.editable:hover .image-upload-overlay {
-      opacity: 1;
-    }
+    .profile-picture .image-upload-overlay { border-radius: 50%; }
+
+    .profile-main-info { flex: 1; min-width: 220px; }
 
     .profile-name {
       font-family: 'Cinzel', serif;
-      font-size: 2rem;
+      font-size: 1.9rem;
       font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 8px;
+      color: #fff;
+      margin-bottom: 4px;
     }
 
-    .profile-email {
-      font-size: 0.9rem;
-      color: #888;
-      margin-bottom: 20px;
+    .profile-email { font-size: 0.85rem; color: #666; }
+
+    .profile-header-stats { display: flex; gap: 10px; flex-shrink: 0; }
+
+    .header-stat {
+      background: rgba(44,19,11,.3);
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: border-color .25s, background .25s;
+      text-align: center;
+      min-width: 76px;
     }
 
+    .header-stat:hover { border-color: #C59849; background: rgba(44,19,11,.5); }
+
+    .header-stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #C59849;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .header-stat-label {
+      color: #999;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hidden-file-input { display: none; }
+
+    /* ── SECTIONS ────────────────────────────────────── */
     .profile-section {
-      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 30px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #111, #1e1e1e);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.3);
     }
 
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid #2C130B;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #2C130B;
     }
 
     .section-title {
       font-family: 'Cinzel', serif;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      color: #ffffff;
+      color: #fff;
     }
 
-    .add-btn {
-      background: #2C130B;
-      color: white;
-      border: 1px solid #4a2619;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .add-btn.visible {
+    /* ── TABS ────────────────────────────────────────── */
+    .tab-nav {
       display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      border-bottom: 1px solid #2a2a2a;
+      padding-bottom: 0;
     }
 
-    .add-btn:hover {
-      background: #4a2619;
-      transform: scale(1.1);
-    }
-
-    .section-content {
-      color: #e0e0e0;
-      line-height: 1.6;
-    }
-
-    .section-content.empty {
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
       color: #888;
-      font-style: italic;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+      margin-bottom: -1px;
     }
 
+    .tab-btn:hover { color: #C2C2C2; }
+    .tab-btn.active { color: #C59849; border-bottom-color: #C59849; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── FORMS ───────────────────────────────────────── */
     .editable-bio {
       width: 100%;
-      min-height: 100px;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.3);
+      min-height: 90px;
+      padding: 12px;
+      background: rgba(0,0,0,.3);
       border: 1px solid #444;
       border-radius: 8px;
       color: #e0e0e0;
       font-family: 'Montserrat', sans-serif;
-      font-size: 1rem;
+      font-size: 0.95rem;
       resize: vertical;
     }
 
-    .editable-bio:focus {
-      outline: none;
-      border-color: #2C130B;
-    }
+    .editable-bio:focus { outline: none; border-color: #2C130B; }
 
     .editable-bio:disabled {
       background: transparent;
@@ -262,225 +212,242 @@
       padding: 0;
       cursor: default;
       resize: none;
+      color: #ccc;
+      font-style: italic;
     }
 
-    .editable-input {
+    .field-label {
+      display: block;
+      margin-bottom: 6px;
+      color: #C59849;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .text-input {
       width: 100%;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 12px;
+      background: rgba(0,0,0,.3);
       border: 1px solid #444;
       border-radius: 8px;
       color: #e0e0e0;
       font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .text-input:focus { outline: none; border-color: #2C130B; }
+
+    select.text-input { cursor: pointer; }
+
+    /* ── DNA CHIP INPUT ──────────────────────────────── */
+    .chip-input-area {
+      background: rgba(0,0,0,.25);
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      padding: 10px;
+      min-height: 50px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      cursor: text;
+    }
+
+    .chip-input-area:focus-within { border-color: #2C130B; }
+
+    .dna-edit-chip {
+      background: rgba(44,19,11,.5);
+      border: 1px solid #4a3a2a;
+      color: #C2C2C2;
+      border-radius: 20px;
+      padding: 3px 8px 3px 10px;
+      font-size: 0.76rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .chip-remove {
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
       font-size: 1rem;
+      line-height: 1;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      transition: color .2s;
     }
 
-    .editable-input:focus {
+    .chip-remove:hover { color: #ff6666; }
+
+    .chip-text-input {
+      background: none;
+      border: none;
       outline: none;
-      border-color: #2C130B;
-    }
-
-    .editable-input:disabled {
-      background: transparent;
-      border: none;
-      padding: 0;
-      cursor: default;
-    }
-
-    .view-only {
-      background: transparent;
-      border: none;
-      padding: 0;
-      cursor: default;
       color: #e0e0e0;
-      line-height: 1.6;
-    }
-
-    .view-only.empty {
-      color: #888;
-      font-style: italic;
-    }
-
-    .signature-display {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 15px;
-      background: rgba(44, 19, 11, 0.3);
-      border-radius: 8px;
-      border-left: 4px solid #2C130B;
-    }
-
-    .signature-image {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.3);
-      flex-shrink: 0;
-    }
-
-    .signature-info {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.86rem;
+      min-width: 80px;
       flex: 1;
     }
 
-    .signature-name {
-      font-size: 1.2rem;
-      color: #ffffff;
-      margin-bottom: 5px;
+    .chip-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
     }
 
-    .signature-brand {
-      font-size: 0.95rem;
-      color: #888;
+    .preset-chip {
+      background: rgba(0,0,0,.3);
+      border: 1px solid #444;
+      color: #999;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.74rem;
+      cursor: pointer;
+      transition: border-color .2s, color .2s, background .2s;
     }
 
-    .hidden-file-input {
-      display: none;
-    }
+    .preset-chip:hover { border-color: #C59849; color: #C59849; background: rgba(44,19,11,.2); }
 
-    .fragrance-list {
-      list-style: none;
-    }
+    /* ── FRAGRANCE CARDS (compact) ───────────────────── */
+    .frag-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 
-    .fragrance-list li {
-      margin-bottom: 10px;
+    .frag-list-item {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 10px;
     }
 
-    .fragrance-list-item-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex: 1;
-    }
-
-    .fragrance-number {
+    .frag-num {
       font-family: 'Cinzel', serif;
-      font-size: 2rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      color: #FFFFFF;
-      min-width: 40px;
+      color: #444;
+      min-width: 28px;
       text-align: right;
       flex-shrink: 0;
     }
 
-    .fragrance-card {
-      padding: 12px 15px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid #444;
-      border-radius: 8px;
-      color: #e0e0e0;
-      transition: all 0.3s ease;
+    .frag-item-card {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       flex: 1;
-    }
-
-    .fragrance-card.clickable:hover {
-      background: rgba(44, 19, 11, 0.3);
-      border-color: #2C130B;
-      transform: translateX(3px);
-      cursor: pointer;
-    }
-
-    .fragrance-link {
-      flex: 1;
-      text-decoration: none;
+      padding: 10px 14px;
+      background: rgba(0,0,0,.3);
+      border: 1px solid #333;
+      border-radius: 8px;
       color: inherit;
-      display: flex;
-      align-items: center;
-      gap: 15px;
+      text-decoration: none;
+      transition: border-color .25s, background .25s;
     }
 
-    .fragrance-item-content {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex: 1;
-      min-width: 0;
-    }
+    .frag-item-card.clickable:hover { border-color: #C59849; background: rgba(44,19,11,.25); cursor: pointer; }
 
-    .fragrance-image {
-      width: 50px;
-      height: 50px;
+    .frag-item-img {
+      width: 42px; height: 42px;
       object-fit: cover;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+      background: #1a1a1a;
       flex-shrink: 0;
     }
 
-    .fragrance-text {
-      flex: 1;
-      line-height: 1.4;
-    }
-
-    .fragrance-list li:hover {
-      background: rgba(44, 19, 11, 0.2);
-      border-color: #2C130B;
-    }
-
-    .fragrance-list li:last-child {
-      margin-bottom: 0;
-    }
+    .frag-item-text { flex: 1; min-width: 0; }
+    .frag-item-brand { font-size: 0.7rem; color: #888; }
+    .frag-item-name { font-size: 0.85rem; color: #e0e0e0; font-weight: 600; }
 
     .remove-btn {
-      background: #8B0000;
-      color: white;
+      background: #5a0000;
+      color: #fff;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 4px 10px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background .2s;
       display: none;
+      flex-shrink: 0;
     }
 
-    .remove-btn.visible {
-      display: block;
+    .remove-btn.visible { display: block; }
+    .remove-btn:hover { background: #8B0000; }
+
+    /* sig card */
+    .sig-display {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 14px;
+      background: rgba(44,19,11,.25);
+      border: 1px solid #3a2a1a;
+      border-radius: 10px;
     }
 
-    .remove-btn:hover {
-      background: #660000;
+    .sig-img {
+      width: 64px; height: 64px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #1a1a1a;
+      flex-shrink: 0;
     }
 
+    .sig-name { font-size: 0.95rem; color: #fff; font-weight: 600; }
+
+    .add-btn {
+      background: #2C130B;
+      color: #fff;
+      border: 1px solid #4a2619;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .add-btn.visible { display: flex; }
+    .add-btn:hover { background: #4a2619; transform: scale(1.1); }
+
+    .section-content.empty { color: #666; font-style: italic; font-size: 0.88rem; }
+
+    /* ── COLLECTIONS ─────────────────────────────────── */
     .collections-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
     }
 
     .collection-card {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid #444;
-      border-radius: 12px;
-      padding: 20px;
-      transition: all 0.3s ease;
+      background: rgba(0,0,0,.3);
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 14px;
       cursor: pointer;
+      transition: border-color .25s, transform .2s;
     }
 
-    .collection-card:hover {
-      background: rgba(44, 19, 11, 0.3);
-      border-color: #C59849;
-      transform: translateY(-4px);
-    }
+    .collection-card:hover { border-color: #C59849; transform: translateY(-3px); }
 
     .collection-card-name {
       font-family: 'Cinzel', serif;
-      font-size: 1.3rem;
+      font-size: 0.95rem;
       color: #C59849;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
 
-    .collection-card-description {
-      color: #C2C2C2;
-      font-size: 0.95rem;
-      margin-bottom: 12px;
+    .collection-card-desc {
+      color: #888;
+      font-size: 0.8rem;
+      margin-bottom: 6px;
       line-height: 1.4;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -489,195 +456,289 @@
       -webkit-box-orient: vertical;
     }
 
-    .collection-card-count {
-      color: #999;
+    .collection-card-count { color: #666; font-size: 0.78rem; }
+
+    /* ── PRIVACY TOGGLES ─────────────────────────────── */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: rgba(44,19,11,.15);
+      border: 1px solid #333;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #ccc;
       font-size: 0.9rem;
+      transition: border-color .2s;
     }
 
-    .search-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.95);
+    .toggle-row:hover { border-color: #555; }
+
+    .toggle-row input[type="checkbox"] {
+      width: 18px; height: 18px;
+      cursor: pointer;
+      accent-color: #C59849;
+      flex-shrink: 0;
+    }
+
+    .settings-grid { display: flex; flex-direction: column; gap: 10px; }
+
+    /* ── ACTIVITY PREVIEW ────────────────────────────── */
+    .activity-item {
+      padding: 12px 14px;
+      background: rgba(44,19,11,.2);
+      border-left: 3px solid #2C130B;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .activity-item-title {
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      text-decoration: none;
+      display: block;
+      transition: color .2s;
+    }
+
+    .activity-item-title:hover { color: #C59849; }
+
+    .activity-item-snippet { color: #aaa; font-size: 0.82rem; margin-bottom: 4px; line-height: 1.4; }
+    .activity-item-date { color: #666; font-size: 0.76rem; }
+
+    .view-all-link {
+      display: inline-block;
+      margin-top: 8px;
+      color: #C59849;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color .2s;
+    }
+
+    .view-all-link:hover { color: #fff; }
+
+    /* ── SCENTLE STATS ───────────────────────────────── */
+    .stats-compact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .stat-box {
+      background: rgba(44,19,11,.25);
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+
+    .stat-box-value {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: #C59849;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-box-label { color: #888; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ── FOLLOW MODAL ────────────────────────────────── */
+    .follow-modal-overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,.85);
       z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
+      display: none; align-items: center; justify-content: center;
       padding: 20px;
     }
 
-    .search-overlay.active {
+    .follow-modal-overlay.active { display: flex; }
+
+    .follow-modal {
+      background: linear-gradient(135deg, #111, #1e1e1e);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      max-width: 560px;
+      width: 100%;
+      max-height: 80vh;
       display: flex;
+      flex-direction: column;
     }
 
-    .search-container {
-      max-width: 600px;
-      width: 100%;
-      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    .follow-modal-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid #2a2a2a;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .follow-modal-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #C59849; }
+
+    .follow-modal-close {
+      background: none; border: none; color: #fff;
+      font-size: 1.8rem; cursor: pointer;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: background .2s;
+    }
+
+    .follow-modal-close:hover { background: rgba(255,255,255,.1); }
+
+    .follow-modal-content { padding: 18px 22px; overflow-y: auto; flex: 1; }
+
+    .follow-user-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px;
+      background: rgba(0,0,0,.3);
       border: 1px solid #333;
-      border-radius: 12px;
-      padding: 30px;
-      max-height: 80vh;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      transition: border-color .2s;
+    }
+
+    .follow-user-item:hover { border-color: #C59849; }
+    .follow-user-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .follow-user-info { flex: 1; }
+
+    .follow-user-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem; color: #fff;
+      text-decoration: none; display: block;
+    }
+
+    .follow-user-name:hover { color: #C59849; }
+    .follow-modal-empty { text-align: center; padding: 32px 20px; color: #666; }
+
+    .follow-modal-load-more {
+      font-family: 'Montserrat', sans-serif;
+      padding: 10px 20px;
+      background: #2C130B;
+      border: 1px solid #C59849;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: background .2s;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .follow-modal-load-more:hover { background: #4a2619; }
+    .follow-modal-load-more:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* ── SEARCH OVERLAY ──────────────────────────────── */
+    .search-overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,.95);
+      z-index: 2000;
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+
+    .search-overlay.active { display: flex; }
+
+    .search-container {
+      max-width: 580px; width: 100%;
+      background: linear-gradient(135deg, #111, #1e1e1e);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 28px;
+      max-height: 82vh;
       overflow-y: auto;
     }
 
     .search-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 18px;
     }
 
-    .search-title {
-      font-family: 'Cinzel', serif;
-      font-size: 1.5rem;
-      color: #ffffff;
-    }
+    .search-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #fff; }
 
     .close-overlay-btn {
-      background: none;
-      border: none;
-      color: #ffffff;
-      font-size: 2rem;
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background-color 0.3s ease;
+      background: none; border: none; color: #fff;
+      font-size: 1.8rem; cursor: pointer;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: background .2s;
     }
 
-    .close-overlay-btn:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
+    .close-overlay-btn:hover { background: rgba(255,255,255,.1); }
 
     .search-input {
       width: 100%;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.3);
+      padding: 12px;
+      background: rgba(0,0,0,.3);
       border: 1px solid #444;
       border-radius: 8px;
       color: #e0e0e0;
       font-family: 'Montserrat', sans-serif;
-      font-size: 1rem;
-      margin-bottom: 20px;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
     }
 
-    .search-input:focus {
-      outline: none;
-      border-color: #2C130B;
-    }
+    .search-input:focus { outline: none; border-color: #2C130B; }
 
-    .search-results {
-      max-height: 400px;
-      overflow-y: auto;
-    }
+    .search-results { max-height: 380px; overflow-y: auto; }
 
     .search-result-item {
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.3);
+      padding: 12px;
+      background: rgba(0,0,0,.3);
       border: 1px solid #444;
       border-radius: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: border-color .2s, transform .15s;
     }
 
-    .search-result-item:hover {
-      background: rgba(44, 19, 11, 0.3);
-      border-color: #2C130B;
-      transform: translateX(5px);
-    }
+    .search-result-item:hover { border-color: #2C130B; transform: translateX(4px); }
 
-    .search-result-name {
-      font-size: 1rem;
-      color: #ffffff;
-      margin-bottom: 5px;
-    }
+    .search-result-name { font-size: 0.95rem; color: #fff; margin-bottom: 3px; }
+    .search-result-brand { font-size: 0.82rem; color: #888; }
+    .no-results { text-align: center; color: #666; padding: 20px; font-style: italic; font-size: 0.9rem; }
 
-    .search-result-brand {
-      font-size: 0.85rem;
-      color: #888;
-    }
-
-    .no-results {
-      text-align: center;
-      color: #888;
-      padding: 20px;
-      font-style: italic;
-    }
-
+    /* ── BUTTONS ─────────────────────────────────────── */
     .btn {
-      padding: 14px 40px;
+      padding: 12px 36px;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all .25s;
       font-family: 'Montserrat', sans-serif;
     }
 
     .btn-primary {
       background: linear-gradient(135deg, #2C130B, #4a2619);
-      color: white;
-      margin-right: 10px;
+      color: #fff;
       display: none;
     }
 
-    .btn-primary.visible {
-      display: inline-block;
-    }
+    .btn-primary.visible { display: inline-block; }
+    .btn-primary:hover { background: linear-gradient(135deg, #4a2619, #6b3829); transform: translateY(-2px); }
 
     .btn-edit {
       background: linear-gradient(135deg, #2C130B, #4a2619);
-      color: white;
-      margin-right: 10px;
+      color: #fff;
     }
 
-    .btn-edit:hover {
-      background: linear-gradient(135deg, #4a2619, #6b3829);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(44, 19, 11, 0.3);
-    }
-
-    .btn-edit:active {
-      transform: translateY(0);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #4a2619, #6b3829);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(44, 19, 11, 0.3);
-    }
+    .btn-edit:hover { background: linear-gradient(135deg, #4a2619, #6b3829); transform: translateY(-2px); }
 
     .btn-danger {
-      background: linear-gradient(135deg, #8B0000, #660000);
-      color: white;
+      background: linear-gradient(135deg, #5a0000, #8B0000);
+      color: #fff;
     }
 
-    .btn-danger:hover {
-      background: linear-gradient(135deg, #660000, #4d0000);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
-    }
+    .btn-danger:hover { background: linear-gradient(135deg, #8B0000, #aa0000); transform: translateY(-2px); }
 
-    .btn-danger:active, .btn-primary:active {
-      transform: translateY(0);
-    }
-
-    .btn.loading {
-      opacity: 0.6;
-      pointer-events: none;
-    }
+    .btn.loading { opacity: .6; pointer-events: none; }
 
     .action-buttons {
       text-align: center;
-      margin-top: 30px;
+      margin-top: 24px;
       display: flex;
       justify-content: center;
       gap: 10px;
@@ -687,380 +748,50 @@
     .message {
       padding: 12px 16px;
       border-radius: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       text-align: center;
       display: none;
     }
 
-    .message.visible {
-      display: block;
-    }
+    .message.visible { display: block; }
 
     .message.success {
-      background: rgba(34, 197, 94, 0.2);
-      border: 1px solid rgba(34, 197, 94, 0.5);
+      background: rgba(34,197,94,.15);
+      border: 1px solid rgba(34,197,94,.4);
       color: #86efac;
     }
 
     .message.error {
-      background: rgba(220, 38, 38, 0.2);
-      border: 1px solid rgba(220, 38, 38, 0.5);
+      background: rgba(220,38,38,.15);
+      border: 1px solid rgba(220,38,38,.4);
       color: #fca5a5;
     }
 
     .back-button {
-      display: inline-block;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-      transition: color 0.3s ease;
+      display: inline-block; color: #ccc;
+      text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 16px; transition: color .2s;
     }
 
-    .back-button:hover {
-      color: #C2C2C2;
-    }
+    .back-button:hover { color: #fff; }
 
+    /* ── RESPONSIVE ──────────────────────────────────── */
     @media (max-width: 768px) {
-      .header-image {
-        height: 180px;
-      }
-
-      .profile-picture {
-        width: 100px;
-        height: 100px;
-        top: -50px;
-        left: 20px;
-      }
-
-      .profile-info-wrapper {
-        padding: 70px 20px 20px;
-      }
-
-      .profile-name {
-        font-size: 1.6rem;
-      }
-
-      .profile-section {
-        padding: 20px;
-      }
-
-      .section-title {
-        font-size: 1.3rem;
-      }
-
-      .search-container {
-        padding: 20px;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .btn-primary {
-        margin-right: 0;
-        margin-bottom: 10px;
-      }
-
-      .fragrance-image {
-        width: 40px;
-        height: 40px;
-      }
-
-      .signature-image {
-        width: 60px;
-        height: 60px;
-      }
-
-      .fragrance-number {
-        font-size: 1.5rem;
-        min-width: 30px;
-      }
-    }
-
-    /* History Preview Styles */
-    .history-preview-item {
-      padding: 15px;
-      background: rgba(44, 19, 11, 0.3);
-      border-radius: 8px;
-      border-left: 4px solid #2C130B;
-      margin-bottom: 10px;
-    }
-
-    .history-preview-title {
-      color: #FFFFFF;
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      text-decoration: none;
-      display: block;
-      transition: color 0.3s ease;
-    }
-
-    .history-preview-title:hover {
-      color: #D5A856;
-    }
-
-    .history-preview-snippet {
-      color: #C2C2C2;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-
-    .history-preview-date {
-      color: #888;
-      font-size: 0.85rem;
-    }
-
-    .view-all-link {
-      display: inline-block;
-      margin-top: 10px;
-      color: #D5A856;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-
-    .view-all-link:hover {
-      color: #ffffff;
-    }
-
-    /* User Avatar and Link Styles */
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-
-    .user-link {
-      display: inline-flex;
-      align-items: center;
-      color: #FFFFFF;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .user-link:hover {
-      color: #D5A856;
-    }
-
-    .user-username {
-      font-weight: 600;
-    }
-
-    /* Scentle Stats Styles */
-    .scentle-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-top: 10px;
-    }
-
-    .scentle-stat-card {
-      background: rgba(44, 19, 11, 0.3);
-      border: 1px solid #444;
-      border-radius: 8px;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .scentle-stat-value {
-      font-family: 'Cinzel', serif;
-      font-size: 2.5rem;
-      color: #C59849;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .scentle-stat-label {
-      color: #C2C2C2;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Connections Styles */
-    .connection-stat {
-      background: rgba(44, 19, 11, 0.3);
-      border: 1px solid #444;
-      border-radius: 8px;
-      padding: 20px 30px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      min-width: 140px;
-    }
-
-    .connection-stat:hover {
-      border-color: #C59849;
-      background: rgba(44, 19, 11, 0.5);
-    }
-
-    .connection-num {
-      font-family: 'Cinzel', serif;
-      font-size: 2.5rem;
-      color: #C59849;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .connection-label {
-      color: #C2C2C2;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Follow Modal */
-    .follow-modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .follow-modal-overlay.active {
-      display: flex;
-    }
-
-    .follow-modal {
-      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-      border: 1px solid #333;
-      border-radius: 12px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 80vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .follow-modal-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .follow-modal-title {
-      font-family: 'Cinzel', serif;
-      font-size: 1.5rem;
-      color: #C59849;
-    }
-
-    .follow-modal-close {
-      background: none;
-      border: none;
-      color: #ffffff;
-      font-size: 2rem;
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background-color 0.3s ease;
-    }
-
-    .follow-modal-close:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .follow-modal-content {
-      padding: 20px 24px;
-      overflow-y: auto;
-      flex: 1;
-    }
-
-    .follow-user-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid #444;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      transition: all 0.3s ease;
-    }
-
-    .follow-user-item:hover {
-      background: rgba(44, 19, 11, 0.3);
-      border-color: #C59849;
-    }
-
-    .follow-user-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .follow-user-info {
-      flex: 1;
-    }
-
-    .follow-user-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1.1rem;
-      color: #ffffff;
-      text-decoration: none;
-      display: block;
-    }
-
-    .follow-user-name:hover {
-      color: #C59849;
-    }
-
-    .follow-modal-empty {
-      text-align: center;
-      padding: 40px 20px;
-      color: #888;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .follow-modal-load-more {
-      font-family: 'Montserrat', sans-serif;
-      padding: 12px 24px;
-      background: #2C130B;
-      border: 1px solid #C59849;
-      border-radius: 8px;
-      color: #ffffff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .follow-modal-load-more:hover {
-      background: #4a2619;
-    }
-
-    .follow-modal-load-more:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+      .header-image { height: 160px; }
+      .profile-picture { width: 90px; height: 90px; top: -45px; left: 20px; }
+      .profile-info-wrapper { padding: 58px 20px 18px; flex-direction: column; }
+      .profile-name { font-size: 1.5rem; }
+      .profile-header-stats { width: 100%; justify-content: center; }
+      .action-buttons { flex-direction: column; }
+      .btn { width: 100%; }
+      .btn-primary { margin-right: 0; margin-bottom: 8px; }
+      .stats-compact-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
-<link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="navbar.css">
 </head>
 <body>
- <div id="navbar-container"></div>
-
+  <div id="navbar-container"></div>
   <div class="notifications-dropdown hidden" id="notifications-dropdown">
     <div class="notifications-header">Notifications</div>
     <div class="notifications-list" id="notifications-list">Loading...</div>
@@ -1068,24 +799,20 @@
 
   <div class="profile-container">
     <a href="index.html" class="back-button">← Back to Homepage</a>
-
     <div id="messageContainer" class="message"></div>
 
+    <!-- HEADER -->
     <div class="profile-header-section">
       <div class="header-image" id="headerImage">
-        <div class="image-upload-overlay">
-          <div class="camera-icon">📷</div>
-        </div>
+        <div class="image-upload-overlay"><div class="camera-icon">&#128247;</div></div>
       </div>
       <div class="profile-info-wrapper">
         <div class="profile-picture" id="profilePicture">
-          <div class="image-upload-overlay">
-            <div class="camera-icon">📷</div>
-          </div>
+          <div class="image-upload-overlay"><div class="camera-icon">&#128247;</div></div>
         </div>
         <div class="profile-main-info">
           <h1 class="profile-name" id="profileUsername">Loading...</h1>
-          <p class="profile-email" id="profileEmail">Loading...</p>
+          <p class="profile-email" id="profileEmail"></p>
         </div>
         <div class="profile-header-stats">
           <button class="header-stat" id="followersBtn" type="button">
@@ -1102,6 +829,7 @@
     <input type="file" id="headerImageInput" class="hidden-file-input" accept="image/*" />
     <input type="file" id="profilePictureInput" class="hidden-file-input" accept="image/*" />
 
+    <!-- ABOUT -->
     <div class="profile-section">
       <div class="section-header">
         <h2 class="section-title">About</h2>
@@ -1109,46 +837,132 @@
       <textarea class="editable-bio" id="profileBio" placeholder="Tell us about yourself and your fragrance journey..."></textarea>
     </div>
 
-    <div class="profile-section">
+    <!-- SCENT DNA -->
+    <div class="profile-section" id="scentDnaSection">
       <div class="section-header">
-        <h2 class="section-title">Signature Fragrance</h2>
-        <button class="add-btn" id="addSignatureBtn">+</button>
+        <h2 class="section-title">Scent DNA</h2>
       </div>
-      <div id="signatureContainer">
-        <div class="section-content empty">No signature fragrance set yet.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <!-- Favourite Notes -->
+        <div>
+          <label class="field-label">Favourite Notes</label>
+          <div class="chip-input-area" id="favNotes-area" data-field="favNotes">
+            <input class="chip-text-input" id="favNotes-input" placeholder="Type & press Enter..." />
+          </div>
+          <div class="chip-presets" id="favNotes-presets"></div>
+        </div>
+        <!-- Disliked Notes -->
+        <div>
+          <label class="field-label">Disliked Notes</label>
+          <div class="chip-input-area" id="disNotes-area" data-field="disNotes">
+            <input class="chip-text-input" id="disNotes-input" placeholder="Type & press Enter..." />
+          </div>
+          <div class="chip-presets" id="disNotes-presets"></div>
+        </div>
+        <!-- Favourite Styles -->
+        <div>
+          <label class="field-label">Favourite Styles</label>
+          <div class="chip-input-area" id="favStyles-area" data-field="favStyles">
+            <input class="chip-text-input" id="favStyles-input" placeholder="Type & press Enter..." />
+          </div>
+          <div class="chip-presets" id="favStyles-presets"></div>
+        </div>
+        <!-- Avoided Styles -->
+        <div>
+          <label class="field-label">Avoided Styles</label>
+          <div class="chip-input-area" id="avoStyles-area" data-field="avoStyles">
+            <input class="chip-text-input" id="avoStyles-input" placeholder="Type & press Enter..." />
+          </div>
+          <div class="chip-presets" id="avoStyles-presets"></div>
+        </div>
+        <!-- Occasions -->
+        <div>
+          <label class="field-label">Favourite Occasions</label>
+          <div class="chip-input-area" id="occasions-area" data-field="occasions">
+            <input class="chip-text-input" id="occasions-input" placeholder="Type & press Enter..." />
+          </div>
+          <div class="chip-presets" id="occasions-presets"></div>
+        </div>
+        <!-- Preferred Strength -->
+        <div>
+          <label class="field-label">Preferred Strength</label>
+          <select class="text-input" id="preferredStrength" style="max-width:220px;">
+            <option value="">No preference</option>
+            <option value="Subtle">Subtle</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Strong">Strong</option>
+            <option value="Nuclear">Nuclear</option>
+          </select>
+        </div>
       </div>
     </div>
 
+    <!-- FRAGRANCE SHOWCASE -->
     <div class="profile-section">
       <div class="section-header">
-        <h2 class="section-title">Top 5 Fragrances</h2>
-        <button class="add-btn" id="addTopFiveBtn">+</button>
+        <h2 class="section-title">Fragrance Showcase</h2>
       </div>
-      <ul class="fragrance-list" id="topFiveList">
-        <li class="empty">No fragrances added yet.</li>
-      </ul>
+      <nav class="tab-nav" role="tablist">
+        <button class="tab-btn active" role="tab" data-showcase-tab="sig" onclick="switchShowcase('sig')">Signature</button>
+        <button class="tab-btn" role="tab" data-showcase-tab="top5" onclick="switchShowcase('top5')">Top 5</button>
+        <button class="tab-btn" role="tab" data-showcase-tab="worst5" onclick="switchShowcase('worst5')">Worst 5</button>
+        <button class="tab-btn" role="tab" data-showcase-tab="have" onclick="switchShowcase('have')">Have</button>
+        <button class="tab-btn" role="tab" data-showcase-tab="want" onclick="switchShowcase('want')">Want</button>
+      </nav>
+
+      <!-- Signature -->
+      <div class="tab-panel active" id="showcase-sig">
+        <div class="section-header" style="border:none;margin:0 0 10px;padding:0;">
+          <span></span>
+          <button class="add-btn" id="addSignatureBtn">+</button>
+        </div>
+        <div id="signatureContainer">
+          <div class="section-content empty">No signature fragrance set yet.</div>
+        </div>
+      </div>
+
+      <!-- Top 5 -->
+      <div class="tab-panel" id="showcase-top5">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+          <button class="add-btn" id="addTopFiveBtn">+</button>
+        </div>
+        <ul class="frag-list" id="topFiveList">
+          <li class="section-content empty">No fragrances added yet.</li>
+        </ul>
+      </div>
+
+      <!-- Worst 5 -->
+      <div class="tab-panel" id="showcase-worst5">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+          <button class="add-btn" id="addWorstFiveBtn">+</button>
+        </div>
+        <ul class="frag-list" id="worstFiveList">
+          <li class="section-content empty">No fragrances added yet.</li>
+        </ul>
+      </div>
+
+      <!-- Have -->
+      <div class="tab-panel" id="showcase-have">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+          <button class="add-btn" id="addHaveBtn">+</button>
+        </div>
+        <ul class="frag-list" id="fragrancesHaveList">
+          <li class="section-content empty">No fragrances added yet.</li>
+        </ul>
+      </div>
+
+      <!-- Want -->
+      <div class="tab-panel" id="showcase-want">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+          <button class="add-btn" id="addWantBtn">+</button>
+        </div>
+        <ul class="frag-list" id="fragrancesWantList">
+          <li class="section-content empty">No fragrances added yet.</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="profile-section">
-      <div class="section-header">
-        <h2 class="section-title">Fragrances I Have</h2>
-        <button class="add-btn" id="addHaveBtn">+</button>
-      </div>
-      <ul class="fragrance-list" id="fragrancesHaveList">
-        <li class="empty">No fragrances added yet.</li>
-      </ul>
-    </div>
-
-    <div class="profile-section">
-      <div class="section-header">
-        <h2 class="section-title">Fragrances I Want</h2>
-        <button class="add-btn" id="addWantBtn">+</button>
-      </div>
-      <ul class="fragrance-list" id="fragrancesWantList">
-        <li class="empty">No fragrances added yet.</li>
-      </ul>
-    </div>
-
+    <!-- COLLECTIONS -->
     <div class="profile-section">
       <div class="section-header">
         <h2 class="section-title">My Collections</h2>
@@ -1158,90 +972,104 @@
       </div>
     </div>
 
-    <!-- Privacy Settings (Edit Mode Only) -->
-    <div class="profile-section" id="privacySettings" style="display: none;">
+    <!-- PRIVACY SETTINGS -->
+    <div class="profile-section" id="privacySettings" style="display:none;">
       <div class="section-header">
         <h2 class="section-title">Privacy Settings</h2>
       </div>
-      <div class="section-content" style="display: flex; flex-direction: column; gap: 15px;">
-        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: #e0e0e0; padding: 12px; background: rgba(44, 19, 11, 0.2); border-radius: 8px; border: 1px solid #444;">
-          <input type="checkbox" id="showFollowStatsToggle" style="width: 20px; height: 20px; cursor: pointer; accent-color: #C59849;">
-          <span>Show follower & following counts on my public profile</span>
+      <div class="settings-grid">
+        <label class="toggle-row">
+          <input type="checkbox" id="showFollowStatsToggle">
+          <span>Show follower &amp; following counts publicly</span>
         </label>
-        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: #e0e0e0; padding: 12px; background: rgba(44, 19, 11, 0.2); border-radius: 8px; border: 1px solid #444;">
-          <input type="checkbox" id="showScentleStatsToggle" style="width: 20px; height: 20px; cursor: pointer; accent-color: #C59849;">
-          <span>Show Scentle stats on my public profile</span>
+        <label class="toggle-row">
+          <input type="checkbox" id="showScentleStatsToggle">
+          <span>Show Scentle stats publicly</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="showScentDnaToggle">
+          <span>Show Scent DNA publicly</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="showShowcaseToggle">
+          <span>Show Fragrance Showcase publicly</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="showCollectionsToggle">
+          <span>Show Collections publicly</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="showActivityToggle">
+          <span>Show Recent Activity publicly</span>
         </label>
       </div>
     </div>
 
-    <!-- Leaderboard Profile Settings (Edit Mode Only) -->
-    <div class="profile-section" id="leaderboardSettings" style="display: none;">
+    <!-- LEADERBOARD SETTINGS -->
+    <div class="profile-section" id="leaderboardSettings" style="display:none;">
       <div class="section-header">
         <h2 class="section-title">Leaderboard Profile</h2>
       </div>
-      <div class="section-content" style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="display:flex;flex-direction:column;gap:16px;">
         <div>
-          <label style="display: block; margin-bottom: 8px; color: #C59849; font-weight: 600;">Public Message</label>
-          <textarea id="leaderboardMessage" placeholder="Share a message that appears on the leaderboard..." style="width: 100%; min-height: 80px; padding: 12px; background: rgba(0, 0, 0, 0.3); border: 1px solid #444; border-radius: 8px; color: #e0e0e0; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; resize: vertical;"></textarea>
-          <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: #e0e0e0; margin-top: 8px;">
-            <input type="checkbox" id="showMessagePublicly" style="width: 18px; height: 18px; cursor: pointer; accent-color: #C59849;">
-            <span style="font-size: 0.9rem;">Show this message on the leaderboard</span>
+          <label class="field-label">Public Message</label>
+          <textarea id="leaderboardMessage" placeholder="Share a message on the leaderboard..." style="width:100%;min-height:72px;padding:10px;background:rgba(0,0,0,.3);border:1px solid #444;border-radius:8px;color:#e0e0e0;font-family:'Montserrat',sans-serif;font-size:0.9rem;resize:vertical;"></textarea>
+          <label class="toggle-row" style="margin-top:8px;">
+            <input type="checkbox" id="showMessagePublicly">
+            <span style="font-size:0.85rem;">Show this message on the leaderboard</span>
           </label>
         </div>
-
         <div>
-          <label style="display: block; margin-bottom: 12px; color: #C59849; font-weight: 600;">Social Media Handles</label>
-          <div style="display: flex; flex-direction: column; gap: 12px;">
+          <label class="field-label">Social Media Handles</label>
+          <div style="display:flex;flex-direction:column;gap:10px;">
             <div>
-              <label style="display: block; margin-bottom: 4px; color: #999; font-size: 0.9rem;">Instagram</label>
-              <input type="text" id="instagramHandle" placeholder="username" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid #444; border-radius: 8px; color: #e0e0e0; font-family: 'Montserrat', sans-serif;">
+              <label style="display:block;margin-bottom:4px;color:#777;font-size:0.82rem;">Instagram</label>
+              <input type="text" id="instagramHandle" placeholder="username" class="text-input">
             </div>
             <div>
-              <label style="display: block; margin-bottom: 4px; color: #999; font-size: 0.9rem;">TikTok</label>
-              <input type="text" id="tiktokHandle" placeholder="username" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid #444; border-radius: 8px; color: #e0e0e0; font-family: 'Montserrat', sans-serif;">
+              <label style="display:block;margin-bottom:4px;color:#777;font-size:0.82rem;">TikTok</label>
+              <input type="text" id="tiktokHandle" placeholder="username" class="text-input">
             </div>
             <div>
-              <label style="display: block; margin-bottom: 4px; color: #999; font-size: 0.9rem;">Twitter</label>
-              <input type="text" id="twitterHandle" placeholder="username" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid #444; border-radius: 8px; color: #e0e0e0; font-family: 'Montserrat', sans-serif;">
+              <label style="display:block;margin-bottom:4px;color:#777;font-size:0.82rem;">Twitter</label>
+              <input type="text" id="twitterHandle" placeholder="username" class="text-input">
             </div>
             <div>
-              <label style="display: block; margin-bottom: 4px; color: #999; font-size: 0.9rem;">Facebook</label>
-              <input type="text" id="facebookHandle" placeholder="username or profile ID" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.3); border: 1px solid #444; border-radius: 8px; color: #e0e0e0; font-family: 'Montserrat', sans-serif;">
+              <label style="display:block;margin-bottom:4px;color:#777;font-size:0.82rem;">Facebook</label>
+              <input type="text" id="facebookHandle" placeholder="username or profile ID" class="text-input">
             </div>
           </div>
-          <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: #e0e0e0; margin-top: 12px;">
-            <input type="checkbox" id="showSocialsPublicly" style="width: 18px; height: 18px; cursor: pointer; accent-color: #C59849;">
-            <span style="font-size: 0.9rem;">Show social media handles on the leaderboard</span>
+          <label class="toggle-row" style="margin-top:10px;">
+            <input type="checkbox" id="showSocialsPublicly">
+            <span style="font-size:0.85rem;">Show social handles on the leaderboard</span>
           </label>
         </div>
       </div>
     </div>
 
-    <!-- Scentle Stats Section -->
-    <div id="scentleStatsSection" class="profile-section">
+    <!-- RECENT ACTIVITY PREVIEW -->
+    <div class="profile-section" id="activityPreviewSection">
+      <div class="section-header">
+        <h2 class="section-title">Recent Activity</h2>
+      </div>
+      <nav class="tab-nav" role="tablist">
+        <button class="tab-btn active" role="tab" onclick="switchActivity('threads')">Threads</button>
+        <button class="tab-btn" role="tab" onclick="switchActivity('comments')">Comments</button>
+      </nav>
+      <div class="tab-panel active" id="activity-threads">
+        <div id="threadHistoryPreview" class="section-content">Loading...</div>
+      </div>
+      <div class="tab-panel" id="activity-comments">
+        <div id="commentHistoryPreview" class="section-content">Loading...</div>
+      </div>
+    </div>
+
+    <!-- SCENTLE STATS -->
+    <div id="scentleStatsSection" class="profile-section" style="display:none;">
       <div class="section-header">
         <h2 class="section-title">Scentle Stats</h2>
       </div>
-      <div id="scentleStatsContent" class="section-content">
-        <div class="section-content empty">Loading...</div>
-      </div>
-    </div>
-
-    <!-- Thread History Section -->
-    <div id="threadHistorySection" class="profile-section">
-      <h2>Thread History</h2>
-      <div id="threadHistoryPreview" class="section-content">
-        Loading...
-      </div>
-    </div>
-
-    <!-- Comment History Section -->
-    <div id="commentHistorySection" class="profile-section">
-      <h2>Comment History</h2>
-      <div id="commentHistoryPreview" class="section-content">
-        Loading...
-      </div>
+      <div id="scentleStatsContent" class="section-content">Loading...</div>
     </div>
 
     <div class="action-buttons">
@@ -1251,6 +1079,7 @@
     </div>
   </div>
 
+  <!-- SEARCH OVERLAY -->
   <div class="search-overlay" id="searchOverlay">
     <div class="search-container">
       <div class="search-header">
@@ -1259,12 +1088,12 @@
       </div>
       <input type="text" class="search-input" id="searchInput" placeholder="Search fragrances..." />
       <div class="search-results" id="searchResults">
-        <div class="no-results">Start typing to search fragrances...</div>
+        <div class="no-results">Start typing to search...</div>
       </div>
     </div>
   </div>
 
-  <!-- Follow Modal -->
+  <!-- FOLLOW MODAL -->
   <div class="follow-modal-overlay" id="followModal">
     <div class="follow-modal">
       <div class="follow-modal-header">
@@ -1273,12 +1102,29 @@
       </div>
       <div class="follow-modal-content">
         <div id="followModalList"></div>
-        <div id="followModalEmpty" class="follow-modal-empty" style="display: none;"></div>
-        <button id="followModalLoadMore" class="follow-modal-load-more" style="display: none;">Load More</button>
+        <div id="followModalEmpty" class="follow-modal-empty" style="display:none;"></div>
+        <button id="followModalLoadMore" class="follow-modal-load-more" style="display:none;">Load More</button>
       </div>
     </div>
   </div>
-<script src="navbar-loader.js"></script>
+
+  <script>
+    function switchShowcase(tabId) {
+      document.querySelectorAll('[data-showcase-tab]').forEach(b => b.classList.toggle('active', b.dataset.showcaseTab === tabId));
+      ['sig','top5','worst5','have','want'].forEach(id => {
+        const el = document.getElementById('showcase-' + id);
+        if (el) el.classList.toggle('active', id === tabId);
+      });
+    }
+    function switchActivity(tabId) {
+      const tabs = document.querySelectorAll('#activityPreviewSection .tab-btn');
+      tabs.forEach((b, i) => b.classList.toggle('active', (i === 0 && tabId === 'threads') || (i === 1 && tabId === 'comments')));
+      document.getElementById('activity-threads').classList.toggle('active', tabId === 'threads');
+      document.getElementById('activity-comments').classList.toggle('active', tabId === 'comments');
+    }
+  </script>
+
+  <script src="navbar-loader.js"></script>
   <script type="module" src="profile.js"></script>
   <script type="module" src="nav_profile.js"></script>
   <script type="module" src="notifications_nav.js"></script>

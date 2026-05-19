@@ -7,17 +7,12 @@ let targetUser = null;
 let fragrancesData = [];
 let imageOverridesMap = new Map();
 
-// NOTE: MaxParfum uses ONE canonical fragrance ID system (fragrance-id-utils.js).
-// DO NOT create alternative ID generators. Always use makeCanonicalFragranceId().
-
 async function init() {
   try {
-    // Auth is optional - only fetch if user is logged in
     try {
       const { data: { user } } = await supabase.auth.getUser();
       currentUser = user;
-    } catch (authError) {
-      console.log('No active session (this is OK for public profiles)');
+    } catch {
       currentUser = null;
     }
 
@@ -25,10 +20,7 @@ async function init() {
     const username = params.get('username');
     const userId = params.get('user_id');
 
-    if (!username && !userId) {
-      showError();
-      return;
-    }
+    if (!username && !userId) { showError(); return; }
 
     await loadFragrancesData();
     await loadUserProfile(username, userId);
@@ -38,81 +30,58 @@ async function init() {
   }
 }
 
-function updateMetadata(user) {
-  const username = user.username || 'User';
-  const bio = user.bio || '';
-  const currentUrl = window.location.href;
-
-  const pageTitle = `${username} - MaxParfum Profile`;
-  let pageDescription = `View ${username}'s fragrance collection, reviews, and activity on MaxParfum.`;
-
-  if (bio && bio.trim().length > 0) {
-    const bioSnippet = bio.length > 100 ? bio.substring(0, 97) + '...' : bio;
-    pageDescription = `${username}: ${bioSnippet}`;
-  }
-
-  const hasContent = user.signature_fragrance || (user.top_five && user.top_five.length > 0) ||
-                     (user.fragrances_have && user.fragrances_have.length > 0) ||
-                     (user.fragrances_want && user.fragrances_want.length > 0) ||
-                     (bio && bio.trim().length > 0);
-
-  const robotsContent = hasContent ? 'index, follow' : 'noindex, follow';
-
-  document.getElementById('page-title').textContent = pageTitle;
-  document.getElementById('page-description').setAttribute('content', pageDescription);
-  document.getElementById('page-robots').setAttribute('content', robotsContent);
-  document.getElementById('page-canonical').setAttribute('href', currentUrl);
-
-  document.getElementById('og-title').setAttribute('content', pageTitle);
-  document.getElementById('og-description').setAttribute('content', pageDescription);
-  document.getElementById('og-url').setAttribute('content', currentUrl);
-
-  document.getElementById('twitter-title').setAttribute('content', pageTitle);
-  document.getElementById('twitter-description').setAttribute('content', pageDescription);
-}
-
 async function loadFragrancesData() {
   try {
-    const [fragrancesResponse, overridesMap] = await Promise.all([
+    const [resp, overrides] = await Promise.all([
       fetch('fragrances_merged.json'),
       loadAllImageOverrides()
     ]);
-
-    fragrancesData = await fragrancesResponse.json();
-    imageOverridesMap = overridesMap;
-  } catch (err) {
-    console.error('Error loading fragrances data:', err);
+    fragrancesData = await resp.json();
+    imageOverridesMap = overrides;
+  } catch {
     fragrancesData = [];
     imageOverridesMap = new Map();
   }
 }
 
+function updateMetadata(user) {
+  const username = user.username || 'User';
+  const bio = user.bio || '';
+  const currentUrl = window.location.href;
+  const pageTitle = `${username} - MaxParfum`;
+  let desc = `${username}'s fragrance taste profile on MaxParfum.`;
+  if (bio.trim()) desc = `${username}: ${bio.length > 100 ? bio.substring(0, 97) + '...' : bio}`;
+
+  const hasContent = user.signature_fragrance || (user.top_five?.length > 0) ||
+    (user.fragrances_have?.length > 0) || (user.fragrances_want?.length > 0) || bio.trim();
+
+  document.getElementById('page-title').textContent = pageTitle;
+  document.getElementById('page-description').setAttribute('content', desc);
+  document.getElementById('page-robots').setAttribute('content', hasContent ? 'index, follow' : 'noindex, follow');
+  document.getElementById('page-canonical').setAttribute('href', currentUrl);
+  document.getElementById('og-title').setAttribute('content', pageTitle);
+  document.getElementById('og-description').setAttribute('content', desc);
+  document.getElementById('og-url').setAttribute('content', currentUrl);
+  document.getElementById('twitter-title').setAttribute('content', pageTitle);
+  document.getElementById('twitter-description').setAttribute('content', desc);
+}
+
 async function loadUserProfile(username, userId) {
   try {
-    let query = supabase
-      .from('users')
-      .select(
-        'id, username, profile_picture, header_image, bio, signature_fragrance, signature_image, top_five, fragrances_have, fragrances_want, created_at, show_follow_stats, show_scentle_stats'
-      );
+    let query = supabase.from('users').select(
+      'id, username, profile_picture, header_image, bio, signature_fragrance, signature_image, ' +
+      'top_five, fragrances_have, fragrances_want, worst_five, ' +
+      'favourite_notes, disliked_notes, favourite_styles, avoided_styles, favourite_occasions, preferred_strength, ' +
+      'show_scent_dna_publicly, show_fragrance_showcase_publicly, show_collections_publicly, show_activity_publicly, ' +
+      'created_at, show_follow_stats, show_scentle_stats'
+    );
 
-    if (username) {
-      query = query.eq('username', username);
-    } else if (userId) {
-      query = query.eq('id', userId);
-    }
+    if (username) query = query.eq('username', username);
+    else if (userId) query = query.eq('id', userId);
 
     const { data, error } = await query.maybeSingle();
 
-    if (error) {
-      console.error('Error loading profile:', error);
-      showError();
-      return;
-    }
-
-    if (!data) {
-      showError();
-      return;
-    }
+    if (error || !data) { showError(); return; }
 
     targetUser = data;
     await displayProfile(data);
@@ -130,162 +99,222 @@ async function displayProfile(user) {
   updateMetadata(user);
   document.title = `${user.username} - MaxParfum`;
 
+  // Header image
   if (user.header_image) {
-    const headerEl = document.getElementById('headerImage');
-    headerEl.style.backgroundImage = `url(${user.header_image})`;
+    document.getElementById('headerImage').style.backgroundImage = `url(${user.header_image})`;
   }
 
-  const profilePicEl = document.getElementById('profilePicture');
-  if (user.profile_picture) {
-    profilePicEl.style.backgroundImage = `url(${user.profile_picture})`;
-  } else {
-    profilePicEl.style.backgroundImage = `url(https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&size=120&background=D5A856&color=000)`;
-  }
+  // Profile picture
+  const picEl = document.getElementById('profilePicture');
+  picEl.style.backgroundImage = user.profile_picture
+    ? `url(${user.profile_picture})`
+    : `url(https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&size=120&background=D5A856&color=000)`;
 
+  // Name / handle
   document.getElementById('profileUsername').textContent = user.username || 'Fragrance Lover';
+  document.getElementById('profileHandle').textContent = `@${user.username}`;
 
+  // Member since
   if (user.created_at) {
-    const memberSince = new Date(user.created_at).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-    document.getElementById('profileMeta').textContent = `Member since ${memberSince}`;
-  } else {
-    document.getElementById('profileMeta').textContent = '';
+    const ms = new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    document.getElementById('profileMetaLine').textContent = `Member since ${ms}`;
   }
 
+  // Signature line
+  if (user.signature_fragrance) {
+    const sigLine = document.getElementById('profileSigLine');
+    sigLine.innerHTML = `Signature: <span>${escapeHtml(user.signature_fragrance)}</span>`;
+    sigLine.classList.remove('hidden');
+  }
+
+  // Style chips from favourite_styles + preferred_strength
+  const styles = safeArray(user.favourite_styles);
+  const strength = user.preferred_strength;
+  if (styles.length > 0 || strength) {
+    const chipsEl = document.getElementById('profileStyleChips');
+    const all = [...styles.slice(0, 4)];
+    if (strength) all.push(strength);
+    chipsEl.innerHTML = all.map(s => `<span class="style-chip">${escapeHtml(s)}</span>`).join('');
+    chipsEl.classList.remove('hidden');
+  }
+
+  // Bio snippet
+  if (user.bio && user.bio.trim()) {
+    const bioEl = document.getElementById('profileBioHeader');
+    bioEl.textContent = user.bio.length > 200 ? user.bio.substring(0, 197) + '...' : user.bio;
+    bioEl.classList.remove('hidden');
+  }
+
+  // Edit button for own profile
   if (currentUser && currentUser.id === user.id) {
     document.getElementById('editButtonContainer').classList.remove('hidden');
-  } else {
-    document.getElementById('editButtonContainer').classList.add('hidden');
   }
 
   await loadConnectionsAndFollowUI(user);
+  await loadPointsHeader(user.id);
 
-  renderBio(user.bio);
-  renderSignatureFragrance(user.signature_fragrance, user.signature_image);
-  renderTopFive(user.top_five);
-  renderFragranceList('fragrancesHaveList', user.fragrances_have);
-  renderFragranceList('fragrancesWantList', user.fragrances_want);
-
-  await loadCollections(user.id);
-  await loadThreadHistoryPreview(user.id);
-  await loadCommentHistoryPreview(user.id);
-  await loadScentleStats(user.id);
-  await loadPointsAndLeaderboard(user.id);
+  renderScentDna(user);
+  renderFragranceShowcase(user);
+  if (user.show_collections_publicly !== false) await loadCollections(user.id);
+  await loadStatsSection(user);
+  if (user.show_activity_publicly !== false) await loadActivitySection(user.id);
 }
 
-function renderBio(bio) {
-  const bioSection = document.getElementById('bioSection');
-  const bioEl = document.getElementById('profileBio');
+// ── SCENT DNA ──────────────────────────────────────────────────────────────
 
-  if (bio && bio.trim()) {
-    bioEl.textContent = bio;
-    bioEl.classList.remove('empty');
-    bioSection.classList.remove('hidden');
-  } else {
-    bioEl.textContent = 'No bio provided yet.';
-    bioEl.classList.add('empty');
-  }
+function renderScentDna(user) {
+  if (user.show_scent_dna_publicly === false) return;
+
+  const favNotes = safeArray(user.favourite_notes);
+  const disNotes = safeArray(user.disliked_notes);
+  const favStyles = safeArray(user.favourite_styles);
+  const avoStyles = safeArray(user.avoided_styles);
+  const occasions = safeArray(user.favourite_occasions);
+  const strength = user.preferred_strength;
+
+  const hasAny = favNotes.length || disNotes.length || favStyles.length ||
+    avoStyles.length || occasions.length || strength;
+
+  if (!hasAny) return;
+
+  const rows = [];
+
+  if (favNotes.length) rows.push(dnaRow('Fav Notes', favNotes, ''));
+  if (disNotes.length) rows.push(dnaRow('Dislikes', disNotes, 'negative'));
+  if (favStyles.length) rows.push(dnaRow('Styles', favStyles, ''));
+  if (avoStyles.length) rows.push(dnaRow('Avoids', avoStyles, 'negative'));
+  if (occasions.length) rows.push(dnaRow('Occasions', occasions, ''));
+  if (strength) rows.push(dnaRow('Strength', [strength], 'strength'));
+
+  document.getElementById('scentDnaContent').innerHTML = rows.join('');
+  document.getElementById('scentDnaSection').classList.remove('hidden');
 }
 
-function unwrapRpcRow(data) {
-  if (Array.isArray(data)) return data[0] ?? null;
-  return data ?? null;
+function dnaRow(label, chips, chipClass) {
+  const chipsHtml = chips
+    .map(c => `<span class="dna-chip ${chipClass}">${escapeHtml(String(c))}</span>`)
+    .join('');
+  return `
+    <div class="dna-row">
+      <span class="dna-label">${label}</span>
+      <div class="dna-chips">${chipsHtml}</div>
+    </div>`;
 }
 
-function renderSignatureFragrance(signatureFragrance, signatureImage) {
-  const signatureSection = document.getElementById('signatureSection');
-  const container = document.getElementById('signatureContainer');
+// ── FRAGRANCE SHOWCASE ─────────────────────────────────────────────────────
 
-  if (!signatureFragrance || !signatureFragrance.trim()) {
-    container.innerHTML = '<div class="section-content empty">No signature fragrance set yet.</div>';
-    signatureSection.classList.remove('hidden');
-    return;
-  }
+function renderFragranceShowcase(user) {
+  if (user.show_fragrance_showcase_publicly === false) return;
 
- const fragranceLink = getFragranceLinkData(signatureFragrance);
-const fragranceData = getFragranceData(signatureFragrance);
-const image = fragranceLink.image || signatureImage || '';
-const fragranceUrl = fragranceLink.url;
-  container.innerHTML = `
-    <a href="${fragranceUrl}" class="signature-display" style="display: flex; align-items: center; gap: 20px; padding: 15px; background: rgba(44, 19, 11, 0.3); border-radius: 8px; border-left: 4px solid #2C130B; text-decoration: none; color: inherit; transition: all 0.3s ease;">
-      ${image ? `<img src="${image}" alt="Signature fragrance" class="signature-image" />` : ''}
-      <div class="signature-info">
-        <div class="signature-name">${escapeHtml(signatureFragrance)}</div>
-        ${fragranceData ? `<div class="signature-brand">${escapeHtml(fragranceData.brand)}</div>` : ''}
-      </div>
-    </a>
-  `;
+  const tabs = [];
 
-  signatureSection.classList.remove('hidden');
-}
-
-function renderTopFive(topFive) {
-  const section = document.getElementById('topFiveSection');
-  const listEl = document.getElementById('topFiveList');
-
-  if (!topFive || topFive.length === 0) {
-    listEl.innerHTML = '<li class="section-content empty">No fragrances added yet.</li>';
-    section.classList.remove('hidden');
-    return;
+  if (user.signature_fragrance) {
+    tabs.push({ id: 'sig', label: 'Signature', render: () => renderSigPanel(user.signature_fragrance, user.signature_image) });
   }
 
-  listEl.innerHTML = '';
-  topFive.forEach((fragrance, index) => {
-   const fragranceLink = getFragranceLinkData(fragrance);
-const image = fragranceLink.image || '';
-const fragranceUrl = fragranceLink.url;
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <div class="fragrance-number">${index + 1}</div>
-      <div class="fragrance-card clickable" onclick="window.location.href='${fragranceUrl}'">
-        <a href="${fragranceUrl}" class="fragrance-link">
-          <div class="fragrance-item-content">
-            ${image ? `<img src="${image}" alt="${escapeHtml(fragrance)}" class="fragrance-image" />` : ''}
-            <div class="fragrance-text">${escapeHtml(fragrance)}</div>
-          </div>
-        </a>
-      </div>
-    `;
-    listEl.appendChild(li);
+  const top5 = safeArray(user.top_five);
+  if (top5.length) {
+    tabs.push({ id: 'top5', label: 'Top 5', render: () => renderNumberedPanel(top5) });
+  }
+
+  const worst5 = safeArray(user.worst_five);
+  if (worst5.length) {
+    tabs.push({ id: 'worst5', label: 'Worst 5', render: () => renderNumberedPanel(worst5) });
+  }
+
+  const have = safeArray(user.fragrances_have);
+  if (have.length) {
+    tabs.push({ id: 'have', label: 'Have', render: () => renderGridPanel(have) });
+  }
+
+  const want = safeArray(user.fragrances_want);
+  if (want.length) {
+    tabs.push({ id: 'want', label: 'Want', render: () => renderGridPanel(want) });
+  }
+
+  if (!tabs.length) return;
+
+  const tabsEl = document.getElementById('showcaseTabs');
+  const panelsEl = document.getElementById('showcasePanels');
+
+  tabs.forEach((tab, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = tab.label;
+    btn.dataset.tab = tab.id;
+    btn.setAttribute('role', 'tab');
+    btn.addEventListener('click', () => switchShowcaseTab(tab.id));
+    tabsEl.appendChild(btn);
+
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = `showcase-panel-${tab.id}`;
+    panel.innerHTML = tab.render();
+    panelsEl.appendChild(panel);
   });
 
-  section.classList.remove('hidden');
+  document.getElementById('fragranceShowcaseSection').classList.remove('hidden');
 }
 
-function renderFragranceList(listId, fragrances) {
-  const section = listId === 'fragrancesHaveList' ? document.getElementById('haveSection') : document.getElementById('wantSection');
-  const listEl = document.getElementById(listId);
+function switchShowcaseTab(tabId) {
+  document.querySelectorAll('#showcaseTabs .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  document.querySelectorAll('#showcasePanels .tab-panel').forEach(p => p.classList.toggle('active', p.id === `showcase-panel-${tabId}`));
+}
 
-  if (!fragrances || fragrances.length === 0) {
-    listEl.innerHTML = '<li class="section-content empty">No fragrances added yet.</li>';
-    section.classList.remove('hidden');
-    return;
-  }
+function renderSigPanel(sigValue, sigImage) {
+  const norm = normalizeFragrance(sigValue);
+  const url = norm.url;
+  const img = norm.image || sigImage || '';
+  return `
+    <a href="${url}" class="sig-card">
+      ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(norm.displayName)}" class="sig-card-img" onerror="this.style.display='none'" />`
+            : `<div class="sig-card-placeholder">&#128167;</div>`}
+      <div>
+        ${norm.brand ? `<div class="sig-card-brand">${escapeHtml(norm.brand)}</div>` : ''}
+        <div class="sig-card-name">${escapeHtml(norm.name || norm.displayName)}</div>
+      </div>
+    </a>`;
+}
 
-  listEl.innerHTML = '';
-  fragrances.forEach((fragrance) => {
-    const fragranceLink = getFragranceLinkData(fragrance);
-const image = fragranceLink.image || '';
-const fragranceUrl = fragranceLink.url;
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <div class="fragrance-card clickable" onclick="window.location.href='${fragranceUrl}'">
-        <a href="${fragranceUrl}" class="fragrance-link">
-          <div class="fragrance-item-content">
-            ${image ? `<img src="${image}" alt="${escapeHtml(fragrance)}" class="fragrance-image" />` : ''}
-            <div class="fragrance-text">${escapeHtml(fragrance)}</div>
+function renderNumberedPanel(items) {
+  const html = items.map((item, i) => {
+    const norm = normalizeFragrance(item);
+    const img = norm.image;
+    return `
+      <li class="frag-list-item">
+        <span class="frag-num">${i + 1}</span>
+        <a href="${norm.url}" class="frag-item-card">
+          ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(norm.displayName)}" class="frag-item-img" onerror="this.style.display='none'" />`
+                : ''}
+          <div class="frag-item-text">
+            ${norm.brand ? `<div class="frag-item-brand">${escapeHtml(norm.brand)}</div>` : ''}
+            <div class="frag-item-name">${escapeHtml(norm.name || norm.displayName)}</div>
           </div>
         </a>
-      </div>
-    `;
-    listEl.appendChild(li);
-  });
-
-  section.classList.remove('hidden');
+      </li>`;
+  }).join('');
+  return `<ul class="frag-list-numbered">${html}</ul>`;
 }
+
+function renderGridPanel(items) {
+  const html = items.map(item => {
+    const norm = normalizeFragrance(item);
+    const img = norm.image;
+    return `
+      <a href="${norm.url}" class="frag-card-compact">
+        ${img
+          ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(norm.displayName)}" class="frag-card-thumb" onerror="this.style.display='none'" />`
+          : `<div class="frag-card-thumb-placeholder">&#128167;</div>`}
+        <div class="frag-card-body">
+          ${norm.brand ? `<div class="frag-card-brand">${escapeHtml(norm.brand)}</div>` : ''}
+          <div class="frag-card-name">${escapeHtml(norm.name || norm.displayName)}</div>
+        </div>
+      </a>`;
+  }).join('');
+  return `<div class="frag-grid">${html}</div>`;
+}
+
+// ── COLLECTIONS ────────────────────────────────────────────────────────────
 
 async function loadCollections(userId) {
   const section = document.getElementById('collectionsSection');
@@ -298,458 +327,299 @@ async function loadCollections(userId) {
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('Error loading collections:', error);
-      container.innerHTML = '<div class="section-content empty">Error loading collections.</div>';
-      section.classList.remove('hidden');
-      return;
+    if (error || !collections || collections.length === 0) {
+      return; // hide section if no collections
     }
 
-    if (!collections || collections.length === 0) {
-      container.innerHTML = '<div class="section-content empty">No collections yet.</div>';
-      section.classList.remove('hidden');
-      return;
-    }
+    const withCounts = await Promise.all(collections.map(async col => {
+      const { count } = await supabase
+        .from('collection_items')
+        .select('*', { count: 'exact', head: true })
+        .eq('collection_id', col.id);
+      return { ...col, itemCount: count || 0 };
+    }));
 
-    const collectionsWithCounts = await Promise.all(
-      collections.map(async (collection) => {
-        const { count } = await supabase
-          .from('collection_items')
-          .select('*', { count: 'exact', head: true })
-          .eq('collection_id', collection.id);
+    container.innerHTML = withCounts.map(col => {
+      const desc = col.description
+        ? `<div class="collection-card-desc">${escapeHtml(col.description)}</div>`
+        : '';
+      return `
+        <div class="collection-card" onclick="window.location.href='collection.html?id=${col.id}'">
+          <div class="collection-card-name">${escapeHtml(col.name)}</div>
+          ${desc}
+          <div class="collection-card-meta">
+            <span class="collection-card-count">${col.itemCount} ${col.itemCount === 1 ? 'fragrance' : 'fragrances'}</span>
+          </div>
+        </div>`;
+    }).join('');
 
-        return {
-          ...collection,
-          itemCount: count || 0,
-        };
-      })
-    );
-
-    renderCollections(collectionsWithCounts);
     section.classList.remove('hidden');
   } catch (err) {
     console.error('Error loading collections:', err);
-    container.innerHTML = '<div class="section-content empty">Error loading collections.</div>';
+  }
+}
+
+// ── STATS ──────────────────────────────────────────────────────────────────
+
+async function loadStatsSection(user) {
+  const section = document.getElementById('statsSection');
+  const grid = document.getElementById('statsGrid');
+  const boxes = [];
+
+  // Points
+  try {
+    const { data: pointsRow } = await supabase
+      .from('leaderboard_all_time')
+      .select('total_points')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    const totalPoints = Number(pointsRow?.total_points || 0);
+
+    let rank = '-';
+    if (totalPoints > 0) {
+      const { data: allRows } = await supabase
+        .from('leaderboard_all_time')
+        .select('total_points')
+        .order('total_points', { ascending: false });
+      const higher = (allRows || []).filter(r => Number(r.total_points || 0) > totalPoints).length;
+      rank = `#${higher + 1}`;
+    }
+
+    boxes.push({ value: totalPoints.toLocaleString(), label: 'All-Time Points' });
+    boxes.push({ value: rank, label: 'Rank' });
+
+    // Also update header points
+    if (totalPoints > 0) {
+      document.getElementById('headerPoints').textContent = totalPoints.toLocaleString();
+      document.getElementById('pointsStatBox').style.display = 'block';
+    }
+
+    // Leaderboard profile message/socials
+    const { data: lbProfile } = await supabase
+      .from('leaderboard_profiles')
+      .select('public_message, instagram_handle, tiktok_handle, facebook_handle, twitter_handle, show_socials_publicly, show_message_publicly')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    const lbInfoEl = document.getElementById('leaderboardProfileInfo');
+    const msgEl = document.getElementById('publicMessage');
+    const socialEl = document.getElementById('socialLinks');
+
+    if (lbProfile?.show_message_publicly && lbProfile.public_message) {
+      msgEl.textContent = `"${lbProfile.public_message}"`;
+      msgEl.classList.remove('hidden');
+      lbInfoEl.style.display = 'block';
+    }
+
+    if (lbProfile?.show_socials_publicly) {
+      const socials = [];
+      if (lbProfile.instagram_handle) socials.push(`<a href="https://instagram.com/${lbProfile.instagram_handle}" target="_blank" rel="noopener noreferrer">Instagram</a>`);
+      if (lbProfile.tiktok_handle) socials.push(`<a href="https://tiktok.com/@${lbProfile.tiktok_handle}" target="_blank" rel="noopener noreferrer">TikTok</a>`);
+      if (lbProfile.twitter_handle) socials.push(`<a href="https://twitter.com/${lbProfile.twitter_handle}" target="_blank" rel="noopener noreferrer">Twitter</a>`);
+      if (lbProfile.facebook_handle) socials.push(`<a href="https://facebook.com/${lbProfile.facebook_handle}" target="_blank" rel="noopener noreferrer">Facebook</a>`);
+      if (socials.length) {
+        socialEl.innerHTML = socials.join('');
+        lbInfoEl.style.display = 'block';
+      }
+    }
+  } catch (err) {
+    console.error('Error loading points:', err);
+  }
+
+  // Scentle
+  if (user.show_scentle_stats !== false) {
+    try {
+      const { data: stats } = await supabase
+        .from('user_scentle_stats')
+        .select('scentle_played, scentle_avg_guesses')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (stats && stats.scentle_played > 0) {
+        boxes.push({ value: stats.scentle_played, label: 'Scentle Played' });
+        boxes.push({ value: Number(stats.scentle_avg_guesses).toFixed(1), label: 'Avg Guesses' });
+      }
+    } catch (err) {
+      console.error('Error loading Scentle stats:', err);
+    }
+  }
+
+  if (boxes.length > 0) {
+    grid.innerHTML = boxes.map(b => `
+      <div class="stat-box">
+        <div class="stat-box-value">${escapeHtml(String(b.value))}</div>
+        <div class="stat-box-label">${escapeHtml(b.label)}</div>
+      </div>`).join('');
     section.classList.remove('hidden');
   }
 }
 
-function renderCollections(collections) {
-  const container = document.getElementById('collectionsContainer');
-
-  if (!collections || collections.length === 0) {
-    container.innerHTML = '<div class="section-content empty">No collections yet.</div>';
-    return;
-  }
-
-  container.innerHTML = collections
-    .map((collection) => {
-      const description = collection.description
-        ? `<div class="collection-card-description">${escapeHtml(collection.description)}</div>`
-        : '';
-
-      return `
-      <div class="collection-card" onclick="window.location.href='collection.html?id=${collection.id}'">
-        <div class="collection-card-name">${escapeHtml(collection.name)}</div>
-        ${description}
-        <div class="collection-card-count">${collection.itemCount} ${
-        collection.itemCount === 1 ? 'fragrance' : 'fragrances'
-      }</div>
-      </div>
-    `;
-    })
-    .join('');
+async function loadPointsHeader(userId) {
+  // Points shown in header stat box are loaded as part of loadStatsSection
+  // This is a no-op kept for clarity
 }
 
-function getFragranceData(fragranceName) {
-  if (!fragranceName) return null;
+// ── ACTIVITY ───────────────────────────────────────────────────────────────
 
-  const parts = fragranceName.split(' - ');
-  if (parts.length < 2) return null;
+async function loadActivitySection(userId) {
+  const section = document.getElementById('activitySection');
+  const tabsEl = document.getElementById('activityTabs');
+  const panelsEl = document.getElementById('activityPanels');
 
-  const brandRaw = parts[0].trim();
-  const nameRaw = parts.slice(1).join(' - ').trim();
+  const activityTabs = [];
 
-  const normalizeText = (value) =>
-    String(value || '')
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, ' ')
-      .replace(/[^\w\s&'-]/g, '');
-
-  const brand = normalizeText(brandRaw);
-  const name = normalizeText(nameRaw);
-
-  const fragrance = fragrancesData.find(f =>
-    normalizeText(f.brand) === brand &&
-    normalizeText(f.name) === name
-  );
-
-  const overrideKey = `${normalizeForMatching(brandRaw)}::${normalizeForMatching(nameRaw)}`;
-  const overrideImage = imageOverridesMap.get(overrideKey);
-
-  if (fragrance) {
-    return {
-      ...fragrance,
-      image: overrideImage || fragrance.image || ''
-    };
-  }
-
-  if (overrideImage) {
-    return {
-      brand: brandRaw,
-      name: nameRaw,
-      image: overrideImage
-    };
-  }
-
-  return null;
-}
-
-function getFragranceLinkData(value) {
-  if (!value) {
-    return {
-      url: 'fragrance.html',
-      label: '',
-      image: ''
-    };
-  }
-
-  const displayMatch = getFragranceData(value);
-  if (displayMatch?.brand && displayMatch?.name) {
-    return {
-      url: makeFragranceUrl(displayMatch.brand, displayMatch.name),
-      label: `${displayMatch.brand} - ${displayMatch.name}`,
-      image: displayMatch.image || ''
-    };
-  }
-
-  const canonicalMatch = fragrancesData.find(
-    (f) => makeCanonicalFragranceId(f.brand, f.name) === String(value).trim().toLowerCase()
-  );
-
-  if (canonicalMatch) {
-    return {
-      url: makeFragranceUrl(canonicalMatch.brand, canonicalMatch.name),
-      label: `${canonicalMatch.brand} - ${canonicalMatch.name}`,
-      image: canonicalMatch.image || ''
-    };
-  }
-
-  return {
-    url: 'fragrance.html',
-    label: String(value),
-    image: ''
-  };
-}
-// Removed: slugify() - Use makeCanonicalFragranceId() or makeFragranceUrl() instead
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-function getUserAvatarUrl(user) {
-  if (user.profile_picture) {
-    return user.profile_picture;
-  }
-  return `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&size=64&background=D5A856&color=000`;
-}
-
-function renderUserLink(user, showAvatar = true) {
-  const avatarUrl = getUserAvatarUrl(user);
-  const avatarHtml = showAvatar ? `<img src="${avatarUrl}" alt="${user.username}" class="user-avatar" />` : '';
-
-  return `
-    <a href="public_profile.html?user_id=${user.id}" class="user-link">
-      ${avatarHtml}
-      <span class="user-username">${escapeHtml(user.username)}</span>
-    </a>
-  `;
-}
-
-async function loadThreadHistoryPreview(userId) {
+  // Threads
   try {
-    const { data: threads, error } = await supabase
+    const { data: threads } = await supabase
       .from('forum_threads')
       .select('id, title, created_at')
       .eq('user_id', userId)
       .eq('is_deleted', false)
       .order('created_at', { ascending: false })
-      .limit(1);
+      .limit(3);
 
-    if (error) {
-      console.error('Error loading thread history:', error);
-      document.getElementById('threadHistoryPreview').innerHTML = '<div class="section-content empty">History unavailable</div>';
-      return;
+    if (threads && threads.length > 0) {
+      activityTabs.push({
+        id: 'threads',
+        label: 'Threads',
+        html: threads.map(t => `
+          <div class="activity-item">
+            <a href="forum_thread.html?id=${t.id}" class="activity-item-title">${escapeHtml(t.title)}</a>
+            <div class="activity-item-date">${new Date(t.created_at).toLocaleDateString()}</div>
+          </div>`).join('') +
+          `<a href="user_threads.html?user_id=${userId}" class="view-all-link">View all threads →</a>`
+      });
     }
+  } catch {}
 
-    const container = document.getElementById('threadHistoryPreview');
-
-    if (!threads || threads.length === 0) {
-      container.innerHTML = '<div class="section-content empty">No threads yet</div>';
-      return;
-    }
-
-    const thread = threads[0];
-    const { data: firstPost } = await supabase
-      .from('forum_posts')
-      .select('body')
-      .eq('thread_id', thread.id)
-      .is('parent_post_id', null)
-      .order('created_at', { ascending: true })
-      .limit(1)
-      .maybeSingle();
-
-    const snippet = firstPost?.body ? firstPost.body.substring(0, 120) + '...' : '';
-    const date = new Date(thread.created_at).toLocaleDateString();
-
-    container.innerHTML = `
-      <div class="history-preview-item">
-        <a href="forum_thread.html?id=${thread.id}" class="history-preview-title">${escapeHtml(thread.title)}</a>
-        <div class="history-preview-snippet">${escapeHtml(snippet)}</div>
-        <div class="history-preview-date">${date}</div>
-      </div>
-      <a href="user_threads.html?user_id=${userId}" class="view-all-link">View all threads →</a>
-    `;
-
-  } catch (err) {
-    console.error('Unexpected error loading thread history:', err);
-    document.getElementById('threadHistoryPreview').innerHTML = '<div class="section-content empty">History unavailable</div>';
-  }
-}
-
-async function loadCommentHistoryPreview(userId) {
-  const container = document.getElementById('commentHistoryPreview');
-  if (!container) return;
-
+  // Comments
   try {
-    const { data: comments, error } = await supabase
+    const { data: comments } = await supabase
       .from('comments')
       .select('id, comment, fragrance_id, created_at')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
-      .limit(1);
+      .limit(3);
 
-    if (error) {
-      console.error('Error loading comment history:', error);
-      container.innerHTML = '<div class="section-content empty">History unavailable</div>';
-      return;
+    if (comments && comments.length > 0) {
+      activityTabs.push({
+        id: 'comments',
+        label: 'Comments',
+        html: comments.map(c => {
+          const linkData = getFragranceLinkData(c.fragrance_id);
+          const snippet = (c.comment || '').substring(0, 120);
+          return `
+            <div class="activity-item">
+              <a href="${linkData.url}" class="activity-item-title">Comment on ${escapeHtml(linkData.label || c.fragrance_id || '')}</a>
+              <div class="activity-item-snippet">${escapeHtml(snippet)}${c.comment?.length > 120 ? '...' : ''}</div>
+              <div class="activity-item-date">${new Date(c.created_at).toLocaleDateString()}</div>
+            </div>`;
+        }).join('') +
+          `<a href="user_comments.html?user_id=${userId}" class="view-all-link">View all comments →</a>`
+      });
     }
+  } catch {}
 
-    if (!comments || comments.length === 0) {
-      container.innerHTML = '<div class="section-content empty">No comments yet</div>';
-      return;
-    }
+  // Scentle activity tab (scentle games played recently - use stats only)
+  // Skipped: no per-game history table assumed; scentle info covered in stats
 
-    const row = comments[0];
-const text = row.comment || '';
-const snippet = text.length > 140 ? text.substring(0, 140) + '...' : text;
-const date = new Date(row.created_at).toLocaleDateString();
-const fragranceLink = getFragranceLinkData(row.fragrance_id);
+  if (!activityTabs.length) return;
 
-container.innerHTML = `
-  <div class="history-preview-item">
-    <a href="${fragranceLink.url}" class="history-preview-title">
-      Comment on ${escapeHtml(fragranceLink.label || row.fragrance_id)}
-    </a>
-    <div class="history-preview-snippet">${escapeHtml(snippet)}</div>
-    <div class="history-preview-date">${date}</div>
-  </div>
-  <a href="user_comments.html?user_id=${userId}" class="view-all-link">View all comments →</a>
-`;
-  } catch (err) {
-    console.error('Unexpected error loading comment history:', err);
-    container.innerHTML = '<div class="section-content empty">History unavailable</div>';
-  }
+  activityTabs.forEach((tab, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = tab.label;
+    btn.dataset.tab = tab.id;
+    btn.setAttribute('role', 'tab');
+    btn.addEventListener('click', () => switchActivityTab(tab.id));
+    tabsEl.appendChild(btn);
+
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = `activity-panel-${tab.id}`;
+    panel.innerHTML = tab.html;
+    panelsEl.appendChild(panel);
+  });
+
+  section.classList.remove('hidden');
 }
 
-
-async function loadScentleStats(userId) {
-  try {
-    const { data: stats, error } = await supabase
-      .from('user_scentle_stats')
-      .select('scentle_played, scentle_avg_guesses')
-      .eq('user_id', userId)
-      .maybeSingle();
-
-    const section = document.getElementById('scentleStatsSection');
-    const contentEl = document.getElementById('scentleStatsContent');
-
-    if (error || !stats || stats.scentle_played === 0) {
-      section.style.display = 'none';
-      return;
-    }
-
-    section.style.display = 'block';
-    contentEl.innerHTML = `
-      <div class="scentle-stats-grid">
-        <div class="scentle-stat-card">
-          <div class="scentle-stat-value">${stats.scentle_played}</div>
-          <div class="scentle-stat-label">Scentle Played</div>
-        </div>
-        <div class="scentle-stat-card">
-          <div class="scentle-stat-value">${Number(stats.scentle_avg_guesses).toFixed(1)}</div>
-          <div class="scentle-stat-label">Avg Guesses</div>
-        </div>
-      </div>
-    `;
-  } catch (err) {
-    console.error('Error loading Scentle stats:', err);
-    document.getElementById('scentleStatsSection').style.display = 'none';
-  }
+function switchActivityTab(tabId) {
+  document.querySelectorAll('#activityTabs .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  document.querySelectorAll('#activityPanels .tab-panel').forEach(p => p.classList.toggle('active', p.id === `activity-panel-${tabId}`));
 }
 
-async function refreshFollowCounts(profileUserId) {
-  try {
-    const { data: counts, error } = await supabase.rpc('get_follow_counts', {
-      target_user_id: profileUserId
-    });
+// ── FOLLOW / CONNECTIONS ───────────────────────────────────────────────────
 
-    if (error) {
-      console.error('Error refreshing follow counts:', error);
-      return;
-    }
-
-    const followersEl = document.getElementById('followersCount');
-    const followingEl = document.getElementById('followingCount');
-
-    if (followersEl) followersEl.textContent = counts?.followers_count || 0;
-    if (followingEl) followingEl.textContent = counts?.following_count || 0;
-  } catch (err) {
-    console.error('Error refreshing follow counts:', err);
-  }
+function unwrapRpcRow(data) {
+  if (Array.isArray(data)) return data[0] ?? null;
+  return data ?? null;
 }
 
 async function loadConnectionsAndFollowUI(profileUser) {
   const headerStats = document.getElementById('profileHeaderStats');
-  const followButtonSection = document.getElementById('followButtonSection');
 
   if (profileUser.show_follow_stats !== false) {
     try {
-      const { data, error } = await supabase.rpc('get_follow_counts', {
-        target_user_id: profileUser.id
-      });
-
+      const { data, error } = await supabase.rpc('get_follow_counts', { target_user_id: profileUser.id });
       const counts = unwrapRpcRow(data);
-
-      if (error || !counts) {
-        console.error('Error loading follow counts:', error);
-        document.getElementById('followersCount').textContent = '0';
-        document.getElementById('followingCount').textContent = '0';
-      } else {
+      if (!error && counts) {
         document.getElementById('followersCount').textContent = Number(counts.followers_count || 0);
         document.getElementById('followingCount').textContent = Number(counts.following_count || 0);
         headerStats.style.display = 'flex';
       }
+    } catch {}
 
-    } catch (err) {
-      console.error('Error loading follow counts:', err);
-    }
-
-    const followersBtn = document.getElementById('followersBtn');
-    const followingBtn = document.getElementById('followingBtn');
-
-    if (followersBtn) {
-      followersBtn.addEventListener('click', () => {
-        openFollowModal('followers', profileUser);
-      });
-    }
-
-    if (followingBtn) {
-      followingBtn.addEventListener('click', () => {
-        openFollowModal('following', profileUser);
-      });
-    }
-  } else {
-    headerStats.style.display = 'none';
+    document.getElementById('followersBtn').addEventListener('click', () => openFollowModal('followers', profileUser));
+    document.getElementById('followingBtn').addEventListener('click', () => openFollowModal('following', profileUser));
   }
 
   const followButtonWrap = document.getElementById('followButtonWrap');
 
   if (currentUser && currentUser.id !== profileUser.id) {
     try {
-      const { data: isFollowing, error } = await supabase.rpc('is_following', {
-        target_user_id: profileUser.id
-      });
-
-      if (error) {
-        console.error('Error checking follow state:', error);
-        return;
-      }
-
-      const buttonClass = isFollowing ? 'btn-following' : 'btn-follow';
-      const buttonText = isFollowing ? 'Following' : 'Follow';
-
-      followButtonWrap.innerHTML = `
-        <button id="followButton" class="${buttonClass}">${buttonText}</button>
-      `;
-      followButtonSection.style.display = 'block';
+      const { data: isFollowing } = await supabase.rpc('is_following', { target_user_id: profileUser.id });
+      const cls = isFollowing ? 'btn-following' : 'btn-follow';
+      const txt = isFollowing ? 'Following' : 'Follow';
+      followButtonWrap.innerHTML = `<button id="followButton" class="${cls}">${txt}</button>`;
+      document.getElementById('followButtonSection').style.display = 'block';
 
       document.getElementById('followButton').addEventListener('click', async (e) => {
-        const button = e.target;
-        button.disabled = true;
-        const wasFollowing = button.classList.contains('btn-following');
-
+        const btn = e.target;
+        btn.disabled = true;
+        const wasFollowing = btn.classList.contains('btn-following');
         try {
           if (wasFollowing) {
-            const { error } = await supabase
-              .from('follows')
-              .delete()
-              .eq('follower_id', currentUser.id)
-              .eq('following_id', profileUser.id);
-
-            if (error) {
-              console.error('Error unfollowing:', error);
-              button.disabled = false;
-              return;
-            }
-
-            button.classList.remove('btn-following');
-            button.classList.add('btn-follow');
-            button.textContent = 'Follow';
-
+            await supabase.from('follows').delete().eq('follower_id', currentUser.id).eq('following_id', profileUser.id);
+            btn.classList.replace('btn-following', 'btn-follow');
+            btn.textContent = 'Follow';
             if (profileUser.show_follow_stats !== false) {
-              const currentCount = parseInt(document.getElementById('followersCount').textContent);
-              document.getElementById('followersCount').textContent = Math.max(0, currentCount - 1);
+              const cur = parseInt(document.getElementById('followersCount').textContent);
+              document.getElementById('followersCount').textContent = Math.max(0, cur - 1);
             }
-            await refreshFollowCounts(profileUser.id);
-
           } else {
-            const { error } = await supabase
-              .from('follows')
-              .insert({ follower_id: currentUser.id, following_id: profileUser.id });
-
-            if (error) {
-              console.error('Error following:', error);
-              button.disabled = false;
-              return;
-            }
-
-            button.classList.remove('btn-follow');
-            button.classList.add('btn-following');
-            button.textContent = 'Following';
-
+            await supabase.from('follows').insert({ follower_id: currentUser.id, following_id: profileUser.id });
+            btn.classList.replace('btn-follow', 'btn-following');
+            btn.textContent = 'Following';
             if (profileUser.show_follow_stats !== false) {
-              const currentCount = parseInt(document.getElementById('followersCount').textContent);
-              document.getElementById('followersCount').textContent = currentCount + 1;
+              const cur = parseInt(document.getElementById('followersCount').textContent);
+              document.getElementById('followersCount').textContent = cur + 1;
             }
           }
         } catch (err) {
           console.error('Error toggling follow:', err);
         }
-
-        button.disabled = false;
+        btn.disabled = false;
       });
-    } catch (err) {
-      console.error('Error setting up follow button:', err);
-    }
-  } else if (!currentUser && profileUser.id !== currentUser?.id) {
+    } catch {}
+  } else if (!currentUser) {
     followButtonWrap.innerHTML = `<a href="login.html" class="btn-follow">Login to follow</a>`;
-    followButtonSection.style.display = 'block';
+    document.getElementById('followButtonSection').style.display = 'block';
   }
 }
+
+// ── FOLLOW MODAL ───────────────────────────────────────────────────────────
 
 let currentModalOffset = 0;
 let currentModalListType = '';
@@ -760,18 +630,11 @@ async function openFollowModal(listType, profileUser) {
   currentModalProfileUser = profileUser;
   currentModalOffset = 0;
 
-  const modal = document.getElementById('followModal');
-  const title = document.getElementById('followModalTitle');
-  const listEl = document.getElementById('followModalList');
-  const emptyEl = document.getElementById('followModalEmpty');
-  const loadMoreBtn = document.getElementById('followModalLoadMore');
-
-  title.textContent = listType === 'followers' ? 'Followers' : 'Following';
-  listEl.innerHTML = '';
-  emptyEl.style.display = 'none';
-  loadMoreBtn.style.display = 'none';
-
-  modal.classList.add('active');
+  document.getElementById('followModalTitle').textContent = listType === 'followers' ? 'Followers' : 'Following';
+  document.getElementById('followModalList').innerHTML = '';
+  document.getElementById('followModalEmpty').style.display = 'none';
+  document.getElementById('followModalLoadMore').style.display = 'none';
+  document.getElementById('followModal').classList.add('active');
 
   await loadFollowList();
 }
@@ -789,22 +652,9 @@ async function loadFollowList() {
       page_offset: currentModalOffset
     });
 
-    if (error) {
-      console.error('Error loading follow list:', error);
+    if (error || !users || users.length === 0) {
       if (currentModalOffset === 0) {
-        emptyEl.textContent = 'Unable to load list';
-        emptyEl.style.display = 'block';
-      }
-      return;
-    }
-
-    if (!users || users.length === 0) {
-      if (currentModalOffset === 0) {
-        if (currentModalListType === 'followers') {
-          emptyEl.textContent = 'No followers yet.';
-        } else {
-          emptyEl.textContent = 'Not following anyone yet.';
-        }
+        emptyEl.textContent = currentModalListType === 'followers' ? 'No followers yet.' : 'Not following anyone yet.';
         emptyEl.style.display = 'block';
       }
       loadMoreBtn.style.display = 'none';
@@ -812,71 +662,118 @@ async function loadFollowList() {
     }
 
     emptyEl.style.display = 'none';
-
     users.forEach(user => {
-      const avatarUrl = user.profile_picture ||
+      const avatar = user.profile_picture ||
         `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&size=96&background=D5A856&color=000`;
-
-      const itemHtml = `
+      listEl.insertAdjacentHTML('beforeend', `
         <div class="follow-user-item">
-          <img src="${avatarUrl}" alt="${user.username}" class="follow-user-avatar" />
+          <img src="${avatar}" alt="${user.username}" class="follow-user-avatar" />
           <div class="follow-user-info">
-            <a href="public_profile.html?user_id=${user.id}" class="follow-user-name">${user.username}</a>
+            <a href="public_profile.html?user_id=${user.id}" class="follow-user-name">${escapeHtml(user.username)}</a>
           </div>
-        </div>
-      `;
-
-      listEl.insertAdjacentHTML('beforeend', itemHtml);
+        </div>`);
     });
-
-    if (users.length === 50) {
-      loadMoreBtn.style.display = 'block';
-    } else {
-      loadMoreBtn.style.display = 'none';
-    }
+    loadMoreBtn.style.display = users.length === 50 ? 'block' : 'none';
   } catch (err) {
     console.error('Error loading follow list:', err);
-    if (currentModalOffset === 0) {
-      emptyEl.textContent = 'Unable to load list';
-      emptyEl.style.display = 'block';
-    }
   }
 }
 
 function closeFollowModal() {
-  const modal = document.getElementById('followModal');
-  if (modal) {
-    modal.classList.remove('active');
+  document.getElementById('followModal').classList.remove('active');
+}
+
+document.getElementById('followModalClose').addEventListener('click', closeFollowModal);
+document.getElementById('followModal').addEventListener('click', e => { if (e.target.id === 'followModal') closeFollowModal(); });
+document.getElementById('followModalLoadMore').addEventListener('click', async () => {
+  const btn = document.getElementById('followModalLoadMore');
+  btn.disabled = true;
+  btn.textContent = 'Loading...';
+  currentModalOffset += 50;
+  await loadFollowList();
+  btn.disabled = false;
+  btn.textContent = 'Load More';
+});
+
+// ── HELPERS ────────────────────────────────────────────────────────────────
+
+function safeArray(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  try { const p = JSON.parse(val); return Array.isArray(p) ? p : []; } catch { return []; }
+}
+
+function normalizeFragrance(value) {
+  if (!value) return { url: 'fragrance.html', displayName: '', brand: '', name: '', image: '' };
+
+  // String: "Brand - Name"
+  if (typeof value === 'string') {
+    const linkData = getFragranceLinkData(value);
+    const parts = value.split(' - ');
+    const brand = parts.length >= 2 ? parts[0].trim() : '';
+    const name = parts.length >= 2 ? parts.slice(1).join(' - ').trim() : value;
+    return { url: linkData.url, displayName: value, brand, name, image: linkData.image };
   }
+
+  // Object
+  const brand = value.brand || value.fragrance_brand || '';
+  const name = value.name || value.fragrance_name || '';
+  const image = value.image || value.image_url || '';
+
+  if (brand && name) {
+    const url = makeFragranceUrl(brand, name);
+    const overrideKey = `${normalizeForMatching(brand)}::${normalizeForMatching(name)}`;
+    const overrideImg = imageOverridesMap.get(overrideKey);
+    const jsonMatch = fragrancesData.find(f =>
+      f.brand?.toLowerCase() === brand.toLowerCase() &&
+      f.name?.toLowerCase() === name.toLowerCase()
+    );
+    return {
+      url,
+      displayName: `${brand} - ${name}`,
+      brand,
+      name,
+      image: overrideImg || image || jsonMatch?.image || ''
+    };
+  }
+
+  // fallback string display
+  const display = brand || name || String(value.id || '');
+  return { url: 'fragrance.html', displayName: display, brand: '', name: display, image };
 }
 
-// Add null guards for all event listeners
-const followModalClose = document.getElementById('followModalClose');
-if (followModalClose) {
-  followModalClose.addEventListener('click', closeFollowModal);
+function getFragranceData(fragranceName) {
+  if (!fragranceName) return null;
+  const parts = fragranceName.split(' - ');
+  if (parts.length < 2) return null;
+  const brandRaw = parts[0].trim();
+  const nameRaw = parts.slice(1).join(' - ').trim();
+  const norm = v => String(v || '').trim().toLowerCase().replace(/\s+/g, ' ').replace(/[^\w\s&'-]/g, '');
+  const fragrance = fragrancesData.find(f => norm(f.brand) === norm(brandRaw) && norm(f.name) === norm(nameRaw));
+  const overrideKey = `${normalizeForMatching(brandRaw)}::${normalizeForMatching(nameRaw)}`;
+  const overrideImage = imageOverridesMap.get(overrideKey);
+  if (fragrance) return { ...fragrance, image: overrideImage || fragrance.image || '' };
+  if (overrideImage) return { brand: brandRaw, name: nameRaw, image: overrideImage };
+  return null;
 }
 
-const followModal = document.getElementById('followModal');
-if (followModal) {
-  followModal.addEventListener('click', (e) => {
-    if (e.target.id === 'followModal') {
-      closeFollowModal();
-    }
-  });
+function getFragranceLinkData(value) {
+  if (!value) return { url: 'fragrance.html', label: '', image: '' };
+  const displayMatch = getFragranceData(String(value));
+  if (displayMatch?.brand && displayMatch?.name) {
+    return { url: makeFragranceUrl(displayMatch.brand, displayMatch.name), label: `${displayMatch.brand} - ${displayMatch.name}`, image: displayMatch.image || '' };
+  }
+  const canonicalMatch = fragrancesData.find(f => makeCanonicalFragranceId(f.brand, f.name) === String(value).trim().toLowerCase());
+  if (canonicalMatch) {
+    return { url: makeFragranceUrl(canonicalMatch.brand, canonicalMatch.name), label: `${canonicalMatch.brand} - ${canonicalMatch.name}`, image: canonicalMatch.image || '' };
+  }
+  return { url: 'fragrance.html', label: String(value), image: '' };
 }
 
-const followModalLoadMore = document.getElementById('followModalLoadMore');
-if (followModalLoadMore) {
-  followModalLoadMore.addEventListener('click', async () => {
-    followModalLoadMore.disabled = true;
-    followModalLoadMore.textContent = 'Loading...';
-
-    currentModalOffset += 50;
-    await loadFollowList();
-
-    followModalLoadMore.disabled = false;
-    followModalLoadMore.textContent = 'Load More';
-  });
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = String(text ?? '');
+  return div.innerHTML;
 }
 
 function showError() {
@@ -885,104 +782,4 @@ function showError() {
   document.getElementById('errorState').classList.remove('hidden');
 }
 
-async function loadPointsAndLeaderboard(userId) {
-  try {
-    const allTimePointsEl = document.getElementById('allTimePoints');
-    const currentRankEl = document.getElementById('currentRank');
-    const noPointsMessageEl = document.getElementById('noPointsMessage');
-    const leaderboardProfileInfoEl = document.getElementById('leaderboardProfileInfo');
-    const publicMessageEl = document.getElementById('publicMessage');
-    const socialLinksEl = document.getElementById('socialLinks');
-
-    const { data: pointsRow, error: pointsError } = await supabase
-      .from('leaderboard_all_time')
-      .select('user_id, total_points')
-      .eq('user_id', userId)
-      .maybeSingle();
-
-    if (pointsError && pointsError.code !== 'PGRST116') {
-      console.error('Error loading leaderboard points:', pointsError);
-    }
-
-    const totalPoints = Number(pointsRow?.total_points || 0);
-    allTimePointsEl.textContent = totalPoints.toLocaleString();
-
-    if (totalPoints > 0) {
-      const { data: allRows, error: rankError } = await supabase
-        .from('leaderboard_all_time')
-        .select('user_id, total_points')
-        .order('total_points', { ascending: false });
-
-      if (rankError) {
-        console.error('Error loading leaderboard ranks:', rankError);
-        currentRankEl.textContent = '#-';
-      } else {
-        const higherCount = (allRows || []).filter(
-          row => Number(row.total_points || 0) > totalPoints
-        ).length;
-
-        currentRankEl.textContent = `#${higherCount + 1}`;
-      }
-
-      noPointsMessageEl.style.display = 'none';
-    } else {
-      currentRankEl.textContent = '#-';
-      noPointsMessageEl.style.display = 'block';
-    }
-
-    const { data: profileRow, error: profileError } = await supabase
-      .from('leaderboard_profiles')
-      .select(`
-        public_message,
-        instagram_handle,
-        tiktok_handle,
-        facebook_handle,
-        twitter_handle,
-        show_socials_publicly,
-        show_message_publicly
-      `)
-      .eq('user_id', userId)
-      .maybeSingle();
-
-    if (profileError && profileError.code !== 'PGRST116') {
-      console.error('Error loading leaderboard profile info:', profileError);
-    }
-
-    leaderboardProfileInfoEl.style.display = 'none';
-    publicMessageEl.style.display = 'none';
-    socialLinksEl.style.display = 'none';
-    socialLinksEl.innerHTML = '';
-
-    if (profileRow?.show_message_publicly && profileRow.public_message) {
-      publicMessageEl.textContent = `"${profileRow.public_message}"`;
-      publicMessageEl.style.display = 'block';
-      leaderboardProfileInfoEl.style.display = 'block';
-    }
-
-    if (profileRow?.show_socials_publicly) {
-      const socials = [];
-
-      if (profileRow.instagram_handle) {
-        socials.push(`<a href="https://instagram.com/${profileRow.instagram_handle}" target="_blank" rel="noopener noreferrer" style="color: #C59849; text-decoration: none;">📷 Instagram</a>`);
-      }
-      if (profileRow.tiktok_handle) {
-        socials.push(`<a href="https://tiktok.com/@${profileRow.tiktok_handle}" target="_blank" rel="noopener noreferrer" style="color: #C59849; text-decoration: none;">🎵 TikTok</a>`);
-      }
-      if (profileRow.twitter_handle) {
-        socials.push(`<a href="https://twitter.com/${profileRow.twitter_handle}" target="_blank" rel="noopener noreferrer" style="color: #C59849; text-decoration: none;">🐦 Twitter</a>`);
-      }
-      if (profileRow.facebook_handle) {
-        socials.push(`<a href="https://facebook.com/${profileRow.facebook_handle}" target="_blank" rel="noopener noreferrer" style="color: #C59849; text-decoration: none;">👥 Facebook</a>`);
-      }
-
-      if (socials.length > 0) {
-        socialLinksEl.innerHTML = socials.join('');
-        socialLinksEl.style.display = 'flex';
-        leaderboardProfileInfoEl.style.display = 'block';
-      }
-    }
-  } catch (err) {
-    console.error('Exception loading points and leaderboard:', err);
-  }
-}
 init();
