@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- SEO Meta Tags -->
+  <title>Best Office Fragrances | MaxParfum</title>
+  <meta name="description" content="Discover the best office fragrances and their affordable dupes. Professional, subtle, and sophisticated scents for the workplace.">
+  <meta name="keywords" content="office fragrances, work perfume dupes, professional colognes, fragrance alternatives, MaxParfum">
+  <meta name="author" content="MaxParfum">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.maxparfum.net/office.html" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Best Office Fragrances | MaxParfum" />
+  <meta property="og:description" content="Explore our curated list of the best office fragrances and affordable dupes." />
+  <meta property="og:url" content="https://www.maxparfum.net/office.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.maxparfum.net/display.png" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Best Office Fragrances | MaxParfum" />
+  <meta name="twitter:description" content="Professional, subtle, and sophisticated scents for the workplace." />
+  <meta name="twitter:image" content="https://www.maxparfum.net/display.png" />
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8658912763856657" crossorigin="anonymous"></script>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGTGRTYFWJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WGTGRTYFWJ');
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)),
+                  url('https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat fixed;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      padding-top: 70px;
+    }
+    /* Page content */
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      text-align: center;
+      color: #C2C2C2;
+      margin-bottom: 60px;
+      line-height: 1.6;
+    }
+
+    .placeholder-section {
+      background: linear-gradient(135deg, #2C130B, #3a1f14);
+      border-radius: 12px;
+      padding: 60px 40px;
+      text-align: center;
+      border: 1px solid #444;
+    }
+
+    .placeholder-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .placeholder-text {
+      font-size: 1.1rem;
+      color: #C2C2C2;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+
+      .page-title {
+        font-size: 2.2rem;
+      }
+
+      .placeholder-section {
+        padding: 40px 20px;
+      }
+
+      .placeholder-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Fragrance Sections */
+    .fragrance-section {
+      margin: 60px 0;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .scroll-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .fragrance-row {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 0;
+      flex: 1;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .fragrance-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .fragrance-card {
+      min-width: 200px;
+      width: 200px;
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #333;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .fragrance-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      border-color: #2C130B;
+    }
+
+    .fragrance-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      background: #111;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 8px;
+      line-height: 1.3;
+    }
+
+    .card-description {
+      font-size: 0.85rem;
+      color: #C2C2C2;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .scroll-btn {
+      background: linear-gradient(135deg, #2C130B, #3a1f14);
+      border: none;
+      color: #ffffff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .scroll-btn:hover {
+      background: linear-gradient(135deg, #3a1f14, #4a2518);
+      transform: scale(1.1);
+    }
+
+    .scroll-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .scroll-btn {
+        display: none;
+      }
+
+      .scroll-container {
+        gap: 0;
+      }
+
+      .fragrance-row {
+        touch-action: pan-x;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <!-- Notifications Dropdown -->
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">
+      <h3 class="notifications-title">Notifications</h3>
+      <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      <div class="notifications-loading">Loading...</div>
+    </div>
+  </div>
+
+
+  <!-- Page Content -->
+  <main class="page-container">
+    <h1 class="page-title">Best Office Fragrances</h1>
+    <p class="page-subtitle">Professional, subtle, and sophisticated scents perfect for the workplace</p>
+    
+    <!-- Men's Fragrances -->
+    <section class="fragrance-section">
+      <h2 class="section-title">Men's Fragrances</h2>
+      <div class="scroll-container">
+        <button class="scroll-btn scroll-left" onclick="scrollRow('mens', -1)">‹</button>
+        <div class="fragrance-row" id="mens-row">
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Chanel&name=Bleu%20de%20Chanel'">
+            <img data-name="Bleu de Chanel" src="https://via.placeholder.com/200x150?text=Bleu+de+Chanel" alt="Bleu de Chanel">
+            <div class="card-content">
+              <h3 class="card-title">Chanel – Bleu de Chanel</h3>
+              <p class="card-description">Fresh, citrus, woody</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Dior&name=Homme'">
+            <img data-name="Homme" src="https://via.placeholder.com/200x150?text=Homme" alt="Homme">
+            <div class="card-content">
+              <h3 class="card-title">Dior – Homme</h3>
+              <p class="card-description">Woody, powdery, clean</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Giorgio%20Armani&name=Acqua%20di%20Gio'">
+            <img data-name="Acqua di Gio" src="https://via.placeholder.com/200x150?text=Acqua+di+Gio" alt="Acqua di Gio">
+            <div class="card-content">
+              <h3 class="card-title">Giorgio Armani – Acqua di Gio</h3>
+              <p class="card-description">Aquatic, fresh, citrus</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Versace&name=Eros'">
+            <img data-name="Eros" src="https://via.placeholder.com/200x150?text=Versace+Eros" alt="Versace Eros">
+            <div class="card-content">
+              <h3 class="card-title">Versace – Eros</h3>
+              <p class="card-description">Fresh, sweet, aromatic</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Herm%C3%A8s&name=Terre%20d%E2%80%99Hermes'">
+            <img data-name="Terre D Hermes" src="https://via.placeholder.com/200x150?text=Terre+d’Hermes" alt="Terre d’Hermes">
+            <div class="card-content">
+              <h3 class="card-title">Hermès – Terre d’Hermes</h3>
+              <p class="card-description">Woody, earthy, citrus</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Creed&name=Green%20Irish%20Tweed'">
+            <img data-name="Green Irish Tweed" src="https://via.placeholder.com/200x150?text=Green+Irish+Tweed" alt="Green Irish Tweed">
+            <div class="card-content">
+              <h3 class="card-title">Creed – Green Irish Tweed</h3>
+              <p class="card-description">Fresh, green, clean</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Dolce%20%26%20Gabbana&name=Light%20Blue%20Pour%20Homme'">
+            <img data-name="Light Blue Pour Homme" src="https://via.placeholder.com/200x150?text=Light+Blue+Pour+Homme" alt="Light Blue Pour Homme">
+            <div class="card-content">
+              <h3 class="card-title">Dolce & Gabbana – Light Blue Pour Homme</h3>
+              <p class="card-description">Citrus, fresh, aromatic</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Montblanc&name=Explorer'">
+            <img data-name="Explorer" src="https://via.placeholder.com/200x150?text=Explorer" alt="Explorer">
+            <div class="card-content">
+              <h3 class="card-title">Montblanc – Explorer</h3>
+              <p class="card-description">Woody, fresh, clean</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Chanel&name=Allure%20Homme%20Sport'">
+            <img data-name="Allure Homme Sport" src="https://via.placeholder.com/200x150?text=Allure+Homme+Sport" alt="Allure Homme Sport">
+            <div class="card-content">
+              <h3 class="card-title">Chanel – Allure Homme Sport</h3>
+              <p class="card-description">Fresh, citrus, musky</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Creed&name=Aventus'">
+            <img data-name="Aventus" src="https://via.placeholder.com/200x150?text=Aventus" alt="Aventus">
+            <div class="card-content">
+              <h3 class="card-title">Creed – Aventus</h3>
+              <p class="card-description">Fruity, woody, clean</p>
+            </div>
+          </div>
+        </div>
+        <button class="scroll-btn scroll-right" onclick="scrollRow('mens', 1)">›</button>
+      </div>
+    </section>
+
+    <!-- Women's Fragrances -->
+    <section class="fragrance-section">
+      <h2 class="section-title">Women's Fragrances</h2>
+      <div class="scroll-container">
+        <button class="scroll-btn scroll-left" onclick="scrollRow('womens', -1)">‹</button>
+        <div class="fragrance-row" id="womens-row">
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Chanel&name=Coco%20Mademoiselle'">
+            <img data-name="Coco Mademoiselle" src="https://via.placeholder.com/200x150?text=Coco+Mademoiselle" alt="Coco Mademoiselle">
+            <div class="card-content">
+              <h3 class="card-title">Chanel – Coco Mademoiselle</h3>
+              <p class="card-description">Citrus, floral, elegant</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Dolce%20%26%20Gabbana&name=Light%20Blue'">
+            <img data-name="Light Blue" src="https://via.placeholder.com/200x150?text=Light+Blue" alt="Light Blue">
+            <div class="card-content">
+              <h3 class="card-title">Dolce & Gabbana – Light Blue</h3>
+              <p class="card-description">Citrus, fresh, floral</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Dior&name=Miss%20Dior'">
+            <img data-name="Miss Dior" src="https://via.placeholder.com/200x150?text=Miss+Dior" alt="Miss Dior">
+            <div class="card-content">
+              <h3 class="card-title">Dior – Miss Dior</h3>
+              <p class="card-description">Floral, fresh, elegant</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Chlo%C3%A9&name=Chlo%C3%A9%20Eau%20de%20Parfum'">
+            <img data-name="chloe eau de parfum" src="https://via.placeholder.com/200x150?text=Chloé+Eau+de+Parfum" alt="Chloé Eau de Parfum">
+            <div class="card-content">
+              <h3 class="card-title">Chloé – Chloé Eau de Parfum</h3>
+              <p class="card-description">Floral, powdery, clean</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Guerlain&name=La%20Petite%20Robe%20Noire'">
+            <img data-name="La Petite Robe Noire" src="https://via.placeholder.com/200x150?text=La+Petite+Robe+Noire" alt="La Petite Robe Noire">
+            <div class="card-content">
+              <h3 class="card-title">Guerlain – La Petite Robe Noire</h3>
+              <p class="card-description">Fruity, floral, soft</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Yves%20Saint%20Laurent&name=Libre'">
+            <img data-name="Libre" src="https://via.placeholder.com/200x150?text=Libre" alt="Libre">
+            <div class="card-content">
+              <h3 class="card-title">Yves Saint Laurent – Libre</h3>
+              <p class="card-description">Lavender, vanilla, floral</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Parfums%20de%20Marly&name=Valaya'">
+            <img data-name="Valaya" src="https://via.placeholder.com/200x150?text=Valaya" alt="Valaya">
+            <div class="card-content">
+              <h3 class="card-title">Parfums de Marly – Valaya</h3>
+              <p class="card-description">Musky, floral, clean</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Marc%20Jacobs&name=Daisy'">
+            <img data-name="Daisy" src="https://via.placeholder.com/200x150?text=Daisy" alt="Daisy">
+            <div class="card-content">
+              <h3 class="card-title">Marc Jacobs – Daisy</h3>
+              <p class="card-description">Floral, fresh, clean</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Narciso%20Rodriguez&name=For%20Her'">
+            <img data-name="For Her" src="https://via.placeholder.com/200x150?text=For+Her" alt="For Her">
+            <div class="card-content">
+              <h3 class="card-title">Narciso Rodriguez – For Her</h3>
+              <p class="card-description">Musky, floral, clean</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Chanel&name=Chance%20Eau%20Tendre'">
+            <img data-name="Chance Eau Tendre" src="https://via.placeholder.com/200x150?text=Chance+Eau+Tendre" alt="Chance Eau Tendre">
+            <div class="card-content">
+              <h3 class="card-title">Chanel – Chance Eau Tendre</h3>
+              <p class="card-description">Floral, fruity, soft</p>
+            </div>
+          </div>
+        </div>
+        <button class="scroll-btn scroll-right" onclick="scrollRow('womens', 1)">›</button>
+      </div>
+    </section>
+
+    <!-- Unisex Fragrances -->
+    <section class="fragrance-section">
+      <h2 class="section-title">Unisex Fragrances</h2>
+      <div class="scroll-container">
+        <button class="scroll-btn scroll-left" onclick="scrollRow('unisex', -1)">‹</button>
+        <div class="fragrance-row" id="unisex-row">
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Tom%20Ford&name=Lost%20Cherry'">
+            <img data-name="Lost Cherry" src="https://via.placeholder.com/200x150?text=Lost+Cherry" alt="Lost Cherry">
+            <div class="card-content">
+              <h3 class="card-title">Tom Ford – Lost Cherry</h3>
+              <p class="card-description">Cherry, almond, sweet</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Le%20Labo&name=Another%2013'">
+            <img data-name="Another 13" src="https://via.placeholder.com/200x150?text=Another+13" alt="Another 13">
+            <div class="card-content">
+              <h3 class="card-title">Le Labo – Another 13</h3>
+              <p class="card-description">Musky, fresh, clean</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Diptyque&name=Philosykos'">
+            <img data-name="philosykos eau de parfum" src="https://via.placeholder.com/200x150?text=Philosykos" alt="Philosykos">
+            <div class="card-content">
+              <h3 class="card-title">Diptyque – Philosykos</h3>
+              <p class="card-description">Fig, green, fresh</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Diptyque&name=Tam%20Dao'">
+            <img data-name="tam dao eau de toilette" src="https://via.placeholder.com/200x150?text=Tam+Dao" alt="Tam Dao">
+            <div class="card-content">
+              <h3 class="card-title">Diptyque – Tam Dao</h3>
+              <p class="card-description">Woody, creamy, soft</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Byredo&name=Gypsy%20Water'">
+            <img data-name="Gypsy Water" src="https://via.placeholder.com/200x150?text=Gypsy+Water" alt="Gypsy Water">
+            <div class="card-content">
+              <h3 class="card-title">Byredo – Gypsy Water</h3>
+              <p class="card-description">Fresh, woody, citrus</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Byredo&name=Bal%20d%E2%80%99Afrique'">
+            <img data-name="bal d afrique" src="https://via.placeholder.com/200x150?text=Bal+d’Afrique" alt="Bal d’Afrique">
+            <div class="card-content">
+              <h3 class="card-title">Byredo – Bal d’Afrique</h3>
+              <p class="card-description">Fruity, floral, fresh</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Tom%20Ford&name=Oud%20Wood'">
+            <img data-name="Oud Wood" src="https://via.placeholder.com/200x150?text=Oud+Wood" alt="Oud Wood">
+            <div class="card-content">
+              <h3 class="card-title">Tom Ford – Oud Wood</h3>
+              <p class="card-description">Woody, oud, warm</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Jo%20Malone&name=Basil%20%26%20Neroli'">
+            <img data-name="basil neroli" src="https://via.placeholder.com/200x150?text=Jo+Malone+Basil+%26+Neroli" alt="Jo Malone Basil & Neroli">
+            <div class="card-content">
+              <h3 class="card-title">Jo Malone – Basil & Neroli</h3>
+              <p class="card-description">Citrus, herbal, fresh</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Jo%20Malone&name=English%20Pear%20%26%20Freesia'">
+            <img data-name="english pear freesia" src="https://via.placeholder.com/200x150?text=English+Pear+%26+Freesia" alt="English Pear & Freesia">
+            <div class="card-content">
+              <h3 class="card-title">Jo Malone – English Pear & Freesia</h3>
+              <p class="card-description">Fruity, floral, fresh</p>
+            </div>
+          </div>
+          <div class="fragrance-card" onclick="window.location.href='fragrance.html?brand=Le%20Labo&name=Santal%2033'">
+            <img data-name="Santal 33" src="https://via.placeholder.com/200x150?text=Santal+33" alt="Santal 33">
+            <div class="card-content">
+              <h3 class="card-title">Le Labo – Santal 33</h3>
+              <p class="card-description">Woody, creamy, clean</p>
+            </div>
+          </div>
+        </div>
+        <button class="scroll-btn scroll-right" onclick="scrollRow('unisex', 1)">›</button>
+      </div>
+    </section>
+  </main>
+<script type="module">
+  import { populateFragranceCardImages } from './fragrance-card-images.js';
+  populateFragranceCardImages();
+</script>
+<script src="navbar-loader.js"></script>
+<script type="module" src="nav_profile.js"></script>
+<script type="module" src="notifications_nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "maxparfum-website",
+  "version": "1.0.0",
+  "description": "MaxParfum - Fragrance Dupe Finder Website",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "generate-index": "node generate-search-index.js",
+    "update-sitemap": "node update-sitemap.js",
+    "build": "npm run generate-index && npm run update-sitemap"
+  },
+  "keywords": [
+    "fragrance",
+    "perfume",
+    "dupes",
+    "cologne"
+  ],
+  "author": "MaxParfum",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {}
+}

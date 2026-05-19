@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8658912763856657"
+     crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGTGRTYFWJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WGTGRTYFWJ');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Collection - MaxParfum</title>
+  <meta name="description" content="View and manage your personal fragrance collection.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cinzel', serif;
+      background-color: black;
+      color: #FFFFFF;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 20px 40px;
+    }
+
+    .back-button {
+      display: inline-block;
+      color: #C59849;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      transition: color 0.3s;
+    }
+
+    .back-button:hover {
+      color: #D5A856;
+    }
+
+    .collection-header {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+
+    .collection-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      color: #C59849;
+      margin: 0 0 10px 0;
+    }
+
+    .collection-description {
+      color: #C2C2C2;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .collection-meta {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      color: #999;
+    }
+
+    .collection-count {
+      color: #C59849;
+      font-weight: 600;
+    }
+
+    .collection-actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .edit-btn,
+    .delete-collection-btn {
+      padding: 10px 20px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background: #2a2a2a;
+      color: #C2C2C2;
+      font-family: 'Cinzel', serif;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .edit-btn:hover {
+      background: #333;
+      border-color: #C59849;
+    }
+
+    .delete-collection-btn {
+      color: #ff6b6b;
+      border-color: #ff6b6b;
+    }
+
+    .delete-collection-btn:hover {
+      background: #ff6b6b;
+      color: #0a0a0a;
+    }
+
+    .fragrances-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .fragrance-card {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #444;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .fragrance-card:hover {
+      transform: translateY(-5px);
+      border-color: #C59849;
+      box-shadow: 0 10px 30px rgba(197, 152, 73, 0.2);
+    }
+
+    .fragrance-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .fragrance-info {
+      padding: 15px;
+    }
+
+    .fragrance-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: #C59849;
+      margin-bottom: 5px;
+    }
+
+    .fragrance-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .remove-item-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 107, 107, 0.9);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .remove-item-btn:hover {
+      background: rgba(255, 107, 107, 1);
+      transform: scale(1.1);
+    }
+
+    .fragrance-card:hover .remove-item-btn.visible {
+      display: flex;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+
+      .container {
+        padding: 90px 15px 30px;
+      }
+
+      .collection-title {
+        font-size: 1.8rem;
+      }
+
+      .fragrances-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+      }
+
+      .fragrance-image {
+        height: 150px;
+      }
+    }
+  </style>
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">Notifications</div>
+    <div class="notifications-list" id="notifications-list">Loading...</div>
+  </div>
+
+  <div class="container">
+    <a href="profile.html" class="back-button">← Back to Profile</a>
+
+    <div id="loading" class="loading">
+      Loading collection...
+    </div>
+
+    <div id="collection-content" class="hidden">
+      <div class="collection-header">
+        <h1 class="collection-title" id="collection-title">Collection Name</h1>
+        <p class="collection-description" id="collection-description"></p>
+        <div class="collection-meta">
+          <span class="collection-count" id="collection-count">0 fragrances</span>
+        </div>
+        <div class="collection-actions" id="collection-actions" style="display: none;">
+          <button class="edit-btn" id="edit-collection-btn">Edit Details</button>
+          <button class="delete-collection-btn" id="delete-collection-btn">Delete Collection</button>
+        </div>
+      </div>
+
+      <div id="fragrances-container">
+        <div class="empty-state">
+          <div class="empty-state-icon">📦</div>
+          <p>No fragrances in this collection yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="navbar-loader.js"></script>
+  <script type="module" src="collection.js"></script>
+  <script type="module" src="nav_profile.js"></script>
+  <script type="module" src="notifications_nav.js"></script>
+</body>
+</html>

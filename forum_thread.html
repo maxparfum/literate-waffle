@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8658912763856657"
+     crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGTGRTYFWJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WGTGRTYFWJ');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Thread - MaxParfum</title>
+  <meta name="description" id="page-description" content="Join the discussion on this fragrance forum thread. Share your thoughts and connect with the MaxParfum community.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" id="page-canonical" href="https://www.maxparfum.net/forum_thread.html">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:title" id="og-title" content="Thread - MaxParfum">
+  <meta property="og:description" id="og-description" content="Join the discussion on this fragrance forum thread. Share your thoughts and connect with the MaxParfum community.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" id="og-url" content="https://www.maxparfum.net/forum_thread.html">
+  <meta property="og:site_name" content="MaxParfum">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" id="twitter-title" content="Thread - MaxParfum">
+  <meta name="twitter:description" id="twitter-description" content="Join the discussion on this fragrance forum thread. Share your thoughts and connect with the MaxParfum community.">
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Cinzel', serif;
+      background-color: black;
+      color: #FFFFFF;
+    }
+    .thread-post-count {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  color: #C2C2C2;
+  margin-left: 10px;
+}
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 100px 20px 40px;
+    }
+
+    .back-button {
+      display: inline-block;
+      color: #C59849;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      transition: color 0.3s;
+    }
+
+    .back-button:hover {
+      color: #D5A856;
+    }
+
+    .loading-state,
+    .error-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+    }
+
+    .error-state {
+      color: #ff6b6b;
+    }
+
+    .thread-header {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .delete-thread-icon {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: none;
+      border: none;
+      color: #999;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      transition: all 0.3s;
+      display: none;
+    }
+
+    .delete-thread-icon.visible {
+      display: block;
+    }
+
+    .delete-thread-icon:hover {
+      color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.1);
+    }
+
+    .thread-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      color: #C59849;
+      margin-bottom: 16px;
+      padding-right: 50px;
+    }
+
+    .thread-meta {
+      display: flex;
+      gap: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: #999;
+      flex-wrap: wrap;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 16px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .category-link {
+      color: #C59849;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .category-link:hover {
+      color: #D5A856;
+      text-decoration: underline;
+    }
+
+    .posts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .post-card {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #333;
+    }
+
+    .post-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2C130B, #4a2619);
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+
+    .post-header-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .post-author {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: #C59849;
+      margin-bottom: 4px;
+    }
+
+    .post-timestamp {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      color: #999;
+    }
+
+    .post-body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      color: #E0E0E0;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .post-deleted {
+      font-style: italic;
+      color: #666;
+    }
+
+    .post-actions {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #333;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .post-action-btn {
+      background: none;
+      border: none;
+      color: #C59849;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: all 0.3s;
+    }
+
+    .post-action-btn:hover {
+      color: #D5A856;
+      text-decoration: underline;
+    }
+
+    .post-vote-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-right: auto;
+    }
+
+    .vote-btn {
+      background: none;
+      border: none;
+      color: #999;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: all 0.3s;
+      line-height: 1;
+    }
+
+    .vote-btn:hover {
+      color: #C59849;
+    }
+
+    .vote-btn.upvoted {
+      color: #ff6b35;
+    }
+
+    .vote-btn.downvoted {
+      color: #6b9eff;
+    }
+
+    .vote-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .vote-score {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      color: #C2C2C2;
+      font-weight: 600;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .nested-replies {
+      margin-top: 16px;
+      margin-left: 32px;
+      padding-left: 16px;
+      border-left: 2px solid #333;
+    }
+
+    .reply-form {
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border: 1px solid #444;
+      display: none;
+    }
+
+    .reply-form.active {
+      display: block;
+    }
+
+    .reply-form-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+
+    .reply-form-textarea:focus {
+      outline: none;
+      border-color: #C59849;
+    }
+
+    .reply-form-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .sort-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+
+    .sort-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    .sort-btn {
+      background: none;
+      border: none;
+      color: #999;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      padding: 6px 12px;
+      transition: all 0.3s;
+      border-radius: 4px;
+    }
+
+    .sort-btn:hover {
+      color: #C59849;
+      background: rgba(197, 152, 73, 0.1);
+    }
+
+    .sort-btn.active {
+      color: #C59849;
+      background: rgba(197, 152, 73, 0.15);
+      font-weight: 600;
+    }
+
+    .replies-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      color: #999;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 8px 0;
+      margin-top: 12px;
+      transition: color 0.3s;
+    }
+
+    .replies-toggle:hover {
+      color: #C59849;
+    }
+
+    .replies-toggle::before {
+      content: '▶';
+      font-size: 0.7rem;
+      transition: transform 0.3s;
+    }
+
+    .replies-toggle.expanded::before {
+      transform: rotate(90deg);
+    }
+
+    .nested-replies.collapsed {
+      display: none;
+    }
+
+    .edit-form {
+      display: none;
+    }
+
+    .edit-form.active {
+      display: block;
+    }
+
+    .edit-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+
+    .edit-textarea:focus {
+      outline: none;
+      border-color: #C59849;
+    }
+
+    .edit-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2C130B, #4a2619);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #4a2619, #6b3829);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #444;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #555;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-sm {
+      padding: 8px 20px;
+      font-size: 0.9rem;
+    }
+
+    .reply-section {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 40px;
+    }
+
+    .reply-section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: #C59849;
+      margin-bottom: 16px;
+    }
+
+    .reply-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+
+    .reply-textarea:focus {
+      outline: none;
+      border-color: #C59849;
+    }
+
+    .login-message {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      color: #999;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .login-link {
+      color: #C59849;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .login-link:hover {
+      color: #D5A856;
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .username-link {
+      color: #E0E0E0;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .username-link:hover {
+      color: #D5A856;
+      text-decoration: underline;
+    }
+
+    .confirm-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .confirm-modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .confirm-modal {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .confirm-modal-message {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: #E0E0E0;
+      margin-bottom: 24px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .confirm-modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #8b1e1e, #c92a2a);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: linear-gradient(135deg, #a02020, #e03030);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 90px 15px 30px;
+      }
+
+      .thread-title {
+        font-size: 1.8rem;
+      }
+
+      .thread-header {
+        padding: 20px;
+      }
+
+      .delete-thread-icon {
+        top: 20px;
+        right: 20px;
+        font-size: 1.3rem;
+      }
+
+      .post-card {
+        padding: 16px;
+      }
+
+      .post-header {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .post-avatar {
+        width: 40px;
+        height: 40px;
+      }
+
+      .reply-section {
+        padding: 16px;
+      }
+
+      .nested-replies {
+        margin-left: 16px;
+        padding-left: 12px;
+      }
+
+      .vote-btn {
+        font-size: 1.1rem;
+        padding: 4px 6px;
+      }
+
+      .vote-score {
+        font-size: 0.9rem;
+        min-width: 25px;
+      }
+    }
+  .original-post-card {
+      background: linear-gradient(135deg, #1d1b1b, #2a2a2a);
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+
+    .original-post-body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      color: #e0e0e0;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin-bottom: 14px;
+    }
+
+    .original-post-meta {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: #999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+
+<link rel="stylesheet" href="navbar.css">
+</head>
+
+<body>
+<div id="navbar-container"></div>
+
+<!-- Notifications Dropdown -->
+
+
+  <!-- Notifications Dropdown -->
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">
+      <h3 class="notifications-title">Notifications</h3>
+      <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      <div class="notifications-loading">Loading...</div>
+    </div>
+  </div>
+
+  <!-- --- MAIN THREAD PAGE --- -->
+  <div class="container">
+    <a href="#" class="back-button" id="backButton">← Back to Category</a>
+
+    <div id="loading-state" class="loading-state">Loading thread...</div>
+
+    <div id="error-state" class="error-state hidden">
+      Failed to load thread. Please try again later.
+    </div>
+
+    <div id="thread-content" class="hidden">
+
+      <div class="thread-header">
+
+        <!-- Delete icon stays here -->
+        <button id="deleteThreadBtn" class="delete-thread-icon" title="Delete Thread">🗑️</button>
+
+        <h1 class="thread-title" id="threadTitle">Loading...</h1>
+        <div class="thread-meta" id="threadMeta"></div>
+
+        <!-- ⭐ ORIGINAL POST WILL BE INSERTED HERE BY JS -->
+        <div id="originalPost"></div>
+
+        <a href="#" class="category-link" id="categoryLink">Category</a>
+      </div>
+
+      <!-- Global Reply Section -->
+      <div id="replySection" class="reply-section hidden">
+        <h3 class="reply-section-title">Post a Reply</h3>
+        <textarea class="reply-textarea" id="replyTextarea" placeholder="Write your reply..."></textarea>
+        <button class="btn btn-primary" id="postReplyBtn">Post Reply</button>
+      </div>
+
+      <div id="loginSection" class="reply-section hidden">
+        <div class="login-message">
+          <a href="login.html" class="login-link">Log in</a> to join the discussion
+        </div>
+      </div>
+
+      <!-- Replies Section -->
+      <div id="posts-container" class="posts-list"></div>
+
+    </div>
+
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="confirm-modal-overlay">
+    <div class="confirm-modal">
+      <div id="confirmMessage" class="confirm-modal-message">
+        Are you sure?
+      </div>
+      <div class="confirm-modal-actions">
+        <button id="confirmCancelBtn" class="btn btn-secondary">Cancel</button>
+        <button id="confirmConfirmBtn" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+  <script src="navbar-loader.js"></script>
+  <script type="module" src="forum_thread.js"></script>
+  <script type="module" src="nav_profile.js"></script>
+  <script type="module" src="notifications_nav.js"></script>
+</body>
+</html>

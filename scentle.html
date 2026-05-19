@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scentle - Daily Fragrance Game | MaxParfum</title>
+  <meta name="description" content="Guess the fragrance in 6 tries. A daily Wordle-style game for perfume lovers.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.maxparfum.net/scentle.html" />
+  <meta property="og:url" content="https://www.maxparfum.net/scentle.html" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="scentle.css">
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+  <div class="container">
+    <div id="navbar-container"></div>
+
+<!-- Notifications Dropdown -->
+<div class="notifications-dropdown hidden" id="notifications-dropdown">
+  <div class="notifications-header">
+    <h3 class="notifications-title">Notifications</h3>
+    <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+  </div>
+  <div class="notifications-list" id="notifications-list">
+    <div class="notifications-loading">Loading...</div>
+  </div>
+</div>
+
+<!-- Scentle page header content (kept) -->
+<header class="header">
+  <h1 class="title">SCENTLE</h1>
+  <div class="title-divider"></div>
+  <p class="subtitle">Guess the fragrance in 6 tries</p>
+  <p class="hint">Popular fragrances only</p>
+  <button class="how-to-play-btn" id="howToPlayBtn">How to Play</button>
+</header>
+
+
+    <main class="game-section">
+      <div id="errorMessage" class="error-message hidden"></div>
+      <div id="loadingMessage" class="loading-message">Loading fragrances...</div>
+
+      <div id="gameArea" class="game-area hidden">
+        <!-- Guess Grid -->
+        <div class="guess-grid">
+          <!-- Tile headers -->
+          <div class="tile-headers">
+            <span>Brand</span>
+            <span>Country</span>
+            <span>Style</span>
+            <span>Note</span>
+            <span>Fresh/Sweet</span>
+            <span>Era</span>
+            <span>Gender</span>
+          </div>
+          <!-- Guess entries (rows + cards) will be inserted here -->
+          <div id="guessList"></div>
+        </div>
+
+        <!-- Search Input -->
+        <div class="search-section" id="searchSection">
+          <div class="autocomplete-container">
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search popular fragrances... (e.g., 'dior sauvage')"
+              autocomplete="off"
+            >
+            <div class="autocomplete-dropdown hidden" id="autocompleteDropdown"></div>
+          </div>
+          <button class="guess-btn" id="guessBtn">Guess</button>
+        </div>
+
+        <!-- Toast for messages -->
+        <div id="toast" class="toast hidden"></div>
+
+        <!-- Result Card (shown after game ends) -->
+        <div id="resultCard" class="result-card hidden">
+          <h2 id="resultTitle"></h2>
+          <div class="answer-display" id="answerDisplay"></div>
+          <div class="result-stats" id="resultStats"></div>
+          <button class="copy-btn" id="copyResultBtn">📋 Copy Result</button>
+          <div class="next-puzzle" id="nextPuzzle"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- How to Play Modal -->
+  <div id="howToPlayModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h2>How to Play</h2>
+      <p>Guess the fragrance in 6 tries. After each guess, you'll see 7 tiles showing how close your guess was:</p>
+
+      <div class="rules-section">
+        <h3>The 7 Tiles:</h3>
+        <ol>
+          <li><strong>Brand</strong> - Exact brand match</li>
+          <li><strong>Country</strong> - Country of origin</li>
+          <li><strong>Style</strong> - Primary style/accord</li>
+          <li><strong>Note</strong> - Dominant note family</li>
+          <li><strong>Fresh/Sweet</strong> - Position on fresh-to-sweet axis</li>
+          <li><strong>Era</strong> - Release year era</li>
+          <li><strong>Gender</strong> - Gender lean (Masculine/Feminine/Unisex)</li>
+        </ol>
+
+        <h3>Tile Colors:</h3>
+        <div class="color-legend">
+          <div class="legend-item">
+            <span class="legend-tile green"></span>
+            <span>Exact match</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-tile yellow"></span>
+            <span>Partial match or close</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-tile gray"></span>
+            <span>No match or missing data</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-tile red"></span>
+            <span>Wrong (Brand/Country only)</span>
+          </div>
+        </div>
+
+        <p class="tip"><strong>Tip:</strong> A new puzzle is available daily at midnight (Melbourne, Australia time).</p>
+      </div>
+
+      <button class="modal-btn" id="modalOkBtn">Got It!</button>
+    </div>
+  </div>
+<script src="navbar-loader.js"></script>
+<script type="module" src="nav_profile.js"></script>
+<script type="module" src="notifications_nav.js"></script>
+
+
+  <script type="module" src="scentle.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Profile - MaxParfum</title>
+  <meta name="description" id="page-description" content="View this user's fragrance collection, reviews, and activity on MaxParfum.">
+  <meta name="robots" id="page-robots" content="index, follow">
+  <link rel="canonical" id="page-canonical" href="https://www.maxparfum.net/public_profile.html">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:title" id="og-title" content="Profile - MaxParfum">
+  <meta property="og:description" id="og-description" content="View this user's fragrance collection, reviews, and activity on MaxParfum.">
+  <meta property="og:type" content="profile">
+  <meta property="og:url" id="og-url" content="https://www.maxparfum.net/public_profile.html">
+  <meta property="og:site_name" content="MaxParfum">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" id="twitter-title" content="Profile - MaxParfum">
+  <meta name="twitter:description" id="twitter-description" content="View this user's fragrance collection, reviews, and activity on MaxParfum.">
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+      padding-top: 70px;
+    }
+    .profile-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px 40px;
+    }
+
+    .profile-header-section {
+      position: relative;
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-image {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #2C130B, #4a2619);
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .profile-info-wrapper {
+      position: relative;
+      padding: 80px 30px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .profile-main-info {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .profile-header-stats {
+      display: flex;
+      gap: 15px;
+      flex-shrink: 0;
+    }
+
+    .header-stat {
+      background: rgba(44, 19, 11, 0.3);
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      min-width: 85px;
+    }
+
+    .header-stat:hover {
+      border-color: #C59849;
+      background: rgba(44, 19, 11, 0.5);
+    }
+
+    .header-stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: #C59849;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .header-stat-label {
+      color: #C2C2C2;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    @media (max-width: 768px) {
+      .profile-info-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .profile-header-stats {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    .profile-picture {
+      position: absolute;
+      top: -60px;
+      left: 30px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2C130B, #4a2619);
+      background-size: cover;
+      background-position: center;
+      border: 5px solid #1a1a1a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .profile-name {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .profile-email {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .profile-section {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #2C130B;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .section-content {
+      color: #e0e0e0;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .section-content.empty {
+      color: #888;
+      font-style: italic;
+    }
+
+    .signature-display {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 15px;
+      background: rgba(44, 19, 11, 0.3);
+      border-radius: 8px;
+      border-left: 4px solid #2C130B;
+    }
+
+    .signature-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    .signature-info {
+      flex: 1;
+    }
+
+    .signature-name {
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+
+    .signature-brand {
+      font-size: 0.95rem;
+      color: #888;
+    }
+
+    .fragrance-list {
+      list-style: none;
+    }
+
+    .fragrance-list li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .fragrance-list-item-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+    }
+
+    .fragrance-number {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      min-width: 40px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .fragrance-card {
+      padding: 12px 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #e0e0e0;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+    }
+
+    .fragrance-card.clickable:hover {
+      background: rgba(44, 19, 11, 0.3);
+      border-color: #2C130B;
+      transform: translateX(3px);
+      cursor: pointer;
+    }
+
+    .fragrance-link {
+      flex: 1;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .fragrance-item-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .fragrance-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    .fragrance-text {
+      flex: 1;
+      line-height: 1.4;
+    }
+
+    .fragrance-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .collection-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .collection-card:hover {
+      background: rgba(44, 19, 11, 0.3);
+      border-color: #C59849;
+      transform: translateY(-4px);
+    }
+
+    .collection-card-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: #C59849;
+      margin-bottom: 8px;
+    }
+
+    .collection-card-description {
+      color: #C2C2C2;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .collection-card-count {
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      padding: 14px 40px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .btn-edit {
+      background: linear-gradient(135deg, #2C130B, #4a2619);
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background: linear-gradient(135deg, #4a2619, #6b3829);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(44, 19, 11, 0.3);
+    }
+
+    .btn-edit:active {
+      transform: translateY(0);
+    }
+
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .back-button {
+      display: inline-block;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .back-button:hover {
+      color: #C2C2C2;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 100px 20px;
+      font-size: 1.2rem;
+      color: #888;
+    }
+
+    .error-state {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #8B0000;
+      border-radius: 12px;
+      margin: 40px 0;
+    }
+
+    .error-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: #ff6b6b;
+      margin-bottom: 20px;
+    }
+
+    .error-text {
+      color: #C2C2C2;
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .header-image {
+        height: 180px;
+      }
+
+      .profile-picture {
+        width: 100px;
+        height: 100px;
+        top: -50px;
+        left: 20px;
+      }
+
+      .profile-info-wrapper {
+        padding: 70px 20px 20px;
+      }
+
+      .profile-name {
+        font-size: 1.6rem;
+      }
+
+      .profile-section {
+        padding: 20px;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .fragrance-image {
+        width: 40px;
+        height: 40px;
+      }
+
+      .signature-image {
+        width: 60px;
+        height: 60px;
+      }
+
+      .fragrance-number {
+        font-size: 1.5rem;
+        min-width: 30px;
+      }
+    }
+
+    /* History Preview Styles */
+    .history-preview-item {
+      padding: 15px;
+      background: rgba(44, 19, 11, 0.3);
+      border-radius: 8px;
+      border-left: 4px solid #2C130B;
+      margin-bottom: 10px;
+    }
+
+    .history-preview-title {
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .history-preview-title:hover {
+      color: #D5A856;
+    }
+
+    .history-preview-snippet {
+      color: #C2C2C2;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .history-preview-date {
+      color: #888;
+      font-size: 0.85rem;
+    }
+
+    .view-all-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #D5A856;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .view-all-link:hover {
+      color: #ffffff;
+    }
+
+    /* User Avatar and Link Styles */
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .user-link {
+      display: inline-flex;
+      align-items: center;
+      color: #FFFFFF;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .user-link:hover {
+      color: #D5A856;
+    }
+
+    .user-username {
+      font-weight: 600;
+    }
+
+    /* Scentle Stats Styles */
+    .scentle-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .scentle-stat-card {
+      background: rgba(44, 19, 11, 0.3);
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .scentle-stat-value {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      color: #C59849;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .scentle-stat-label {
+      color: #C2C2C2;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Connections Styles */
+    .connection-stat {
+      background: rgba(44, 19, 11, 0.3);
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 140px;
+    }
+
+    .connection-stat:hover {
+      border-color: #C59849;
+      background: rgba(44, 19, 11, 0.5);
+    }
+
+    .connection-num {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      color: #C59849;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .connection-label {
+      color: #C2C2C2;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-follow, .btn-following {
+      font-family: 'Montserrat', sans-serif;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-follow {
+      background: #2C130B;
+      border: 1px solid #C59849;
+      color: #ffffff;
+    }
+
+    .btn-follow:hover {
+      background: #4a2619;
+    }
+
+    .btn-follow:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-following {
+      background: transparent;
+      border: 1px solid #666;
+      color: #888;
+    }
+
+    .btn-following:hover {
+      background: rgba(139, 0, 0, 0.2);
+      border-color: #8B0000;
+      color: #ff6666;
+    }
+
+    .btn-following:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Follow Modal */
+    .follow-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .follow-modal-overlay.active {
+      display: flex;
+    }
+
+    .follow-modal {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #333;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .follow-modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .follow-modal-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #C59849;
+    }
+
+    .follow-modal-close {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 2rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background-color 0.3s ease;
+    }
+
+    .follow-modal-close:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .follow-modal-content {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .follow-user-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #444;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .follow-user-item:hover {
+      background: rgba(44, 19, 11, 0.3);
+      border-color: #C59849;
+    }
+
+    .follow-user-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .follow-user-info {
+      flex: 1;
+    }
+
+    .follow-user-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: #ffffff;
+      text-decoration: none;
+      display: block;
+    }
+
+    .follow-user-name:hover {
+      color: #C59849;
+    }
+
+    .follow-modal-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .follow-modal-load-more {
+      font-family: 'Montserrat', sans-serif;
+      padding: 12px 24px;
+      background: #2C130B;
+      border: 1px solid #C59849;
+      border-radius: 8px;
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .follow-modal-load-more:hover {
+      background: #4a2619;
+    }
+
+    .follow-modal-load-more:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  </style>
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">Notifications</div>
+    <div class="notifications-list" id="notifications-list">Loading...</div>
+  </div>
+
+  <div id="loadingState" class="loading-state">
+    Loading profile...
+  </div>
+
+  <div id="errorState" class="error-state hidden">
+    <h1 class="error-title">User Not Found</h1>
+    <p class="error-text">The user you're looking for doesn't exist or has been removed.</p>
+    <a href="forum.html" class="back-button">← Back to Forum</a>
+  </div>
+
+  <div id="profileContainer" class="profile-container hidden">
+    <a href="forum.html" class="back-button">← Back to Forum</a>
+
+    <div class="profile-header-section">
+      <div class="header-image" id="headerImage"></div>
+      <div class="profile-info-wrapper">
+        <div class="profile-picture" id="profilePicture"></div>
+        <div class="profile-main-info">
+          <h1 class="profile-name" id="profileUsername">Loading...</h1>
+          <p class="profile-email" id="profileMeta">Member since...</p>
+        </div>
+        <div class="profile-header-stats" id="profileHeaderStats" style="display: none;">
+          <button class="header-stat" id="followersBtn" type="button">
+            <div class="header-stat-num" id="followersCount">0</div>
+            <div class="header-stat-label">Followers</div>
+          </button>
+          <button class="header-stat" id="followingBtn" type="button">
+            <div class="header-stat-num" id="followingCount">0</div>
+            <div class="header-stat-label">Following</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section" id="followButtonSection" style="display: none;">
+      <div class="section-content" style="text-align: center;">
+        <div id="followButtonWrap"></div>
+      </div>
+    </div>
+
+    <div class="profile-section" id="bioSection">
+      <div class="section-header">
+        <h2 class="section-title">About</h2>
+      </div>
+      <div class="section-content" id="profileBio"></div>
+    </div>
+
+    <div class="profile-section" id="signatureSection">
+      <div class="section-header">
+        <h2 class="section-title">Signature Fragrance</h2>
+      </div>
+      <div id="signatureContainer">
+        <div class="section-content empty">No signature fragrance set yet.</div>
+      </div>
+    </div>
+
+    <div class="profile-section" id="topFiveSection">
+      <div class="section-header">
+        <h2 class="section-title">Top 5 Fragrances</h2>
+      </div>
+      <ul class="fragrance-list" id="topFiveList">
+        <li class="section-content empty">No fragrances added yet.</li>
+      </ul>
+    </div>
+
+    <div class="profile-section" id="haveSection">
+      <div class="section-header">
+        <h2 class="section-title">Fragrances I Have</h2>
+      </div>
+      <ul class="fragrance-list" id="fragrancesHaveList">
+        <li class="section-content empty">No fragrances added yet.</li>
+      </ul>
+    </div>
+
+    <div class="profile-section" id="wantSection">
+      <div class="section-header">
+        <h2 class="section-title">Fragrances I Want</h2>
+      </div>
+      <ul class="fragrance-list" id="fragrancesWantList">
+        <li class="section-content empty">No fragrances added yet.</li>
+      </ul>
+    </div>
+
+    <div class="profile-section" id="collectionsSection">
+      <div class="section-header">
+        <h2 class="section-title">Collections</h2>
+      </div>
+      <div id="collectionsContainer" class="collections-grid">
+        <div class="section-content empty">No collections yet.</div>
+      </div>
+    </div>
+
+    <!-- Points & Leaderboard Section -->
+    <div id="pointsSection" class="profile-section">
+      <div class="section-header">
+        <h2 class="section-title">MaxParfum Points</h2>
+      </div>
+      <div class="section-content">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+          <div class="scentle-stat-card" style="flex: 1; min-width: 200px;">
+            <div class="scentle-stat-value" id="allTimePoints">0</div>
+            <div class="scentle-stat-label">All-Time Points</div>
+          </div>
+          <div class="scentle-stat-card" style="flex: 1; min-width: 200px;">
+            <div class="scentle-stat-value" id="currentRank">#-</div>
+            <div class="scentle-stat-label">All-Time Rank</div>
+          </div>
+        </div>
+        <div id="leaderboardProfileInfo" style="display: none;">
+          <div id="publicMessage" style="font-style: italic; color: #C59849; margin-bottom: 15px; padding: 15px; background: rgba(44, 19, 11, 0.3); border-left: 3px solid #C59849; border-radius: 8px;"></div>
+          <div id="socialLinks" style="display: flex; gap: 15px; flex-wrap: wrap;"></div>
+        </div>
+        <div id="noPointsMessage" style="color: #888; font-style: italic; text-align: center; padding: 20px;">
+          No points earned yet. Start contributing to earn points!
+        </div>
+      </div>
+    </div>
+
+    <!-- Scentle Stats Section -->
+    <div id="scentleStatsSection" class="profile-section" style="display: none;">
+      <div class="section-header">
+        <h2 class="section-title">Scentle Stats</h2>
+      </div>
+      <div id="scentleStatsContent" class="section-content">
+        <div class="section-content empty">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Thread History Section -->
+    <div id="threadHistorySection" class="profile-section">
+      <h2>Thread History</h2>
+      <div id="threadHistoryPreview" class="section-content">
+        Loading...
+      </div>
+    </div>
+
+    <!-- Comment History Section -->
+    <div id="commentHistorySection" class="profile-section">
+      <h2>Comment History</h2>
+      <div id="commentHistoryPreview" class="section-content">
+        Loading...
+      </div>
+    </div>
+
+    <div class="action-buttons" id="editButtonContainer">
+      <a href="profile.html" class="btn btn-edit">Edit My Profile</a>
+    </div>
+  </div>
+
+  <!-- Follow Modal -->
+  <div class="follow-modal-overlay" id="followModal">
+    <div class="follow-modal">
+      <div class="follow-modal-header">
+        <h2 class="follow-modal-title" id="followModalTitle">Followers</h2>
+        <button class="follow-modal-close" id="followModalClose">&times;</button>
+      </div>
+      <div class="follow-modal-content">
+        <div id="followModalList"></div>
+        <div id="followModalEmpty" class="follow-modal-empty" style="display: none;"></div>
+        <button id="followModalLoadMore" class="follow-modal-load-more" style="display: none;">Load More</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="public_profile.js?v=3"></script>
+  
+  <script src="navbar-loader.js"></script>
+  <script type="module" src="nav_profile.js"></script>
+  <script type="module" src="notifications_nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+# MaxParfum - Robots.txt
+# https://www.maxparfum.net
+
+User-agent: *
+Allow: /
+
+# Private / auth-only pages
+Disallow: /login.html
+Disallow: /profile.html
+Disallow: /collection.html
+Disallow: /add-fragrance.html
+Disallow: /admin-fragrances.html
+Disallow: /user_comments.html
+Disallow: /user_threads.html
+
+# Disallow query parameters that don't change content
+Disallow: /*?*utm_source=
+Disallow: /*?*utm_medium=
+Disallow: /*?*utm_campaign=
+Disallow: /*?*fbclid=
+Disallow: /*?*gclid=
+
+# Block common bot paths
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /_/
+
+# Sitemap location
+Sitemap: https://www.maxparfum.net/sitemap.xml

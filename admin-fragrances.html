@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin: Review Fragrance Submissions - MaxParfum</title>
+  <meta name="description" content="Admin panel for reviewing fragrance submissions.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="navbar.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 1.5rem 4rem;
+    }
+
+    .page-header {
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      color: #d4af37;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .page-subtitle {
+      font-size: 1rem;
+      color: #888888;
+      letter-spacing: 0.5px;
+    }
+
+    .access-denied {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: linear-gradient(135deg, #0a0a0a, #141414);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      margin-top: 3rem;
+    }
+
+    .access-denied h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: #d4af37;
+      margin-bottom: 1rem;
+    }
+
+    .access-denied p {
+      color: #888888;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 3rem 1.5rem;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #333333;
+      border-top-color: #d4af37;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-state p {
+      color: #888888;
+      font-size: 1rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #0a0a0a, #141414);
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 1.25rem 2rem;
+      text-align: center;
+      min-width: 150px;
+    }
+
+    .stat-value {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: #d4af37;
+      font-weight: 700;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #777777;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .submissions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .submission-card {
+      background: linear-gradient(135deg, #0a0a0a, #141414);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 1.75rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.25s ease;
+    }
+
+    .submission-card:hover {
+      border-color: #333333;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .submission-header {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .submission-image {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #1a1a1a;
+      flex-shrink: 0;
+    }
+
+    .submission-image-placeholder {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border-radius: 8px;
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    .submission-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .submission-brand {
+      font-size: 0.9rem;
+      color: #888888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.25rem;
+    }
+
+    .submission-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: #d4af37;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .submission-meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: #aaaaaa;
+    }
+
+    .submission-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .submission-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .detail-group {
+      background: #0a0a0a;
+      padding: 0.875rem;
+      border-radius: 6px;
+      border: 1px solid #1a1a1a;
+    }
+
+    .detail-label {
+      font-size: 0.75rem;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-value {
+      font-size: 0.9rem;
+      color: #cccccc;
+      line-height: 1.4;
+    }
+
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #333333;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: #aaaaaa;
+    }
+
+    .submission-comment {
+      margin-bottom: 1.25rem;
+      padding: 1rem;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 6px;
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .comment-author {
+      font-size: 0.875rem;
+      color: #cccccc;
+      font-weight: 600;
+    }
+
+    .submitter-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      background: linear-gradient(135deg, #d4af37, #e8c547);
+      color: #000000;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .comment-date {
+      font-size: 0.75rem;
+      color: #666666;
+      margin-left: auto;
+    }
+
+    .comment-body {
+      font-size: 0.875rem;
+      color: #aaaaaa;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .source-info {
+      margin-bottom: 1.25rem;
+      padding: 1rem;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 6px;
+    }
+
+    .source-label {
+      font-size: 0.75rem;
+      color: #666666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .source-value {
+      font-size: 0.9rem;
+      color: #cccccc;
+      word-break: break-all;
+    }
+
+    .source-value a {
+      color: #d4af37;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .source-value a:hover {
+      color: #e8c547;
+      text-decoration: underline;
+    }
+
+    .review-notes-section {
+      margin-bottom: 1.25rem;
+      padding: 1rem;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 6px;
+    }
+
+    .review-notes-label {
+      font-size: 0.875rem;
+      color: #d4af37;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+      letter-spacing: 0.3px;
+    }
+
+    .review-notes-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 0.75rem;
+      background: #000000;
+      border: 1px solid #2a2a2a;
+      border-radius: 4px;
+      color: #cccccc;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      resize: vertical;
+      transition: border-color 0.2s ease;
+    }
+
+    .review-notes-textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+    }
+
+    .review-notes-textarea::placeholder {
+      color: #555555;
+    }
+
+    .submission-footer {
+      display: flex;
+      gap: 0.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 0.875rem 1.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .approve-btn {
+      background: linear-gradient(135deg, #2d7a2d, #3a9a3a);
+      color: #ffffff;
+    }
+
+    .approve-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #3a9a3a, #4db84d);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(58, 154, 58, 0.3);
+    }
+
+    .reject-btn {
+      background: linear-gradient(135deg, #8a2a2a, #a83838);
+      color: #ffffff;
+    }
+
+    .reject-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #a83838, #c94646);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(168, 56, 56, 0.3);
+    }
+
+    .action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .action-btn .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 1.5rem;
+      background: linear-gradient(135deg, #0a0a0a, #141414);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+    }
+
+    .empty-state h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #d4af37;
+      margin-bottom: 0.75rem;
+    }
+
+    .empty-state p {
+      color: #888888;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .submission-date {
+      font-size: 0.8rem;
+      color: #666666;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 1.8rem;
+      }
+
+      .submission-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .submission-details {
+        grid-template-columns: 1fr;
+      }
+
+      .submission-footer {
+        flex-direction: column;
+      }
+
+      .stats-bar {
+        gap: 1rem;
+      }
+
+      .stat-card {
+        min-width: 120px;
+        padding: 1rem 1.5rem;
+      }
+
+      .submissions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 90px 1rem 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">
+      <h3 class="notifications-title">Notifications</h3>
+      <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      <div class="notifications-loading">Loading...</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Fragrance Submissions</h1>
+      <p class="page-subtitle">Review and moderate pending fragrance submissions</p>
+    </div>
+
+    <div id="access-denied" class="access-denied" style="display: none;">
+      <h2>Access Denied</h2>
+      <p>You do not have permission to view this page.</p>
+    </div>
+
+    <div id="loading" class="loading-state" style="display: none;">
+      <div class="loading-spinner"></div>
+      <p>Loading submissions...</p>
+    </div>
+
+    <div id="main-content" style="display: none;">
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-value" id="pending-count">0</div>
+          <div class="stat-label">Pending</div>
+        </div>
+      </div>
+
+      <div id="submissions-grid" class="submissions-grid"></div>
+
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <h3>All Caught Up!</h3>
+        <p>There are no pending fragrance submissions to review at this time.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="supabase.js"></script>
+  <script src="navbar-loader.js"></script>
+  <script>
+    document.addEventListener('navbar:loaded', () => {
+      const profileScript = document.createElement('script');
+      profileScript.type = 'module';
+      profileScript.src = 'nav_profile.js';
+      document.body.appendChild(profileScript);
+
+      const notificationsScript = document.createElement('script');
+      notificationsScript.type = 'module';
+      notificationsScript.src = 'notifications_nav.js';
+      document.body.appendChild(notificationsScript);
+    });
+  </script>
+  <script type="module" src="admin-fragrances.js"></script>
+</body>
+</html>

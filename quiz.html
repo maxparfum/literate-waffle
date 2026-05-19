@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Find Your Signature Fragrance | MaxParfum</title>
+  <meta name="description" content="Take the MaxParfum quiz to discover fragrances that match your personality and style.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="Find Your Signature Fragrance | MaxParfum" />
+  <meta property="og:description" content="Take the MaxParfum quiz to discover fragrances that match your personality and style." />
+  <link rel="canonical" href="https://www.maxparfum.net/quiz.html" />
+  <meta property="og:url" content="https://www.maxparfum.net/quiz.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Find Your Signature Fragrance | MaxParfum" />
+  <meta name="twitter:description" content="Take the MaxParfum quiz to discover fragrances that match your personality and style." />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="quiz.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8658912763856657" crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGTGRTYFWJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WGTGRTYFWJ');
+  </script>
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <!-- Notifications Dropdown -->
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">
+      <h3 class="notifications-title">Notifications</h3>
+      <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      <div class="notifications-loading">Loading...</div>
+    </div>
+  </div>
+
+
+  <main class="quiz-container">
+    <div class="quiz-shell">
+      <section id="hero" class="hero-section">
+        <div class="glass-card">
+          <div class="hero-content">
+            <h1 class="hero-title">Find Your Signature Fragrance</h1>
+            <p class="hero-subtitle">Answer a few quick questions and discover fragrances that match your personality.</p>
+            <button class="primary-btn" id="startBtn">Start Quiz</button>
+          </div>
+
+          <section class="teaser-section">
+            <h2 class="teaser-title">Example Scent Personalities</h2>
+            <div class="teaser-grid">
+              <div class="teaser-card">
+                <div class="teaser-header">
+                  <h3 class="teaser-name">THE FRESH EXPLORER</h3>
+                  <span class="teaser-emoji">🌊</span>
+                </div>
+                <div class="teaser-traits">Fresh • Clean • Energetic</div>
+                <div class="teaser-examples">
+                  <div>Dior Sauvage</div>
+                  <div>Bleu de Chanel</div>
+                  <div>Acqua di Gio</div>
+                </div>
+              </div>
+
+              <div class="teaser-card">
+                <div class="teaser-header">
+                  <h3 class="teaser-name">THE DARK CHARMER</h3>
+                  <span class="teaser-emoji">🖤</span>
+                </div>
+                <div class="teaser-traits">Bold • Mysterious • Seductive</div>
+                <div class="teaser-examples">
+                  <div>Tom Ford Noir Extreme</div>
+                  <div>Initio Side Effect</div>
+                  <div>YSL La Nuit de L'Homme</div>
+                </div>
+              </div>
+
+              <div class="teaser-card">
+                <div class="teaser-header">
+                  <h3 class="teaser-name">THE SWEET CONNOISSEUR</h3>
+                  <span class="teaser-emoji">🍯</span>
+                </div>
+                <div class="teaser-traits">Warm • Addictive • Cozy</div>
+                <div class="teaser-examples">
+                  <div>Baccarat Rouge 540</div>
+                  <div>Angels Share</div>
+                  <div>JPG Le Male Elixir</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="quiz" class="quiz-section hidden">
+        <div class="glass-card">
+          <div class="quiz-wrapper">
+            <div class="quiz-progress">
+              <span id="progressText">Question 1 / 10</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+
+            <div class="quiz-content">
+              <h2 id="questionText" class="question-text"></h2>
+              <div id="answersContainer" class="answers-grid"></div>
+            </div>
+
+            <div class="quiz-controls">
+              <button class="secondary-btn" id="backBtn" style="display: none;">← Back</button>
+              <span class="spacer"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="results-section hidden">
+        <div class="glass-card">
+          <div class="results-wrapper">
+            <div class="personality-headline">
+              <h2 class="personality-title" id="personalityTitle"></h2>
+            </div>
+
+            <div class="profile-tags" id="profileTags"></div>
+
+            <h3 class="recommendations-title">Recommended Fragrances</h3>
+            <div class="fragrances-grid" id="mainRecommendations"></div>
+
+            <h3 class="recommendations-title">You Might Also Like</h3>
+            <div class="fragrances-grid" id="secondaryRecommendations"></div>
+
+            <section class="share-section">
+              <h3 class="share-title">Share Your Scent Personality</h3>
+              <div class="share-buttons">
+                <button class="primary-btn" id="shareBtn">Share My Scent Personality</button>
+                <button class="secondary-btn" id="copyBtn">Copy Link</button>
+              </div>
+              <div class="share-feedback" id="shareFeedback"></div>
+            </section>
+
+            <section class="friend-share-section">
+              <h3 class="friend-share-title">Compare Your Scent Personality With a Friend</h3>
+              <button class="primary-btn" id="friendShareBtn">Share Quiz With Friends</button>
+            </section>
+
+            <button class="secondary-btn" id="retakeBtn">Retake Quiz</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="quiz.js"></script>
+<script src="navbar-loader.js"></script>
+<script type="module" src="nav_profile.js"></script>
+<script type="module" src="notifications_nav.js"></script>
+
+</body>
+</html>

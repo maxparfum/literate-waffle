@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Support MaxParfum | Help Us Keep Growing</title>
+  <meta name="description" content="MaxParfum is built for the fragrance community. Support the platform and help us keep growing, adding fragrances, and improving for everyone.">
+  <meta name="keywords" content="support MaxParfum, buy me a coffee, fragrance community, MaxParfum donation">
+  <meta name="author" content="MaxParfum">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.maxparfum.net/support.html" />
+
+  <meta property="og:title" content="Support MaxParfum | Help Us Keep Growing" />
+  <meta property="og:description" content="MaxParfum is built for the fragrance community. Your support helps keep it growing." />
+  <meta property="og:url" content="https://www.maxparfum.net/support.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.maxparfum.net/display.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Support MaxParfum | Help Us Keep Growing" />
+  <meta name="twitter:description" content="MaxParfum is built for the fragrance community. Your support helps keep it growing." />
+  <meta name="twitter:image" content="https://www.maxparfum.net/display.png" />
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8658912763856657" crossorigin="anonymous"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGTGRTYFWJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WGTGRTYFWJ');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="navbar.css">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      padding-top: 70px;
+      min-height: 100vh;
+    }
+
+    .support-page {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient background */
+    .support-page::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(212, 175, 55, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(212, 175, 55, 0.04) 0%, transparent 60%),
+        linear-gradient(180deg, #000 0%, #0a0800 50%, #000 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== HERO ===== */
+
+    .hero {
+      padding: 90px 0 60px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: #d4af37;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #d4af37 0%, #f0d060 45%, #b8922e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: #c0b090;
+      letter-spacing: 0.04em;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.3s forwards;
+    }
+
+    .hero-intro {
+      font-size: 0.97rem;
+      color: #999;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.4s forwards;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      margin: 48px auto;
+      opacity: 0;
+      animation: fadeIn 0.7s ease 0.5s forwards;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+
+    .content-section {
+      padding: 0 0 60px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.5s forwards;
+    }
+
+    .content-block {
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(212, 175, 55, 0.03) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      border-radius: 16px;
+      padding: 44px 48px;
+    }
+
+    .content-block p {
+      font-size: 0.97rem;
+      line-height: 1.9;
+      color: #bbb;
+      margin-bottom: 20px;
+    }
+
+    .content-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .content-block p strong {
+      color: #d4af37;
+      font-weight: 600;
+    }
+
+    /* ===== CTA ===== */
+
+    .cta-section {
+      padding: 20px 0 60px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.6s forwards;
+    }
+
+    .cta-label {
+      font-size: 0.82rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 24px;
+      font-family: 'Cinzel', serif;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #b8922e 0%, #d4af37 40%, #e8c84a 70%, #c9a030 100%);
+      color: #000;
+      font-family: 'Cinzel', serif;
+      font-size: 1.0rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 18px 44px;
+      border-radius: 50px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.2);
+      position: relative;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 40px rgba(212, 175, 55, 0.4);
+      filter: brightness(1.08);
+    }
+
+    .cta-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .cta-btn .heart-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+      display: inline-block;
+      animation: heartbeat 2.2s ease-in-out infinite;
+    }
+
+    .cta-note {
+      margin-top: 18px;
+      font-size: 0.78rem;
+      color: #555;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== WHERE SUPPORT GOES ===== */
+
+    .transparency-section {
+      padding: 0 0 60px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.7s forwards;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 36px;
+      letter-spacing: 0.06em;
+    }
+
+    .section-title span {
+      color: #d4af37;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .pillar-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      border-radius: 12px;
+      padding: 28px 28px 24px;
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .pillar-card:hover {
+      border-color: rgba(212, 175, 55, 0.3);
+      background: rgba(212, 175, 55, 0.04);
+    }
+
+    .pillar-icon {
+      font-size: 1.4rem;
+      margin-bottom: 14px;
+      display: block;
+      line-height: 1;
+    }
+
+    .pillar-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #d4af37;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .pillar-desc {
+      font-size: 0.85rem;
+      color: #888;
+      line-height: 1.65;
+    }
+
+    /* ===== CLOSING ===== */
+
+    .closing-section {
+      padding: 20px 0 100px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.8s forwards;
+    }
+
+    .closing-divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+      margin: 0 auto 40px;
+    }
+
+    .closing-text {
+      font-size: 1.05rem;
+      color: #888;
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    .closing-text em {
+      color: #c0a040;
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .closing-signature {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: #444;
+      text-transform: uppercase;
+    }
+
+    /* ===== ANIMATIONS ===== */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.25); }
+      60% { transform: scale(1.08); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 60px 0 40px;
+      }
+
+      .content-block {
+        padding: 30px 24px;
+      }
+
+      .pillars-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-btn {
+        padding: 16px 32px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="support-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="hero">
+        <span class="hero-eyebrow">MaxParfum Community</span>
+        <h1 class="hero-title">Support <span>MaxParfum</span></h1>
+        <p class="hero-subtitle">Built for the community. Supported by the community.</p>
+        <p class="hero-intro">
+          MaxParfum is designed to help fragrance lovers discover scents, find dupes, and explore fragrances without clutter or heavy ads.
+        </p>
+        <div style="margin-top: 40px;">
+  <p class="cta-label">Show your support</p>
+
+  <a
+    href="https://buymeacoffee.com/maxparfum?new=1"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="cta-btn"
+  >
+    <span class="heart-icon">♥</span>
+    Support MaxParfum
+  </a>
+
+  <p class="cta-note">
+    Opens Buy Me a Coffee — secure, no account required.
+  </p>
+</div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Main Content -->
+      <section class="content-section">
+        <div class="content-block">
+          <p>
+            MaxParfum is built for the fragrance community, a place to discover scents, find dupes, and explore fragrances in a way that's actually useful.
+          </p>
+          <p>
+            We pride ourselves on keeping the platform <strong>clean and enjoyable to use</strong>, with minimal ads and no paywalls. Instead of cluttering the experience, we focus on delivering real value through features like our AI chatbot, community ratings, and a constantly expanding fragrance database.
+          </p>
+          <p>
+            Because of this, support from the community plays a big role in helping MaxParfum grow. Every contribution goes directly into improving the platform, adding new fragrances, refining recommendations, and building better tools for everyone.
+          </p>
+          <p>
+            If you've found MaxParfum helpful, even a small donation makes a real difference.
+          </p>
+        </div>
+      </section>
+
+
+
+      <div class="divider"></div>
+
+      <!-- Where support goes -->
+      <section class="transparency-section">
+        <h2 class="section-title">Where your <span>support</span> goes</h2>
+        <div class="pillars-grid">
+          <div class="pillar-card">
+            <span class="pillar-icon">✦</span>
+            <div class="pillar-title">Clean Minimal Ad Display</div>
+            <p class="pillar-desc">We have minimal ads to ensure a clean display and a smooth user experience.</p>
+          </div>
+          <div class="pillar-card">
+            <span class="pillar-icon">◈</span>
+            <div class="pillar-title">Fragrance Database</div>
+            <p class="pillar-desc">Continuously expanding our library of fragrances, dupes, and detailed notes so more scents are covered.</p>
+          </div>
+          <div class="pillar-card">
+            <span class="pillar-icon">◇</span>
+            <div class="pillar-title">Platform Maintenance</div>
+            <p class="pillar-desc">Keeping the site fast, reliable, and ad-light so the experience stays clean and enjoyable for everyone.</p>
+          </div>
+          <div class="pillar-card">
+            <span class="pillar-icon">◉</span>
+            <div class="pillar-title">Community Features</div>
+            <p class="pillar-desc">Building new tools, ratings, forums, profiles, fragrance battles, that make the community richer.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Closing -->
+      <section class="closing-section">
+        <div class="closing-divider"></div>
+        <p class="closing-text">
+          MaxParfum exists because of its community. Every person who explores a scent, leaves a rating, or shares a recommendation is part of what makes this platform worth building.<br><br>
+          <em>Your support helps keep it growing.</em>
+        </p>
+        <p class="closing-signature">— The MaxParfum Team</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="navbar-loader.js"></script>
+
+</body>
+</html>

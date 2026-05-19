@@ -1,0 +1,61 @@
+# Cache static assets aggressively
+/logo.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+/display.png
+  Cache-Control: public, max-age=31536000, immutable
+
+# Do not aggressively cache shared navbar files
+/navbar.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/navbar.css
+  Cache-Control: public, max-age=0, must-revalidate
+
+/navbar-loader.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/nav_admin.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/nav_profile.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/notifications_nav.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Cache CSS/JS files
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Cache fragrance index with revalidation
+/fragrances_index.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Cache images from external sources (via proxy if applicable)
+/*.jpg
+  Cache-Control: public, max-age=604800
+
+/*.png
+  Cache-Control: public, max-age=604800
+
+/*.webp
+  Cache-Control: public, max-age=604800
+
+# HTML pages - short cache with revalidation
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Sitemap
+/sitemap.xml
+  Cache-Control: public, max-age=86400, must-revalidate
+
+# Robots.txt
+/robots.txt
+  Cache-Control: public, max-age=86400, must-revalidate

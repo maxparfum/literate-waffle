@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8658912763856657"
+     crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGTGRTYFWJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WGTGRTYFWJ');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forum - MaxParfum Community Discussions</title>
+  <meta name="description" content="Join the MaxParfum forum to discuss fragrances, share recommendations, and connect with fellow fragrance enthusiasts. Explore categories on perfume reviews, dupes, and more.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.maxparfum.net/forum.html">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Forum - MaxParfum Community Discussions">
+  <meta property="og:description" content="Join the MaxParfum forum to discuss fragrances, share recommendations, and connect with fellow fragrance enthusiasts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.maxparfum.net/forum.html">
+  <meta property="og:site_name" content="MaxParfum">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Forum - MaxParfum Community Discussions">
+  <meta name="twitter:description" content="Join the MaxParfum forum to discuss fragrances, share recommendations, and connect with fellow fragrance enthusiasts.">
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Cinzel', serif;
+      background-color: black;
+      color: #FFFFFF;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 20px 40px;
+    }
+
+    .back-button {
+      display: inline-block;
+      color: #C59849;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      transition: color 0.3s;
+    }
+
+    .back-button:hover {
+      color: #D5A856;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
+      color: #C59849;
+      margin-bottom: 10px;
+    }
+
+    .page-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: #C2C2C2;
+      margin-bottom: 40px;
+    }
+
+    .search-toggle-container {
+      margin-bottom: 30px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      font-family: 'Montserrat', sans-serif;
+      padding: 10px 24px;
+      background: rgba(44, 19, 11, 0.3);
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #C2C2C2;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .tab-btn:hover {
+      background: rgba(44, 19, 11, 0.5);
+      border-color: #C59849;
+    }
+
+    .tab-btn.active {
+      background: #2C130B;
+      border-color: #C59849;
+      color: #C59849;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #C59849;
+    }
+
+    .search-input::placeholder {
+      color: #888;
+    }
+
+    .user-results {
+      display: none;
+    }
+
+    .user-results.active {
+      display: block;
+    }
+
+    .user-result-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: rgba(26, 26, 26, 0.8);
+      border: 1px solid #333;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .user-result-item:hover {
+      background: rgba(44, 19, 11, 0.3);
+      border-color: #C59849;
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-username {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .user-actions {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .btn-view-profile, .btn-follow, .btn-following {
+      font-family: 'Montserrat', sans-serif;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .btn-view-profile {
+      background: rgba(44, 19, 11, 0.5);
+      border: 1px solid #C59849;
+      color: #C59849;
+    }
+
+    .btn-view-profile:hover {
+      background: #2C130B;
+    }
+
+    .btn-follow {
+      background: #2C130B;
+      border: 1px solid #C59849;
+      color: #ffffff;
+    }
+
+    .btn-follow:hover {
+      background: #4a2619;
+    }
+
+    .btn-follow:disabled, .btn-following:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-following {
+      background: transparent;
+      border: 1px solid #666;
+      color: #888;
+    }
+
+    .btn-following:hover {
+      background: rgba(139, 0, 0, 0.2);
+      border-color: #8B0000;
+      color: #ff6666;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+      font-family: 'Montserrat', sans-serif;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .user-result-item {
+        flex-wrap: wrap;
+      }
+
+      .user-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .btn-view-profile, .btn-follow, .btn-following {
+        flex: 1;
+        text-align: center;
+      }
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: #FFFFFF;
+      margin-bottom: 30px;
+    }
+
+    .loading-state,
+    .error-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+    }
+
+    .error-state {
+      color: #ff6b6b;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    .category-card {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+      border-color: #C59849;
+      box-shadow: 0 10px 30px rgba(197, 152, 73, 0.2);
+    }
+
+    .category-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #C59849;
+      margin-bottom: 12px;
+    }
+
+    .category-description {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      color: #C2C2C2;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      min-height: 48px;
+    }
+
+    .category-meta {
+      display: flex;
+      gap: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      color: #999;
+      padding-top: 16px;
+      border-top: 1px solid #333;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-icon {
+      font-size: 1rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 90px 15px 30px;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+  </style>
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+ <div id="navbar-container"></div>
+
+<!-- Notifications Dropdown -->
+<div class="notifications-dropdown hidden" id="notifications-dropdown">
+  <div class="notifications-header">
+    <h3 class="notifications-title">Notifications</h3>
+    <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+  </div>
+  <div class="notifications-list" id="notifications-list">
+    <div class="notifications-loading">Loading...</div>
+  </div>
+</div>
+  <div class="container">
+    <a href="index.html" class="back-button">← Back to Homepage</a>
+
+    <h1 class="page-title">Forum</h1>
+    <p class="page-subtitle">Join the conversation about fragrances, share recommendations, and connect with fellow enthusiasts</p>
+
+    <div class="search-toggle-container">
+      <div class="tab-buttons">
+        <button class="tab-btn active" id="threadsTab">Threads</button>
+        <button class="tab-btn" id="usersTab">Users</button>
+      </div>
+
+      <div class="search-box" id="userSearchBox" style="display: none;">
+        <input type="text" class="search-input" id="userSearchInput" placeholder="Search users by username..." />
+      </div>
+
+      <div class="user-results" id="userResults">
+        <div class="empty-state">Start typing to search users...</div>
+      </div>
+    </div>
+
+    <h2 class="section-title" id="categoriesTitle">Categories</h2>
+
+    <div id="loading-state" class="loading-state">
+      Loading categories...
+    </div>
+
+    <div id="error-state" class="error-state hidden">
+      Failed to load categories. Please try again later.
+    </div>
+
+    <div id="categories-grid" class="categories-grid hidden">
+    </div>
+  </div>
+  <script src="navbar-loader.js"></script>
+  <script type="module" src="forum.js"></script>
+  <script type="module" src="nav_profile.js"></script>
+  <script type="module" src="notifications_nav.js"></script>
+</body>
+</html>

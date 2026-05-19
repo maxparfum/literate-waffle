@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - MaxParfum</title>
+  <meta name="description" content="Login to your MaxParfum account to access your fragrance collection and community features.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+      padding-top: 70px;
+    }
+    /* Page wrapper */
+    .page-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 70px);
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 450px;
+      width: 100%;
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-section h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .logo-section p {
+      font-size: 0.95rem;
+      color: #C2C2C2;
+    }
+
+    .user-info {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background: rgba(44, 19, 11, 0.3);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(44, 19, 11, 0.5);
+    }
+
+    .user-info.visible {
+      display: block;
+    }
+
+    .user-email {
+      font-size: 1rem;
+      color: #ffffff;
+      margin-bottom: 15px;
+      word-break: break-all;
+    }
+
+    .auth-forms {
+      display: block;
+    }
+
+    .auth-forms.hidden {
+      display: none;
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+    }
+
+    .form-section h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      color: #C2C2C2;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 2px solid #333;
+      background-color: #0a0a0a;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #2C130B;
+    }
+
+    .form-group input::placeholder {
+      color: #666;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2C130B, #3a1f14);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #3a1f14, #4a2518);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid #333;
+      margin-top: 10px;
+    }
+
+    .btn-secondary:hover {
+      border-color: #2C130B;
+      background: rgba(44, 19, 11, 0.1);
+    }
+
+    .error-message {
+      display: none;
+      padding: 12px 16px;
+      background: rgba(220, 38, 38, 0.2);
+      border: 1px solid rgba(220, 38, 38, 0.5);
+      border-radius: 8px;
+      color: #fca5a5;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .error-message.visible {
+      display: block;
+    }
+
+    .success-message {
+      display: none;
+      padding: 12px 16px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.5);
+      border-radius: 8px;
+      color: #86efac;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .success-message.visible {
+      display: block;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 30px 0;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #333;
+    }
+
+    .divider span {
+      position: relative;
+      background: #1a1a1a;
+      padding: 0 15px;
+      color: #666;
+      font-size: 0.85rem;
+    }
+
+    .back-button {
+      width: 100%;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 2px solid #333;
+      background: transparent;
+      color: #C2C2C2;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .back-button:hover {
+      border-color: #2C130B;
+      background: rgba(44, 19, 11, 0.1);
+      color: #ffffff;
+    }
+
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+
+    .password-error {
+      display: none;
+      color: #fca5a5;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+
+    .password-error.visible {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      .logo-section h1 {
+        font-size: 1.6rem;
+      }
+
+      .form-section h2 {
+        font-size: 1.2rem;
+      }
+    }
+    /* Popup / Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 520px;
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  border: 1px solid #333;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+.modal h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.modal p {
+  color: #C2C2C2;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-actions .btn {
+  width: auto;
+  flex: 1;
+  min-width: 160px;
+}
+
+.modal-close-x {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+  float: right;
+  margin-top: -4px;
+}
+
+  </style>
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+  <!-- Navbar (loaded from navbar.html) -->
+  <div id="navbar-container"></div>
+
+  <!-- Notifications Dropdown -->
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">
+      <h3 class="notifications-title">Notifications</h3>
+      <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      <div class="notifications-loading">Loading...</div>
+    </div>
+  </div>
+
+
+  <div class="page-wrapper">
+    <div class="container">
+      <a href="index.html" class="back-button">← Back to Homepage</a>
+
+      <div class="logo-section">
+        <h1>MaxParfum</h1>
+        <p>Sign in to your account</p>
+      </div>
+
+    <div id="errorMessage" class="error-message"></div>
+    <div id="successMessage" class="success-message"></div>
+
+    <!-- Logged in user info -->
+    <div id="userInfo" class="user-info">
+      <div class="user-email">Logged in as: <strong id="userEmail"></strong></div>
+      <button id="logoutBtn" class="btn btn-secondary">Log Out</button>
+    </div>
+
+    <!-- Auth forms (login/signup) -->
+    <div id="authForms" class="auth-forms">
+      <!-- Login Form -->
+      <div class="form-section">
+        <h2>Log In</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="••••••••" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
+      </div>
+
+      <div class="divider"><span>OR</span></div>
+
+      <!-- Signup Form -->
+      <div class="form-section">
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="signupUsername">Username</label>
+            <input type="text" id="signupUsername" placeholder="Choose a unique username" required minlength="3" maxlength="30" />
+          </div>
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" placeholder="••••••••" required minlength="6" />
+          </div>
+          <div class="form-group">
+            <label for="signupConfirmPassword">Confirm Password</label>
+            <input type="password" id="signupConfirmPassword" placeholder="••••••••" required minlength="6" />
+          </div>
+          <div id="passwordError" class="password-error">Passwords do not match.</div>
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+  <!-- Email Verification Popup -->
+<div class="modal-overlay" id="emailModalOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="emailModalTitle">
+    <button class="modal-close-x" id="emailModalClose" aria-label="Close">&times;</button>
+    <h3 id="emailModalTitle">Verify your email</h3>
+    <p id="emailModalText">
+      We’ve sent you a verification email. Please check your <strong>Inbox</strong>, and also <strong>Spam</strong> or <strong>Promotions</strong>.
+      After you verify, come back here and log in.
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="emailModalOk">Got it</button>
+      <button class="btn btn-secondary" id="emailModalResend">Resend email</button>
+    </div>
+  </div>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Initialize Supabase client
+    const SUPABASE_URL = 'https://moazswfklpvoperkarlk.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vYXpzd2ZrbHB2b3BlcmthcmxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3MDc2MTYsImV4cCI6MjA3OTI4MzYxNn0.7_xrCWwV_elxQ0i4bdQ9Hsv-HGB-qz30a__1aeJ4QiM';
+
+   window.supabaseClient =
+  window.supabaseClient ||
+  window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const supabaseClient = window.supabaseClient;
+
+
+
+    // DOM elements
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userInfo = document.getElementById('userInfo');
+    const authForms = document.getElementById('authForms');
+    const userEmail = document.getElementById('userEmail');
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    // Helper functions
+    const emailModalOverlay = document.getElementById('emailModalOverlay');
+const emailModalClose = document.getElementById('emailModalClose');
+const emailModalOk = document.getElementById('emailModalOk');
+const emailModalResend = document.getElementById('emailModalResend');
+
+function openEmailModal(customText = null) {
+  if (customText) {
+    document.getElementById('emailModalText').innerHTML = customText;
+  }
+  emailModalOverlay.classList.add('active');
+  emailModalOverlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeEmailModal() {
+  emailModalOverlay.classList.remove('active');
+  emailModalOverlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+emailModalResend.addEventListener('click', async () => {
+  const email = document.getElementById('signupEmail').value.trim() || document.getElementById('loginEmail').value.trim();
+
+  if (!email) {
+    showError('Enter your email first, then click Resend.');
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.resend({
+    type: 'signup',
+    email,
+    options: { emailRedirectTo: 'https://www.maxparfum.net/login.html' }
+  });
+
+  if (error) {
+    showError(error.message);
+  } else {
+    showSuccess('Verification email resent. Check Inbox + Spam/Promotions.');
+  }
+});
+
+
+emailModalClose.addEventListener('click', closeEmailModal);
+emailModalOk.addEventListener('click', closeEmailModal);
+emailModalOverlay.addEventListener('click', (e) => {
+  if (e.target === emailModalOverlay) closeEmailModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && emailModalOverlay.classList.contains('active')) {
+    closeEmailModal();
+  }
+});
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.add('visible');
+      successMessage.classList.remove('visible');
+      setTimeout(() => {
+        errorMessage.classList.remove('visible');
+      }, 5000);
+    }
+
+    function showSuccess(message) {
+      successMessage.textContent = message;
+      successMessage.classList.add('visible');
+      errorMessage.classList.remove('visible');
+      setTimeout(() => {
+        successMessage.classList.remove('visible');
+      }, 5000);
+    }
+
+async function upsertPublicUser(user, usernameOverride = null) {
+  if (!user) return;
+
+  const username =
+    (usernameOverride || user.user_metadata?.username || user.email?.split("@")[0] || "")
+      .trim() || null;
+
+  const { error } = await supabaseClient
+    .from("users")
+    .upsert(
+      {
+        id: user.id,       // must match auth.uid()
+        email: user.email,
+        username: username
+      },
+      { onConflict: "id" }
+    );
+
+  if (error) {
+    console.error("❌ upsert users failed:", error);
+  }
+}
+
+
+    function updateUI(user) {
+      if (user) {
+        // User is logged in
+        userEmail.textContent =
+  user.user_metadata?.username || user.email;
+
+        userInfo.classList.add('visible');
+        authForms.classList.add('hidden');
+      } else {
+        // User is not logged in
+        userInfo.classList.remove('visible');
+        authForms.classList.remove('hidden');
+      }
+    }
+
+    async function checkSession() {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+
+  if (session && session.user.email_confirmed_at) {
+  await upsertPublicUser(session.user);
+  window.location.href = 'profile.html';
+} else {
+  updateUI(null);
+}
+
+}
+
+
+    // Check current session on page load
+    // If user is already logged in, redirect to profile page
+    
+
+    // Login handler
+    // Login handler
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+
+  loginForm.classList.add('loading');
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  loginForm.classList.remove('loading');
+
+  if (error) {
+  if (error.message.toLowerCase().includes('email')) {
+    showError('Please verify your email before logging in.');
+  } else {
+    showError(error.message);
+  }
+}
+ else {
+  // block unverified users
+  if (!data?.user?.email_confirmed_at) {
+    await supabaseClient.auth.signOut();
+    showError('Please verify your email first. Check Inbox + Spam/Promotions.');
+    return;
+  }
+
+  // ensure public.users is created/updated
+  await upsertPublicUser(data.user);
+
+  window.location.href = 'profile.html';
+}
+
+});
+
+
+    // Signup handler
+   // Signup handler
+signupForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('signupEmail').value.trim();
+  const username = document.getElementById('signupUsername').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const confirmPassword = document.getElementById('signupConfirmPassword').value;
+  const passwordError = document.getElementById('passwordError');
+
+  // Hide password error initially
+  passwordError.classList.remove('visible');
+
+  // Validate username length
+  if (username.length < 3) {
+    showError('Username must be at least 3 characters');
+    return;
+  }
+
+  // Validate username format (alphanumeric and underscore only)
+  if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+    showError('Username can only contain letters, numbers, and underscores');
+    return;
+  }
+
+  if (password.length < 6) {
+    showError('Password must be at least 6 characters');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    passwordError.classList.add('visible');
+    return;
+  }
+
+  signupForm.classList.add('loading');
+
+
+  // 2) Create auth user
+  // 2) Create auth user (with correct redirect + save username in metadata)
+const { data: authData, error: authError } =
+  await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: "https://www.maxparfum.net/login.html",
+      data: { username }
+    }
+  });
+
+signupForm.classList.remove('loading');
+
+if (authError) {
+  showError(authError.message);
+  return;
+}
+
+// write to public.users immediately (so username isn't NULL)
+if (authData?.user) {
+  await upsertPublicUser(authData.user, username);
+}
+
+signupForm.reset();
+
+openEmailModal(`
+  ✅ <strong>Account created!</strong><br><br>
+  We sent a verification email to <strong>${email}</strong>.<br>
+  Please check <strong>Inbox</strong>, and also <strong>Spam</strong>/<strong>Promotions</strong>.<br><br>
+  After verifying, come back here and log in.
+`);
+
+
+});
+
+
+    // Logout handler (for logged-in state on this page)
+    logoutBtn.addEventListener('click', async () => {
+      logoutBtn.classList.add('loading');
+
+      const { error } = await supabaseClient.auth.signOut();
+
+      logoutBtn.classList.remove('loading');
+
+      if (error) {
+        showError(error.message);
+      } else {
+        showSuccess('Successfully logged out');
+        updateUI(null);
+      }
+    });
+
+    // Initialize - check session on page load
+    checkSession();
+
+    // Nav profile button - on login page, clicking always goes to login.html (current page)
+    // or profile.html if logged in (but this page redirects logged-in users anyway)
+    const navProfileBtn = document.getElementById('nav-profile-btn');
+    if (navProfileBtn) {
+      navProfileBtn.addEventListener('click', () => {
+        window.location.href = 'login.html';
+      });
+    }
+  </script>
+<script src="navbar-loader.js"></script>
+<script type="module" src="nav_profile.js"></script>
+<script type="module" src="notifications_nav.js"></script>
+
+</body>
+</html>

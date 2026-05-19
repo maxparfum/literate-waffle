@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard - MaxParfum Community Rankings</title>
+  <meta name="description" content="View the MaxParfum community leaderboard and top contributors. Earn points by rating fragrances, participating in forums, and engaging with the community.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.maxparfum.net/leaderboard.html">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Leaderboard - MaxParfum Community Rankings">
+  <meta property="og:description" content="View the MaxParfum community leaderboard and top contributors. Earn points by rating fragrances, participating in forums, and engaging with the community.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.maxparfum.net/leaderboard.html">
+  <meta property="og:site_name" content="MaxParfum">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Leaderboard - MaxParfum Community Rankings">
+  <meta name="twitter:description" content="View the MaxParfum community leaderboard and top contributors. Earn points by rating fragrances, participating in forums, and engaging with the community.">
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+      padding-top: 70px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: #999;
+      font-weight: 400;
+    }
+
+    .timeframe-controls {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .timeframe-btn {
+      background: transparent;
+      border: 2px solid #333;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .timeframe-btn:hover {
+      border-color: #FFD700;
+      background: rgba(255, 215, 0, 0.1);
+    }
+
+    .timeframe-btn.active {
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      border-color: #FFD700;
+      color: #000;
+    }
+
+    /* How to Earn Points Section */
+    .points-explainer {
+      max-width: 800px;
+      margin: 0 auto 2.5rem;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      border: 2px solid #333;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .points-explainer:hover {
+      border-color: #444;
+    }
+
+    .points-explainer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 165, 0, 0.05));
+      transition: background 0.3s ease;
+    }
+
+    .points-explainer-header:hover {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+    }
+
+    .points-explainer-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #FFD700;
+    }
+
+    .points-explainer-icon {
+      font-size: 1.5rem;
+    }
+
+    .points-explainer-chevron {
+      font-size: 1.2rem;
+      color: #999;
+      transition: transform 0.3s ease;
+    }
+
+    .points-explainer.expanded .points-explainer-chevron {
+      transform: rotate(180deg);
+    }
+
+    .points-explainer-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0 2rem;
+    }
+
+    .points-explainer.expanded .points-explainer-content {
+      max-height: 2000px;
+      padding: 0 2rem 2rem;
+    }
+
+    .points-explainer-intro {
+      font-size: 0.95rem;
+      color: #aaa;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .points-categories {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .points-category {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .points-category-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: #FFD700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .points-category-icon {
+      font-size: 1.2rem;
+    }
+
+    .points-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .points-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .points-item:last-child {
+      border-bottom: none;
+    }
+
+    .points-item-label {
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    .points-item-value {
+      color: #FFD700;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .points-explainer-note {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 215, 0, 0.05);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    .points-explainer-note strong {
+      color: #FFD700;
+    }
+
+   @media (max-width: 768px) {
+  .points-explainer-header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .points-explainer-title {
+    font-size: 1.1rem;
+  }
+
+  .points-explainer.expanded .points-explainer-content {
+    max-height: 2600px;
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .points-category {
+    padding: 1rem;
+  }
+
+  .points-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+    .current-user-rank {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.15));
+      border: 2px solid #FFD700;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      display: none;
+    }
+
+    .current-user-rank.show {
+      display: block;
+    }
+
+    .current-user-header {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #FFD700;
+    }
+
+    .current-user-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .current-user-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #FFD700;
+      flex-shrink: 0;
+    }
+
+    .current-user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .current-user-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .current-user-stats {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    .current-user-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .current-user-stat-label {
+      color: #999;
+    }
+
+    .current-user-stat-value {
+      color: #FFD700;
+      font-weight: 700;
+    }
+
+    .leaderboard-list {
+      background: #0a0a0a;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid #1a1a1a;
+      transition: background 0.3s ease;
+      gap: 1rem;
+    }
+
+    .leaderboard-item:last-child {
+      border-bottom: none;
+    }
+
+    .leaderboard-item:hover {
+      background: #151515;
+    }
+
+    .leaderboard-item.top-1 {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+    }
+
+    .leaderboard-item.top-2 {
+      background: linear-gradient(135deg, rgba(192, 192, 192, 0.15), rgba(192, 192, 192, 0.05));
+    }
+
+    .leaderboard-item.top-3 {
+      background: linear-gradient(135deg, rgba(205, 127, 50, 0.15), rgba(205, 127, 50, 0.05));
+    }
+
+    .rank-badge {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .rank-badge.top-1 {
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #000;
+    }
+
+    .rank-badge.top-2 {
+      background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+      color: #000;
+    }
+
+    .rank-badge.top-3 {
+      background: linear-gradient(135deg, #CD7F32, #B87333);
+      color: #000;
+    }
+
+    .rank-badge.other {
+      background: #1a1a1a;
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .user-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #333;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .user-avatar:hover {
+      transform: scale(1.05);
+      border-color: #FFD700;
+    }
+
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .user-name:hover {
+      color: #FFD700;
+    }
+
+    .user-message {
+      font-size: 0.9rem;
+      color: #999;
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+
+    .user-socials {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #666;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.social-link i {
+  font-size: 1rem;
+  width: 16px;
+  text-align: center;
+}
+
+    .social-link:hover {
+      color: #FFD700;
+    }
+
+    .points-display {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .points-value {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .points-label {
+      font-size: 0.85rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+    }
+
+    .empty-state-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #999;
+    }
+
+    .empty-state-message {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .timeframe-controls {
+        gap: 0.3rem;
+      }
+
+      .timeframe-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .leaderboard-item {
+        flex-wrap: wrap;
+        padding: 1rem;
+      }
+
+      .rank-badge {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+      }
+
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+      }
+
+      .user-info {
+        flex: 1 1 100%;
+        order: 3;
+        margin-top: 0.5rem;
+      }
+
+      .points-display {
+        margin-left: auto;
+      }
+
+      .points-value {
+        font-size: 1.5rem;
+      }
+
+      .current-user-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .current-user-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      #leaderboardSocialGrid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Leaderboard</h1>
+      <p class="page-subtitle">Top contributors to the MaxParfum community</p>
+    </div>
+
+    <div class="timeframe-controls">
+      <button class="timeframe-btn active" data-timeframe="all">All Time</button>
+      <button class="timeframe-btn" data-timeframe="year">This Year</button>
+      <button class="timeframe-btn" data-timeframe="month">This Month</button>
+      <button class="timeframe-btn" data-timeframe="week">This Week</button>
+    </div>
+
+    <!-- How to Earn Points Section -->
+    <div class="points-explainer" id="pointsExplainer">
+      <div class="points-explainer-header" id="pointsExplainerHeader"> <div class="points-explainer-title">
+          <span class="points-explainer-icon">🏆</span>
+          <span>How to Earn Points</span>
+        </div>
+        <i class="fa-solid fa-chevron-down points-explainer-chevron"></i>
+      </div>
+      <div class="points-explainer-content">
+        <p class="points-explainer-intro">
+          Climb the leaderboard by contributing to the MaxParfum community! Here's how you can earn points:
+        </p>
+
+        <div class="points-categories">
+          <!-- Fragrance Ratings -->
+          <div class="points-category">
+            <div class="points-category-title">
+              <span class="points-category-icon">⭐</span>
+              <span>Fragrance Ratings</span>
+            </div>
+            <div class="points-list">
+              <div class="points-item">
+                <span class="points-item-label">Rate a fragrance</span>
+                <span class="points-item-value">+5</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Rate season & performance</span>
+                <span class="points-item-value">+8</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Rate wearability</span>
+                <span class="points-item-value">+8</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Rate dupe confidence</span>
+                <span class="points-item-value">+6</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Community Engagement -->
+          <div class="points-category">
+            <div class="points-category-title">
+              <span class="points-category-icon">💬</span>
+              <span>Community Engagement</span>
+            </div>
+            <div class="points-list">
+              <div class="points-item">
+                <span class="points-item-label">Create a forum thread</span>
+                <span class="points-item-value">+10</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Reply to a forum thread</span>
+                <span class="points-item-value">+6</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Receive a thread upvote</span>
+                <span class="points-item-value">+2</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Receive a reply upvote</span>
+                <span class="points-item-value">+1</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Contribution -->
+          <div class="points-category">
+            <div class="points-category-title">
+              <span class="points-category-icon">✨</span>
+              <span>Content Contribution</span>
+            </div>
+            <div class="points-list">
+              <div class="points-item">
+                <span class="points-item-label">Get a fragrance submission approved</span>
+                <span class="points-item-value">+50</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Games & Challenges -->
+          <div class="points-category">
+            <div class="points-category-title">
+              <span class="points-category-icon">🎮</span>
+              <span>Games & Challenges</span>
+            </div>
+            <div class="points-list">
+              <div class="points-item">
+                <span class="points-item-label">Complete Scentle (1 guess)</span>
+                <span class="points-item-value">+10</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Complete Scentle (2 guesses)</span>
+                <span class="points-item-value">+8</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Complete Scentle (3 guesses)</span>
+                <span class="points-item-value">+6</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Complete Scentle (4 guesses)</span>
+                <span class="points-item-value">+4</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Complete Scentle (5 guesses)</span>
+                <span class="points-item-value">+3</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Complete Scentle (6 guesses)</span>
+                <span class="points-item-value">+2</span>
+              </div>
+              <div class="points-item">
+                <span class="points-item-label">Fragrance Battle milestone (every 10 battles)</span>
+                <span class="points-item-value">+5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="points-explainer-note">
+          <strong>Important:</strong> Points are only awarded once per eligible action where applicable. Some actions require approval or completion to count. Keep engaging with the community to climb the leaderboard!
+        </div>
+      </div>
+    </div>
+
+    <div id="leaderboardContainer">
+  <div class="loading-state">Loading leaderboard...</div>
+</div>
+
+<div class="current-user-rank" id="currentUserRank">
+  <div class="current-user-header">Your Rank</div>
+  <div class="current-user-content">
+    <img class="current-user-avatar" id="currentUserAvatar" src="" alt="" onerror="mpAvatarFallback(this)">
+    <div class="current-user-info">
+      <div class="current-user-name" id="currentUserName"></div>
+      <div class="current-user-stats">
+        <div class="current-user-stat">
+          <span class="current-user-stat-label">Rank:</span>
+          <span class="current-user-stat-value" id="currentUserRankValue">#-</span>
+        </div>
+        <div class="current-user-stat">
+          <span class="current-user-stat-label">Points:</span>
+          <span class="current-user-stat-value" id="currentUserPointsValue">0</span>
+        </div>
+      </div>
+
+      <div id="currentUserPreview" style="margin-top: 1rem; display: none;">
+        <div style="font-size: 0.9rem; color: #999; margin-bottom: 0.5rem;">How others see you:</div>
+        <div id="currentUserPreviewMessage" style="font-style: italic; color: #ccc; margin-bottom: 0.5rem; display: none;"></div>
+        <div id="currentUserPreviewSocials" style="display: flex; gap: 0.75rem; flex-wrap: wrap;"></div>
+      </div>
+
+      <div id="leaderboardPublicSettings" style="display:none; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.12);">
+        <div style="font-size: 1rem; color: #FFD700; font-weight: 700; margin-bottom: 1rem;">Customize your public leaderboard profile</div>
+
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+          <div>
+            <label for="publicMessageInput" style="display:block; margin-bottom:0.5rem; color:#FFD700; font-weight:600;">Public message</label>
+            <textarea
+              id="publicMessageInput"
+              rows="3"
+              maxlength="200"
+              placeholder="Write a short message you want shown on the leaderboard..."
+              style="width:100%; background:#111; border:1px solid #333; color:#fff; border-radius:8px; padding:0.9rem; font-family:'Montserrat',sans-serif; resize:vertical;"
+            ></textarea>
+            <label style="display:flex; align-items:center; gap:0.5rem; margin-top:0.75rem; color:#ccc;">
+              <input type="checkbox" id="showMessagePubliclyCheckbox">
+              <span>Show my message publicly</span>
+            </label>
+          </div>
+
+          <div>
+            <div style="margin-bottom:0.75rem; color:#FFD700; font-weight:600;">Social links</div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;" id="leaderboardSocialGrid">
+              <input id="instagramHandleInput" type="text" placeholder="Instagram handle" style="background:#111; border:1px solid #333; color:#fff; border-radius:8px; padding:0.85rem;">
+              <input id="tiktokHandleInput" type="text" placeholder="TikTok handle" style="background:#111; border:1px solid #333; color:#fff; border-radius:8px; padding:0.85rem;">
+              <input id="twitterHandleInput" type="text" placeholder="Twitter/X handle" style="background:#111; border:1px solid #333; color:#fff; border-radius:8px; padding:0.85rem;">
+              <input id="facebookHandleInput" type="text" placeholder="Facebook handle" style="background:#111; border:1px solid #333; color:#fff; border-radius:8px; padding:0.85rem;">
+            </div>
+
+            <label style="display:flex; align-items:center; gap:0.5rem; margin-top:0.75rem; color:#ccc;">
+              <input type="checkbox" id="showSocialsPubliclyCheckbox">
+              <span>Show my socials publicly</span>
+            </label>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <button id="saveLeaderboardProfileBtn" class="timeframe-btn active" style="min-width:180px;">Save Public Profile</button>
+            <div id="leaderboardProfileStatus" style="display:flex; align-items:center; color:#ccc; font-size:0.95rem;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+  <script type="module">
+    import { supabase } from './supabase.js';
+
+    let currentTimeframe = 'all';
+    let currentUser = null;
+
+    const TIMEFRAME_VIEWS = {
+      all: 'leaderboard_all_time',
+      year: 'leaderboard_year',
+      month: 'leaderboard_month',
+      week: 'leaderboard_week'
+    };
+
+    const DEFAULT_AVATAR = 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><rect width="60" height="60" rx="30" fill="#222"/><circle cx="30" cy="23" r="10" fill="#888"/><ellipse cx="30" cy="48" rx="16" ry="10" fill="#888"/></svg>');
+    window.mpAvatarFallback = function(img) { img.onerror = null; img.src = DEFAULT_AVATAR; };
+
+    async function init() {
+      const { data: { session } } = await supabase.auth.getSession();
+      currentUser = session?.user || null;
+
+      setupEventListeners();
+
+      if (currentUser) {
+        document.getElementById('leaderboardPublicSettings').style.display = 'block';
+        await loadLeaderboardProfileSettings();
+      }
+
+      await loadLeaderboard();
+    }
+
+  function setupEventListeners() {
+  document.querySelectorAll('.timeframe-btn[data-timeframe]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.timeframe-btn[data-timeframe]').forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      currentTimeframe = e.currentTarget.dataset.timeframe;
+      loadLeaderboard();
+    });
+  });
+
+  const saveBtn = document.getElementById('saveLeaderboardProfileBtn');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', saveLeaderboardProfileSettings);
+  }
+
+  const pointsHeader = document.getElementById('pointsExplainerHeader');
+  if (pointsHeader) {
+    pointsHeader.addEventListener('click', togglePointsExplainer);
+  }
+}
+    async function enrichLeaderboardRows(rows) {
+  if (!rows || !rows.length) return [];
+
+  const userIds = [...new Set(rows.map(row => row.user_id).filter(Boolean))];
+
+  const [{ data: usersData, error: usersError }, { data: profilesData, error: profilesError }] = await Promise.all([
+    supabase
+      .from('users')
+      .select('id, username, profile_picture')
+      .in('id', userIds),
+    supabase
+      .from('leaderboard_profiles')
+      .select(`
+        user_id,
+        public_message,
+        instagram_handle,
+        tiktok_handle,
+        facebook_handle,
+        twitter_handle,
+        show_socials_publicly,
+        show_message_publicly
+      `)
+      .in('user_id', userIds)
+  ]);
+
+  if (usersError) {
+    console.error('Error loading leaderboard users:', usersError);
+  }
+
+  if (profilesError) {
+    console.error('Error loading leaderboard profiles:', profilesError);
+  }
+
+  const usersMap = new Map((usersData || []).map(user => [user.id, user]));
+  const profilesMap = new Map((profilesData || []).map(profile => [profile.user_id, profile]));
+
+  return rows.map(row => {
+    const user = usersMap.get(row.user_id) || {};
+    const profile = profilesMap.get(row.user_id) || {};
+
+    return {
+      ...row,
+      username: user.username || 'Anonymous',
+      profile_picture: user.profile_picture || '',
+      public_message: profile.public_message || '',
+      instagram_handle: profile.instagram_handle || '',
+      tiktok_handle: profile.tiktok_handle || '',
+      facebook_handle: profile.facebook_handle || '',
+      twitter_handle: profile.twitter_handle || '',
+      show_socials_publicly: profile.show_socials_publicly ?? true,
+      show_message_publicly: profile.show_message_publicly ?? true
+    };
+  });
+}
+
+   async function loadLeaderboard() {
+  const container = document.getElementById('leaderboardContainer');
+  container.innerHTML = '<div class="loading-state">Loading leaderboard...</div>';
+
+  const viewName = TIMEFRAME_VIEWS[currentTimeframe];
+
+  const { data, error } = await supabase
+    .from(viewName)
+    .select('*')
+    .order('total_points', { ascending: false });
+
+  if (error) {
+    console.error('Error loading leaderboard:', JSON.stringify(error, null, 2));
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-title">Error loading leaderboard</div></div>';
+    hideCurrentUserRank();
+    return;
+  }
+
+  const rankedBaseData = (data || []).map((entry, index) => ({
+    ...entry,
+    computed_rank: index + 1
+  }));
+
+  const rankedData = await enrichLeaderboardRows(rankedBaseData);
+
+  if (!rankedData.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-title">No rankings yet</div><div class="empty-state-message">Be the first to earn points!</div></div>';
+  } else {
+    renderLeaderboard(rankedData.slice(0, 10));
+  }
+
+  if (currentUser) {
+    await loadCurrentUserRank(rankedData);
+  } else {
+    hideCurrentUserRank();
+  }
+}
+    function renderLeaderboard(data) {
+      const container = document.getElementById('leaderboardContainer');
+      const listHTML = `
+        <div class="leaderboard-list">
+          ${data.map(entry => createLeaderboardItem(entry)).join('')}
+        </div>
+      `;
+      container.innerHTML = listHTML;
+    }
+
+    function createLeaderboardItem(entry) {
+      const rank = entry.computed_rank || entry.rank || 0;
+      const rankClass = rank === 1 ? 'top-1' : rank === 2 ? 'top-2' : rank === 3 ? 'top-3' : 'other';
+      const itemClass = rank <= 3 ? `top-${rank}` : '';
+
+      const avatar = entry.profile_picture || DEFAULT_AVATAR;
+      const username = entry.username || 'Anonymous';
+
+      const showMessage = entry.show_message_publicly && entry.public_message;
+      const messageHTML = showMessage ? `<div class="user-message">"${escapeHtml(entry.public_message)}"</div>` : '';
+
+      const socials = [];
+if (entry.show_socials_publicly) {
+  if (entry.instagram_handle) socials.push(`<a href="https://instagram.com/${encodeURIComponent(entry.instagram_handle)}" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>`);
+  if (entry.tiktok_handle) socials.push(`<a href="https://tiktok.com/@${encodeURIComponent(entry.tiktok_handle)}" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></a>`);
+  if (entry.twitter_handle) socials.push(`<a href="https://twitter.com/${encodeURIComponent(entry.twitter_handle)}" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fa-brands fa-x-twitter"></i><span>Twitter</span></a>`);
+  if (entry.facebook_handle) socials.push(`<a href="https://facebook.com/${encodeURIComponent(entry.facebook_handle)}" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fa-brands fa-facebook-f"></i><span>Facebook</span></a>`);
+}
+      const socialsHTML = socials.length > 0 ? `<div class="user-socials">${socials.join('')}</div>` : '';
+
+      return `
+        <div class="leaderboard-item ${itemClass}">
+          <div class="rank-badge ${rankClass}">${rank}</div>
+          <img class="user-avatar" src="${avatar}" alt="${escapeHtml(username)}" onclick="window.location.href='public_profile.html?user_id=${entry.user_id}'" onerror="mpAvatarFallback(this)">
+          <div class="user-info">
+            <div class="user-name" onclick="window.location.href='public_profile.html?user_id=${entry.user_id}'">${escapeHtml(username)}</div>
+            ${messageHTML}
+            ${socialsHTML}
+          </div>
+          <div class="points-display">
+            <div class="points-value">${entry.total_points || 0}</div>
+            <div class="points-label">Points</div>
+          </div>
+        </div>
+      `;
+    }
+
+   async function loadCurrentUserRank(rankedData) {
+  let userData = rankedData.find(e => e.user_id === currentUser.id);
+
+  if (!userData) {
+    const viewName = TIMEFRAME_VIEWS[currentTimeframe];
+
+    const [{ data: fallbackRow, error: fallbackError }, { data: userRow, error: userError }, { data: profileRow, error: profileError }] = await Promise.all([
+      supabase
+        .from(viewName)
+        .select('*')
+        .eq('user_id', currentUser.id)
+        .maybeSingle(),
+      supabase
+        .from('users')
+        .select('id, username, profile_picture')
+        .eq('id', currentUser.id)
+        .maybeSingle(),
+      supabase
+        .from('leaderboard_profiles')
+        .select(`
+          user_id,
+          public_message,
+          instagram_handle,
+          tiktok_handle,
+          facebook_handle,
+          twitter_handle,
+          show_socials_publicly,
+          show_message_publicly
+        `)
+        .eq('user_id', currentUser.id)
+        .maybeSingle()
+    ]);
+
+    if (fallbackError) {
+      console.error('Error loading current user rank fallback:', fallbackError);
+    }
+
+    if (userError) {
+      console.error('Error loading current user user row:', userError);
+    }
+
+    if (profileError) {
+      console.error('Error loading current user leaderboard profile:', profileError);
+    }
+
+    const totalPoints = fallbackRow?.total_points || 0;
+    const higherCount = rankedData.filter(row => (row.total_points || 0) > totalPoints).length;
+
+    userData = {
+      user_id: currentUser.id,
+      total_points: totalPoints,
+      computed_rank: fallbackRow ? higherCount + 1 : '-',
+      username: userRow?.username || 'You',
+      profile_picture: userRow?.profile_picture || '',
+      public_message: profileRow?.public_message || '',
+      instagram_handle: profileRow?.instagram_handle || '',
+      tiktok_handle: profileRow?.tiktok_handle || '',
+      facebook_handle: profileRow?.facebook_handle || '',
+      twitter_handle: profileRow?.twitter_handle || '',
+      show_socials_publicly: profileRow?.show_socials_publicly ?? true,
+      show_message_publicly: profileRow?.show_message_publicly ?? true
+    };
+  }
+
+  displayCurrentUserRank(userData);
+}
+    function displayCurrentUserRank(userData) {
+      const container = document.getElementById('currentUserRank');
+
+      document.getElementById('currentUserAvatar').src = userData.profile_picture || DEFAULT_AVATAR;
+      document.getElementById('currentUserName').textContent = userData.username || 'You';
+      document.getElementById('currentUserRankValue').textContent = `#${userData.computed_rank || userData.rank || '-'}`;
+      document.getElementById('currentUserPointsValue').textContent = userData.total_points || 0;
+
+      const preview = document.getElementById('currentUserPreview');
+      const previewMessage = document.getElementById('currentUserPreviewMessage');
+      const previewSocials = document.getElementById('currentUserPreviewSocials');
+
+      let hasPreview = false;
+
+      if (userData.show_message_publicly && userData.public_message) {
+        previewMessage.textContent = `"${userData.public_message}"`;
+        previewMessage.style.display = 'block';
+        hasPreview = true;
+      } else {
+        previewMessage.style.display = 'none';
+      }
+
+     const socials = [];
+if (userData.show_socials_publicly) {
+  if (userData.instagram_handle) socials.push(`<a href="https://instagram.com/${encodeURIComponent(userData.instagram_handle)}" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>`);
+  if (userData.tiktok_handle) socials.push(`<a href="https://tiktok.com/@${encodeURIComponent(userData.tiktok_handle)}" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></a>`);
+  if (userData.twitter_handle) socials.push(`<a href="https://twitter.com/${encodeURIComponent(userData.twitter_handle)}" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fa-brands fa-x-twitter"></i><span>Twitter</span></a>`);
+  if (userData.facebook_handle) socials.push(`<a href="https://facebook.com/${encodeURIComponent(userData.facebook_handle)}" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fa-brands fa-facebook-f"></i><span>Facebook</span></a>`);
+}
+
+      if (socials.length > 0) {
+        previewSocials.innerHTML = socials.join('');
+        hasPreview = true;
+      } else {
+        previewSocials.innerHTML = '';
+      }
+
+      preview.style.display = hasPreview ? 'block' : 'none';
+      container.classList.add('show');
+    }
+
+    function hideCurrentUserRank() {
+      document.getElementById('currentUserRank').classList.remove('show');
+    }
+
+   async function loadLeaderboardProfileSettings() {
+  if (!currentUser) return;
+
+  const { data, error } = await supabase
+    .from('leaderboard_profiles')
+    .select(`
+      public_message,
+      show_message_publicly,
+      instagram_handle,
+      tiktok_handle,
+      twitter_handle,
+      facebook_handle,
+      show_socials_publicly
+    `)
+    .eq('user_id', currentUser.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Error loading leaderboard public settings:', error);
+    return;
+  }
+
+  document.getElementById('publicMessageInput').value = data?.public_message || '';
+  document.getElementById('showMessagePubliclyCheckbox').checked = data?.show_message_publicly ?? true;
+  document.getElementById('instagramHandleInput').value = data?.instagram_handle || '';
+  document.getElementById('tiktokHandleInput').value = data?.tiktok_handle || '';
+  document.getElementById('twitterHandleInput').value = data?.twitter_handle || '';
+  document.getElementById('facebookHandleInput').value = data?.facebook_handle || '';
+  document.getElementById('showSocialsPubliclyCheckbox').checked = data?.show_socials_publicly ?? true;
+}
+    async function saveLeaderboardProfileSettings() {
+  if (!currentUser) return;
+
+  const statusEl = document.getElementById('leaderboardProfileStatus');
+  statusEl.textContent = 'Saving...';
+
+  const payload = {
+    user_id: currentUser.id,
+    public_message: document.getElementById('publicMessageInput').value.trim() || null,
+    show_message_publicly: document.getElementById('showMessagePubliclyCheckbox').checked,
+    instagram_handle: cleanHandle(document.getElementById('instagramHandleInput').value) || null,
+    tiktok_handle: cleanHandle(document.getElementById('tiktokHandleInput').value) || null,
+    twitter_handle: cleanHandle(document.getElementById('twitterHandleInput').value) || null,
+    facebook_handle: cleanHandle(document.getElementById('facebookHandleInput').value) || null,
+    show_socials_publicly: document.getElementById('showSocialsPubliclyCheckbox').checked,
+    updated_at: new Date().toISOString()
+  };
+
+  const { error } = await supabase
+    .from('leaderboard_profiles')
+    .upsert(payload, { onConflict: 'user_id' });
+
+  if (error) {
+    console.error('Error saving leaderboard public settings:', error);
+    statusEl.textContent = 'Failed to save';
+    return;
+  }
+
+  statusEl.textContent = 'Saved';
+  await loadLeaderboard();
+}
+    function cleanHandle(value) {
+  return (value || '').trim().replace(/^@/, '');
+}
+
+function togglePointsExplainer() {
+  const explainer = document.getElementById('pointsExplainer');
+  if (explainer) {
+    explainer.classList.toggle('expanded');
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text || '';
+  return div.innerHTML;
+}
+
+init();
+  </script>
+
+  <script src="navbar-loader.js"></script>
+
+  <script type="module">
+    import { supabase } from './supabase.js';
+
+    const DEFAULT_PROFILE_ICON = `
+      <svg class="nav-profile-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    `;
+
+    async function hydrateLeaderboardNavProfile() {
+      const profileBtn = document.getElementById('nav-profile-btn');
+      if (!profileBtn) return;
+
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
+          profileBtn.innerHTML = DEFAULT_PROFILE_ICON;
+          return;
+        }
+
+        const { data: profileRow, error } = await supabase
+          .from('users')
+          .select('profile_picture')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        if (error) {
+          console.error('Error loading navbar profile picture:', error);
+          profileBtn.innerHTML = DEFAULT_PROFILE_ICON;
+          return;
+        }
+
+        if (profileRow?.profile_picture) {
+          profileBtn.innerHTML = `<img src="${profileRow.profile_picture}" alt="Profile" class="nav-profile-img" />`;
+        } else {
+          profileBtn.innerHTML = DEFAULT_PROFILE_ICON;
+        }
+      } catch (err) {
+        console.error('Failed to hydrate leaderboard navbar profile:', err);
+      }
+    }
+
+    document.addEventListener('navbar:loaded', () => {
+      hydrateLeaderboardNavProfile();
+
+      const profileBtn = document.getElementById('nav-profile-btn');
+      if (!profileBtn) return;
+      if (profileBtn.dataset.boundClick === '1') return;
+
+      profileBtn.dataset.boundClick = '1';
+
+      profileBtn.addEventListener('click', async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        window.location.href = session?.user ? 'profile.html' : 'login.html';
+      });
+    });
+
+    supabase.auth.onAuthStateChange(() => {
+      hydrateLeaderboardNavProfile();
+    });
+  </script>
+</body>
+</html>

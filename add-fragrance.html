@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submit Fragrance - MaxParfum</title>
+  <meta name="description" content="Submit a new fragrance to the MaxParfum database.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <link rel="stylesheet" href="navbar.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 100px 1.5rem 4rem;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .page-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      letter-spacing: 1px;
+    }
+
+    .page-subtitle {
+      font-size: 1.05rem;
+      color: #999999;
+      font-weight: 400;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tabs-container {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid #222222;
+      padding: 0 0.25rem;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: #777777;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      padding: 0.875rem 1.75rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.25s ease;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      letter-spacing: 0.5px;
+    }
+
+    .tab-btn:hover {
+      color: #aaaaaa;
+    }
+
+    .tab-btn.active {
+      color: #d4af37;
+      border-bottom-color: #d4af37;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .auth-required-card {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1px solid #d4af37;
+      border-radius: 16px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      margin-top: 2rem;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.15);
+    }
+
+    .auth-required-card::before {
+      content: '🔒';
+      display: block;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .auth-required-card h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #d4af37;
+    }
+
+    .auth-required-card p {
+      font-size: 1.05rem;
+      color: #aaaaaa;
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .auth-required-card .subtitle {
+      font-size: 0.95rem;
+      color: #777777;
+      margin-bottom: 2rem;
+    }
+
+    .auth-link {
+      display: inline-block;
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      color: #000000;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .auth-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .form-section {
+      background: linear-gradient(135deg, #0a0a0a, #141414);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 1.75rem 2rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-section:hover {
+      border-color: #333333;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: #d4af37;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.5px;
+    }
+
+    .section-description {
+      font-size: 0.875rem;
+      color: #777777;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 1.35rem;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #cccccc;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-label .required {
+      color: #ff6b6b;
+      margin-left: 0.25rem;
+    }
+
+    .form-helper {
+      display: block;
+      font-size: 0.85rem;
+      color: #777777;
+      margin-top: 0.25rem;
+      margin-bottom: 0.35rem;
+      line-height: 1.4;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      min-height: 40px;
+      padding: 0.5rem;
+      background: #0a0a0a;
+      border: 1px solid #333333;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: text;
+    }
+
+    .tags-container:focus-within {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
+    }
+
+    .tags-container.error {
+      border-color: #ff6b6b;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      color: #000000;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      animation: tagAppear 0.2s ease;
+    }
+
+    @keyframes tagAppear {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tag-remove {
+      background: none;
+      border: none;
+      color: #000000;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+
+    .tag-remove:hover {
+      opacity: 1;
+    }
+
+    .tag-input {
+      flex: 1;
+      min-width: 150px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-family: 'Montserrat', sans-serif;
+      padding: 0.25rem;
+      outline: none;
+    }
+
+    .tag-input::placeholder {
+      color: #555555;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: #0a0a0a;
+      border: 1px solid #333333;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: #555555;
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-select {
+      cursor: pointer;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .error-message {
+      display: none;
+      font-size: 0.85rem;
+      color: #ff6b6b;
+      margin-top: 0.5rem;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .form-input.error,
+    .form-select.error,
+    .form-textarea.error {
+      border-color: #ff6b6b;
+    }
+
+    .duplicate-warning {
+      display: none;
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid #ff6b6b;
+      border-left: 4px solid #ff6b6b;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .duplicate-warning.show {
+      display: block;
+    }
+
+    .duplicate-warning h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #ff6b6b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .duplicate-warning h3::before {
+      content: '⚠️';
+    }
+
+    .duplicate-warning p {
+      font-size: 0.95rem;
+      margin-bottom: 0;
+      color: #ffaaaa;
+      line-height: 1.5;
+    }
+
+    .submit-section {
+      background: linear-gradient(135deg, #0a0a0a, #141414);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .submit-note {
+      font-size: 0.875rem;
+      color: #777777;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .submit-btn {
+      width: 100%;
+      max-width: 350px;
+      background: linear-gradient(135deg, #d4af37, #e8c547);
+      color: #000000;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Cinzel', serif;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 0.75px;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .success-card {
+      display: none;
+      background: linear-gradient(135deg, #0f2f0f, #1a4a1a);
+      border: 2px solid #4ade80;
+      border-radius: 16px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 30px rgba(74, 222, 128, 0.2);
+      animation: successAppear 0.4s ease;
+    }
+
+    @keyframes successAppear {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .success-card.show {
+      display: block;
+    }
+
+    .success-card::before {
+      content: '✓';
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      background: #4ade80;
+      color: #000000;
+      border-radius: 50%;
+      font-size: 2rem;
+      line-height: 60px;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+    }
+
+    .success-card h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: #4ade80;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    .success-card p {
+      font-size: 1.05rem;
+      color: #cccccc;
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .success-card .actions {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(74, 222, 128, 0.2);
+    }
+
+    .secondary-btn {
+      display: inline-block;
+      background: transparent;
+      color: #4ade80;
+      border: 2px solid #4ade80;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .secondary-btn:hover {
+      background: #4ade80;
+      color: #000000;
+      transform: translateY(-2px);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #000000;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .submissions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .submission-card {
+      background: linear-gradient(135deg, #0a0a0a, #141414);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .submission-card:hover {
+      border-color: #333333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .submission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .submission-info {
+      flex: 1;
+    }
+
+    .submission-brand {
+      font-size: 0.85rem;
+      color: #888888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.25rem;
+    }
+
+    .submission-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .submission-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #333333;
+      margin-left: 1rem;
+    }
+
+    .submission-image-placeholder {
+      width: 80px;
+      height: 80px;
+      background: #1a1a1a;
+      border: 1px solid #333333;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555555;
+      font-size: 2rem;
+      margin-left: 1rem;
+    }
+
+    .submission-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .submission-detail {
+      font-size: 0.85rem;
+      color: #aaaaaa;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .submission-detail strong {
+      color: #cccccc;
+    }
+
+    .submission-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid #222222;
+    }
+
+    .submission-date {
+      font-size: 0.8rem;
+      color: #777777;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-pending {
+      background: rgba(250, 204, 21, 0.15);
+      color: #facc15;
+      border: 1px solid rgba(250, 204, 21, 0.3);
+    }
+
+    .status-approved {
+      background: rgba(74, 222, 128, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+
+    .status-rejected {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      border: 1px solid #333333;
+      border-radius: 12px;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.3;
+    }
+
+    .empty-state h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #cccccc;
+      margin-bottom: 0.75rem;
+    }
+
+    .empty-state p {
+      font-size: 1rem;
+      color: #888888;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .empty-state-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #d4af37, #f4d03f);
+      color: #000000;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .empty-state-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .loading-state-spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #333333;
+      border-top: 3px solid #d4af37;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    .loading-state p {
+      color: #888888;
+      font-size: 1rem;
+    }
+
+    .submission-comment {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .comment-author {
+      font-size: 0.875rem;
+      color: #cccccc;
+      font-weight: 600;
+    }
+
+    .submitter-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      background: linear-gradient(135deg, #d4af37, #e8c547);
+      color: #000000;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .comment-date {
+      font-size: 0.75rem;
+      color: #666666;
+      margin-left: auto;
+    }
+
+    .comment-body {
+      font-size: 0.875rem;
+      color: #aaaaaa;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 1.8rem;
+      }
+
+      .page-subtitle {
+        font-size: 0.95rem;
+      }
+
+      .auth-required-card {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .auth-required-card::before {
+        font-size: 2.5rem;
+      }
+
+      .tabs-container {
+        gap: 0.5rem;
+      }
+
+      .tab-btn {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .form-section {
+        padding: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 90px 1rem 2rem;
+      }
+
+      .submit-btn {
+        font-size: 1rem;
+        padding: 1rem 1.5rem;
+      }
+
+      .success-card {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .success-card::before {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        line-height: 50px;
+      }
+
+      .success-card h2 {
+        font-size: 1.6rem;
+      }
+
+      .tag {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.6rem;
+      }
+
+      .tags-container {
+        min-height: 50px;
+      }
+
+      .submissions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .submission-card {
+        padding: 1.25rem;
+      }
+
+      .submission-name {
+        font-size: 1.1rem;
+      }
+
+      .empty-state {
+        padding: 3rem 1.5rem;
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Submit a Fragrance</h1>
+      <p class="page-subtitle">Help expand the MaxParfum database by submitting fragrances for review</p>
+    </div>
+
+    <div id="auth-required" class="auth-required-card" style="display: none;">
+      <h2>Authentication Required</h2>
+      <p>Join the MaxParfum community to submit fragrances and help expand our database.</p>
+      <p class="subtitle">Only authenticated users can contribute to maintain quality and prevent spam.</p>
+      <a href="login.html" class="auth-link">Sign In to Continue</a>
+    </div>
+
+    <div id="form-wrapper" style="display: none;">
+      <div class="tabs-container">
+        <button class="tab-btn active" data-tab="add-tab">Add Fragrance</button>
+        <button class="tab-btn" data-tab="submissions-tab">My Submissions</button>
+      </div>
+
+      <div id="success-message" class="success-card">
+        <h2>Submission Successful!</h2>
+        <p>Thank you for contributing to MaxParfum! Your fragrance submission has been received.</p>
+        <p>Our team will review it shortly, and it will appear on the site once approved.</p>
+        <div class="actions">
+          <button type="button" id="submit-another-btn" class="secondary-btn">Submit Another Fragrance</button>
+        </div>
+      </div>
+
+      <div id="add-tab" class="tab-content active">
+        <div id="duplicate-warning" class="duplicate-warning">
+          <h3>Possible Duplicate Detected</h3>
+          <p id="duplicate-message"></p>
+        </div>
+
+        <form id="add-fragrance-form" class="form-container">
+          <div class="form-section">
+            <div class="section-header">
+              <h2 class="section-title">Basic Information</h2>
+              <p class="section-description">Start with the essential details about the fragrance</p>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="brand">Brand<span class="required">*</span></label>
+                <input type="text" id="brand" name="brand" class="form-input" placeholder="e.g., Dior" required>
+                <span class="error-message" id="brand-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="name">Fragrance Name<span class="required">*</span></label>
+                <input type="text" id="name" name="name" class="form-input" placeholder="e.g., Sauvage" required>
+                <span class="error-message" id="name-error"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="country">Country<span class="required">*</span></label>
+                <input type="text" id="country" name="country" class="form-input" placeholder="e.g., France" required>
+                <span class="error-message" id="country-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="gender">Gender<span class="required">*</span></label>
+                <select id="gender" name="gender" class="form-select" required>
+                  <option value="">Select gender</option>
+                  <option value="men">Men</option>
+                  <option value="women">Women</option>
+                  <option value="unisex">Unisex</option>
+                </select>
+                <span class="error-message" id="gender-error"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="year">Release Year<span class="required">*</span></label>
+                <input type="number" id="year" name="year" class="form-input" placeholder="e.g., 2015" min="1800" max="2027" required>
+                <span class="error-message" id="year-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="image">Image URL<span class="required">*</span></label>
+                <span class="form-helper">Direct link to a high-quality fragrance image</span>
+                <input type="url" id="image" name="image" class="form-input" placeholder="https://example.com/image.jpg" required>
+                <span class="error-message" id="image-error"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="section-header">
+              <h2 class="section-title">Fragrance Notes</h2>
+              <p class="section-description">The pyramid structure of the scent composition</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="top_notes">Top Notes<span class="required">*</span></label>
+              <span class="form-helper">The initial scents noticed immediately upon application (e.g., bergamot, lemon, orange)</span>
+              <div class="input-wrapper">
+                <div id="top_notes-tags" class="tags-container" data-field="top_notes">
+                  <input type="text" class="tag-input" placeholder="Type and press Enter or comma to add..." data-input-for="top_notes">
+                </div>
+              </div>
+              <span class="error-message" id="top_notes-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="middle_notes">Middle Notes<span class="required">*</span></label>
+              <span class="form-helper">The heart of the fragrance, emerging after top notes fade (e.g., lavender, geranium, rose)</span>
+              <div class="input-wrapper">
+                <div id="middle_notes-tags" class="tags-container" data-field="middle_notes">
+                  <input type="text" class="tag-input" placeholder="Type and press Enter or comma to add..." data-input-for="middle_notes">
+                </div>
+              </div>
+              <span class="error-message" id="middle_notes-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="base_notes">Base Notes<span class="required">*</span></label>
+              <span class="form-helper">The lasting foundation that remains on the skin (e.g., cedar, vetiver, patchouli)</span>
+              <div class="input-wrapper">
+                <div id="base_notes-tags" class="tags-container" data-field="base_notes">
+                  <input type="text" class="tag-input" placeholder="Type and press Enter or comma to add..." data-input-for="base_notes">
+                </div>
+              </div>
+              <span class="error-message" id="base_notes-error"></span>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="section-header">
+              <h2 class="section-title">Creative Details</h2>
+              <p class="section-description">Information about the creators and overall character</p>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="perfumer1">Primary Perfumer</label>
+                <span class="form-helper">The nose behind the fragrance</span>
+                <input type="text" id="perfumer1" name="perfumer1" class="form-input" placeholder="e.g., François Demachy">
+                <span class="error-message" id="perfumer1-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="perfumer2">Secondary Perfumer</label>
+                <span class="form-helper">If multiple perfumers collaborated</span>
+                <input type="text" id="perfumer2" name="perfumer2" class="form-input" placeholder="Optional">
+                <span class="error-message" id="perfumer2-error"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="main_accords">Main Accords<span class="required">*</span></label>
+              <span class="form-helper">The dominant scent families and characteristics (e.g., woody, aromatic, fresh)</span>
+              <div class="input-wrapper">
+                <div id="main_accords-tags" class="tags-container" data-field="main_accords">
+                  <input type="text" class="tag-input" placeholder="Type and press Enter or comma to add..." data-input-for="main_accords">
+                </div>
+              </div>
+              <span class="error-message" id="main_accords-error"></span>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="section-header">
+              <h2 class="section-title">Additional Information</h2>
+              <p class="section-description">Help us with dupes, sources, and any extra details</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="suggested_dupes">Suggested Dupes</label>
+              <span class="form-helper">Know any affordable alternatives? Your suggestions will be reviewed before going live</span>
+              <div class="input-wrapper">
+                <div id="suggested_dupes-tags" class="tags-container" data-field="suggested_dupes">
+                  <input type="text" class="tag-input" placeholder="Type dupe names and press Enter or comma..." data-input-for="suggested_dupes">
+                </div>
+              </div>
+              <span class="error-message" id="suggested_dupes-error"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="source_name">Source Name</label>
+                <span class="form-helper">Where you found this info</span>
+                <input type="text" id="source_name" name="source_name" class="form-input" placeholder="e.g., Fragrantica">
+                <span class="error-message" id="source_name-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="source_url">Source URL</label>
+                <span class="form-helper">Link to your source for verification</span>
+                <input type="url" id="source_url" name="source_url" class="form-input" placeholder="https://example.com">
+                <span class="error-message" id="source_url-error"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="additional_notes">Additional Notes</label>
+              <span class="form-helper">Your first comment on this fragrance - share personal experience or other details</span>
+              <textarea id="additional_notes" name="additional_notes" class="form-textarea" placeholder="Optional comment..."></textarea>
+              <span class="error-message" id="additional_notes-error"></span>
+            </div>
+          </div>
+
+          <div class="submit-section">
+            <p class="submit-note">By submitting, you confirm that the information provided is accurate to the best of your knowledge. Our team will review your submission before it goes live.</p>
+            <button type="submit" id="submit-btn" class="submit-btn">Submit for Review</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="submissions-tab" class="tab-content">
+        <div id="submissions-loading" class="loading-state">
+          <div class="loading-state-spinner"></div>
+          <p>Loading your submissions...</p>
+        </div>
+
+        <div id="submissions-content" style="display: none;">
+          <div id="submissions-grid" class="submissions-grid"></div>
+        </div>
+
+        <div id="submissions-empty" class="empty-state" style="display: none;">
+          <div class="empty-state-icon">📦</div>
+          <h3>No Submissions Yet</h3>
+          <p>You haven't submitted any fragrances yet. Start contributing to the MaxParfum database by submitting your first fragrance.</p>
+          <button class="empty-state-btn" id="goto-add-tab">Submit Your First Fragrance</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="supabase.js"></script>
+  <script type="module" src="add-fragrance.js"></script>
+  <script src="navbar-loader.js"></script>
+  <script>
+    document.addEventListener('navbar:loaded', () => {
+      const profileScript = document.createElement('script');
+      profileScript.type = 'module';
+      profileScript.src = 'nav_profile.js';
+      document.body.appendChild(profileScript);
+
+      const notificationsScript = document.createElement('script');
+      notificationsScript.type = 'module';
+      notificationsScript.src = 'notifications_nav.js';
+      document.body.appendChild(notificationsScript);
+    });
+  </script>
+</body>
+</html>

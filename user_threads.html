@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thread History - MaxParfum</title>
+  <meta name="description" content="View all threads created by this user.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Cinzel', serif;
+      background-color: black;
+      color: #FFFFFF;
+    }
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 20px 40px;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      margin-bottom: 30px;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .page-subtitle {
+      font-size: 1rem;
+      color: #C2C2C2;
+    }
+
+    .user-info-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 20px;
+      background: rgba(44, 19, 11, 0.3);
+      border-radius: 8px;
+      border-left: 4px solid #2C130B;
+      margin-bottom: 30px;
+    }
+
+    .user-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-name {
+      font-size: 1.5rem;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .loading-state, .error-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #C2C2C2;
+      font-size: 1.1rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .threads-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .thread-item {
+      padding: 20px;
+      background: rgba(44, 19, 11, 0.3);
+      border-radius: 8px;
+      border-left: 4px solid #2C130B;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .thread-item:hover {
+      background: rgba(44, 19, 11, 0.5);
+      transform: translateX(5px);
+    }
+
+    .thread-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .thread-snippet {
+      color: #C2C2C2;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .thread-meta {
+      display: flex;
+      gap: 20px;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #C2C2C2;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 1.5rem;
+      }
+
+      .user-info-header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+ <div id="navbar-container"></div>
+
+  <!-- Notifications Dropdown -->
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">
+      <h3 class="notifications-title">Notifications</h3>
+      <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      <div class="notifications-loading">Loading...</div>
+    </div>
+  </div>
+
+
+  <div class="main-container">
+    <div id="loadingState" class="loading-state">
+      Loading thread history...
+    </div>
+
+    <div id="errorState" class="error-state hidden">
+      Unable to load thread history. Please try again later.
+    </div>
+
+    <div id="contentContainer" class="hidden">
+      <div class="page-header">
+        <h1 class="page-title">Thread History</h1>
+        <p class="page-subtitle">All threads created by this user</p>
+      </div>
+
+      <div id="userInfoHeader" class="user-info-header"></div>
+
+      <div id="threadsList" class="threads-list"></div>
+
+      <div id="emptyState" class="empty-state hidden">
+        No threads created yet.
+      </div>
+    </div>
+  </div>
+  <script src="navbar-loader.js"></script>
+  <script type="module" src="nav_profile.js"></script>
+  <script type="module" src="user_threads.js"></script>
+  <script type="module" src="notifications_nav.js"></script>
+</body>
+</html>

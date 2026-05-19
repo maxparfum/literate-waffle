@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-8658912763856657" crossorigin="anonymous"></script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGTGRTYFWJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WGTGRTYFWJ');
+  </script>
+
+  <title>AI Fragrance Advisor – MaxParfum</title>
+  <meta name="description" content="Get personalised fragrance recommendations from MaxParfum's AI advisor. Find your perfect scent.">
+  <meta name="keywords" content="fragrance AI, perfume assistant, fragrance recommendations, MaxParfum AI, scent finder">
+  <meta name="author" content="MaxParfum">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.maxparfum.net/chat.html" />
+
+  <meta property="og:title" content="AI Fragrance Advisor – MaxParfum" />
+  <meta property="og:description" content="Get personalised fragrance recommendations from our AI advisor." />
+  <meta property="og:url" content="https://www.maxparfum.net/chat.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.maxparfum.net/display.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Fragrance Advisor – MaxParfum" />
+  <meta name="twitter:description" content="Get personalised fragrance recommendations from our AI advisor." />
+  <meta name="twitter:image" content="https://www.maxparfum.net/display.png" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="navbar.css">
+
+  <style>
+   #sillage-app,
+#sillage-app * ,
+#sillage-app *::before,
+#sillage-app *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#sillage-app {
+  --ink: #0F0D0B;
+  --cream: #F7F3EE;
+  --gold: #B8956A;
+  --gold-light: #D4B48C;
+  --gold-dim: rgba(184,149,106,0.2);
+  --muted: #7A7065;
+  --border: rgba(184,149,106,0.18);
+  --border-strong: rgba(184,149,106,0.35);
+  --user-bg: #1A1612;
+}
+
+    /* Override body so navbar still works at top */
+    body {
+  background: #0F0D0B;
+  color: #F7F3EE;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+    /* Ambient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(184,149,106,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 80% 20%, rgba(184,149,106,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Page wrapper — sits below navbar ── */
+    #sillage-app {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  height: calc(100dvh - 80px);
+  margin-top: 80px;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+    /* ── Header ── */
+    .sillage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px 16px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-mark svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--gold);
+      opacity: 0.9;
+    }
+
+    .brand-text h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .brand-text p {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 3px;
+      font-weight: 400;
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #6DBD8A;
+      animation: pulse-dot 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    /* ── Ornament ── */
+    .ornament {
+      text-align: center;
+      padding: 10px 0 0;
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 6px;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* ── Chat area ── */
+    #chat-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+    }
+
+    #chat-area::-webkit-scrollbar { width: 4px; }
+    #chat-area::-webkit-scrollbar-track { background: transparent; }
+    #chat-area::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+    /* ── Messages ── */
+    .message-row {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 22px;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .message-row.user { flex-direction: row-reverse; }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .avatar.advisor {
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+    }
+
+    .avatar.user {
+      background: var(--gold-dim);
+      border: 1px solid var(--border-strong);
+      color: var(--gold-light);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .bubble {
+      max-width: calc(100% - 80px);
+      font-size: 15px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .bubble.advisor {
+      color: var(--cream);
+      padding-left: 0;
+    }
+
+    .bubble.advisor .sender-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .bubble.user {
+      background: var(--user-bg);
+      color: rgba(247,243,238,0.85);
+      border: 1px solid var(--border);
+      font-size: 14.5px;
+      padding: 12px 16px;
+      border-radius: 2px;
+      margin-left: auto;
+    }
+
+    /* ── Recommendation cards (inline in chat) ── */
+    .rec-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .rec-card {
+      background: rgba(184,149,106,0.06);
+      border: 1px solid var(--border-strong);
+      border-radius: 2px;
+      padding: 12px 16px;
+      transition: background 0.2s ease;
+    }
+
+    .rec-card:hover { background: rgba(184,149,106,0.1); }
+
+    .rec-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .rec-card-reason {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .rec-card-link {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      transition: border-color 0.2s ease;
+    }
+
+    .rec-card-link:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    /* ── Typing indicator ── */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 0 6px 46px;
+      margin-bottom: 22px;
+    }
+
+    .typing-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.4;
+      animation: typingBounce 1.2s ease-in-out infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30%           { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* ── Suggestion pills ── */
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 32px 14px 46px;
+      flex-shrink: 0;
+    }
+
+    .suggestion-pill {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      padding: 7px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .suggestion-pill:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+      background: var(--gold-dim);
+    }
+
+    /* ── Input area ── */
+    #input-area {
+      border-top: 1px solid var(--border);
+      padding: 18px 32px 22px;
+      flex-shrink: 0;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-strong);
+      border-radius: 2px;
+      padding: 12px 16px;
+      transition: border-color 0.2s ease;
+    }
+
+    .input-wrapper:focus-within { border-color: var(--gold); }
+
+    #user-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-size: 14.5px;
+      font-weight: 300;
+      line-height: 1.6;
+      resize: none;
+      min-height: 24px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    #user-input::placeholder {
+      color: rgba(122,112,101,0.6);
+      font-style: italic;
+    }
+
+    #send-btn {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      width: 34px;
+      height: 34px;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      color: var(--muted);
+    }
+
+    #send-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+    #send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    #send-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+    .input-meta {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0 0;
+      font-size: 10.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(122,112,101,0.5);
+    }
+
+    /* ── Error ── */
+    .error-bubble {
+      background: rgba(200,80,60,0.08);
+      border: 1px solid rgba(200,80,60,0.2);
+      color: #D4856A;
+      font-size: 13px;
+      padding: 12px 16px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+  #sillage-app {
+    margin-top: 64px;
+    height: calc(100dvh - 64px);
+  }
+
+  .sillage-header,
+  #chat-area,
+  #input-area {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .suggestions {
+    padding: 0 16px 14px;
+  }
+
+  .bubble {
+    max-width: calc(100% - 50px);
+  }
+
+  .brand-text h1 {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  .header-status span {
+    display: none;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar injected here by navbar-loader.js -->
+  <div id="navbar-container"></div>
+
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">
+      <h3 class="notifications-title">Notifications</h3>
+      <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      <div class="notifications-loading">Loading...</div>
+    </div>
+  </div>
+
+  <!-- ── Sillage App ── -->
+  <div id="sillage-app">
+
+    <header class="sillage-header">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C9.5 2 7.5 3.5 7 5.5C5.5 6 4 7.5 4 9.5C4 10.5 4.5 11.5 5 12C4.5 12.5 4 13.5 4 14.5C4 16.5 5.5 18 7 18.5C7.5 20.5 9.5 22 12 22C14.5 22 16.5 20.5 17 18.5C18.5 18 20 16.5 20 14.5C20 13.5 19.5 12.5 19 12C19.5 11.5 20 10.5 20 9.5C20 7.5 18.5 6 17 5.5C16.5 3.5 14.5 2 12 2ZM12 8C13.1 8 14 8.9 14 10C14 11.1 13.1 12 12 12C10.9 12 10 11.1 10 10C10 8.9 10.9 8 12 8ZM12 18C10.5 18 9 17.1 8.5 15.8C9.5 16.2 10.7 16.5 12 16.5C13.3 16.5 14.5 16.2 15.5 15.8C15 17.1 13.5 18 12 18Z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Sillage</h1>
+          <p>by Maxparfum</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <div class="status-dot"></div>
+        <span>Advisor online</span>
+      </div>
+    </header>
+
+    <div class="ornament">— ✦ —</div>
+
+    <div id="chat-area" role="log" aria-live="polite" aria-label="Conversation with Sillage"></div>
+
+    <div class="suggestions" id="suggestions-row" style="display:none;">
+      <button class="suggestion-pill" onclick="useSuggestion(this)">I want something for every day</button>
+      <button class="suggestion-pill" onclick="useSuggestion(this)">Something that turns heads</button>
+      <button class="suggestion-pill" onclick="useSuggestion(this)">What's a good gift?</button>
+      <button class="suggestion-pill" onclick="useSuggestion(this)">I love oud</button>
+    </div>
+
+    <div id="input-area">
+      <div class="input-wrapper">
+        <textarea
+          id="user-input"
+          rows="1"
+          placeholder="Describe a memory, a mood, a fragrance you love…"
+          aria-label="Your message"
+        ></textarea>
+        <button id="send-btn" aria-label="Send message" disabled>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="input-meta">
+        <span>Fragrance advisor · Maxparfum</span>
+        <span>Enter to send</span>
+      </div>
+    </div>
+
+  </div><!-- /#sillage-app -->
+
+  <script>
+    // ── State ──
+    let sessionId = localStorage.getItem('mp_session_id') || null;
+    let isThinking = false;
+
+    // ── Fragrance data for URL fallback ──
+    let fragrancesData = [];
+    (async () => {
+      try {
+        const r = await fetch('fragrances_merged.json');
+        fragrancesData = await r.json();
+      } catch { fragrancesData = []; }
+    })();
+
+    // ── DOM ──
+    const chatArea   = document.getElementById('chat-area');
+    const userInput  = document.getElementById('user-input');
+    const sendBtn    = document.getElementById('send-btn');
+    const suggestRow = document.getElementById('suggestions-row');
+
+    // ── URL resolver ──
+    function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function formatText(text) {
+  const escaped = escapeHtml(text);
+
+  return escaped
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>')
+    .replace(/^/, '<p>')
+    .replace(/$/, '</p>');
+}
+
+function getSuggestionUrl(s = {}) {
+  if (typeof s.url === 'string') {
+    const cleanUrl = s.url.trim();
+
+    if (cleanUrl.startsWith('/') && !cleanUrl.startsWith('//')) {
+      return cleanUrl;
+    }
+  }
+
+  if (s.brand && s.name) {
+    return `/fragrance.html?brand=${encodeURIComponent(s.brand)}&name=${encodeURIComponent(s.name)}`;
+  }
+
+  if (s.name && fragrancesData.length) {
+    const match = fragrancesData.find(f =>
+      (f.name || '').trim().toLowerCase() === String(s.name).trim().toLowerCase()
+    );
+
+    if (match) {
+      return `/fragrance.html?brand=${encodeURIComponent(match.brand)}&name=${encodeURIComponent(match.name)}`;
+    }
+  }
+
+  return '/search.html';
+}
+
+function appendMessage(role, text, suggestions) {
+  const row = document.createElement('div');
+  row.className = `message-row ${role}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = `avatar ${role}`;
+  avatar.textContent = role === 'advisor' ? 'S' : 'You';
+
+  const bubble = document.createElement('div');
+  bubble.className = `bubble ${role}`;
+
+  if (role === 'advisor') {
+    const label = document.createElement('span');
+    label.className = 'sender-label';
+    label.textContent = 'Sillage';
+    bubble.appendChild(label);
+  }
+
+  const content = document.createElement('div');
+  content.innerHTML = formatText(text);
+  bubble.appendChild(content);
+
+  if (Array.isArray(suggestions) && suggestions.length > 0) {
+    const cards = document.createElement('div');
+    cards.className = 'rec-cards';
+
+    suggestions.forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'rec-card';
+
+      const name = document.createElement('div');
+      name.className = 'rec-card-name';
+      name.textContent = s.name || 'Recommended fragrance';
+      card.appendChild(name);
+
+      if (s.reason) {
+        const reason = document.createElement('div');
+        reason.className = 'rec-card-reason';
+        reason.textContent = s.reason;
+        card.appendChild(reason);
+      }
+
+      const link = document.createElement('a');
+      link.className = 'rec-card-link';
+      link.href = getSuggestionUrl(s);
+      link.target = '_self';
+      link.textContent = 'View on Maxparfum →';
+      card.appendChild(link);
+
+      cards.appendChild(card);
+    });
+
+    bubble.appendChild(cards);
+  }
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  chatArea.appendChild(row);
+  scrollToBottom();
+}
+    function showTyping() {
+      const row = document.createElement('div');
+      row.className = 'typing-indicator';
+      row.id = 'typing-row';
+      row.innerHTML = `
+        <div class="avatar advisor" style="flex-shrink:0;">S</div>
+        <div style="display:flex;gap:5px;align-items:center;padding:6px 0;">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>`;
+      chatArea.appendChild(row);
+      scrollToBottom();
+    }
+
+    function hideTyping() {
+      const el = document.getElementById('typing-row');
+      if (el) el.remove();
+    }
+
+    function showError(msg) {
+      const div = document.createElement('div');
+      div.className = 'error-bubble';
+      div.textContent = msg;
+      chatArea.appendChild(div);
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    // ── API call to YOUR backend ──
+    async function callBackend(message) {
+      const resp = await fetch('http://localhost:3000/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, sessionId })
+      });
+      if (!resp.ok) throw new Error(`Server error: ${resp.status}`);
+      return await resp.json();
+    }
+
+    // ── Send message ──
+    async function sendMessage(text) {
+      if (!text.trim() || isThinking) return;
+
+      isThinking = true;
+      sendBtn.disabled = true;
+      suggestRow.style.display = 'none';
+      userInput.style.height = 'auto';
+
+      appendMessage('user', text);
+      showTyping();
+
+      try {
+        const data = await callBackend(text);
+
+        if (data.sessionId) {
+          sessionId = data.sessionId;
+          localStorage.setItem('mp_session_id', sessionId);
+        }
+
+        hideTyping();
+
+        // Combine reply + follow-up question into one message
+        let replyText = data.reply || '';
+        if (data.ask_followup && data.followup_question) {
+          replyText = replyText
+            ? `${replyText}\n\n${data.followup_question}`
+            : data.followup_question;
+        }
+
+        if (replyText) {
+          appendMessage('advisor', replyText, data.suggestions || []);
+        }
+
+      } catch (err) {
+        hideTyping();
+        showError(`Something went wrong: ${err.message}`);
+        console.error(err);
+      }
+
+      isThinking = false;
+      sendBtn.disabled = userInput.value.trim() === '';
+      userInput.focus();
+    }
+
+    // ── Opening message ──
+    async function openingMessage() {
+      showTyping();
+      try {
+        const data = await callBackend('[OPEN]');
+        if (data.sessionId) {
+          sessionId = data.sessionId;
+          localStorage.setItem('mp_session_id', sessionId);
+        }
+        hideTyping();
+        if (data.reply) appendMessage('advisor', data.reply);
+        suggestRow.style.display = 'flex';
+      } catch {
+        hideTyping();
+        appendMessage('advisor', "What's the last scent that stopped you in your tracks — on someone walking past, in a room, anywhere?");
+        suggestRow.style.display = 'flex';
+      }
+    }
+
+    // ── Suggestion pills ──
+    function useSuggestion(el) {
+      suggestRow.style.display = 'none';
+      sendMessage(el.textContent);
+    }
+
+    // ── Input events ──
+    function autoResize() {
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
+    }
+
+    userInput.addEventListener('input', () => {
+      autoResize();
+      sendBtn.disabled = userInput.value.trim() === '' || isThinking;
+    });
+
+    userInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        const text = userInput.value.trim();
+        if (text) {
+          userInput.value = '';
+          autoResize();
+          sendBtn.disabled = true;
+          sendMessage(text);
+        }
+      }
+    });
+
+    sendBtn.addEventListener('click', () => {
+      const text = userInput.value.trim();
+      if (text) {
+        userInput.value = '';
+        autoResize();
+        sendBtn.disabled = true;
+        sendMessage(text);
+      }
+    });
+
+    // ── Boot ──
+    openingMessage();
+  </script>
+
+  <!-- Navbar scripts — keep exactly as original -->
+  <script src="navbar-loader.js"></script>
+  <!-- Navbar scripts -->
+<script>
+  function loadNavbarEnhancements() {
+    if (window.__maxparfumNavbarEnhancementsLoaded) return;
+    window.__maxparfumNavbarEnhancementsLoaded = true;
+
+    const profileScript = document.createElement('script');
+    profileScript.type = 'module';
+    profileScript.src = 'nav_profile.js';
+    document.body.appendChild(profileScript);
+
+    const notificationsScript = document.createElement('script');
+    notificationsScript.type = 'module';
+    notificationsScript.src = 'notifications_nav.js';
+    document.body.appendChild(notificationsScript);
+  }
+
+  document.addEventListener('navbar:loaded', loadNavbarEnhancements, { once: true });
+</script>
+<script src="navbar-loader.js"></script>
+
+</body>
+</html>

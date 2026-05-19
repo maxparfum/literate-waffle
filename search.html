@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <title>Search Results – MaxParfum Fragrance Finder</title>
+  <meta name="description" content="Search results for affordable fragrance dupes. Find your perfect scent alternative with MaxParfum's extensive collection of designer fragrance dupes." />
+  <meta name="keywords" content="fragrance search, perfume search, dupe finder, cologne search, MaxParfum" />
+  <meta name="author" content="MaxParfum" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.maxparfum.net/search.html" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Search Results – MaxParfum" />
+  <meta property="og:description" content="Find your perfect fragrance dupe with MaxParfum's search." />
+  <meta property="og:url" content="https://www.maxparfum.net/search.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.maxparfum.net/display.png" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Search Results – MaxParfum" />
+  <meta name="twitter:description" content="Find your perfect fragrance dupe with MaxParfum's search." />
+  <meta name="twitter:image" content="https://www.maxparfum.net/display.png" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+    }
+    /* Search bar styling */
+    .search-bar {
+      background-color: #FFFFFF;
+      color: #000000;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      font-family: "Times New Roman", serif;
+      width: 200px;
+      font-size: 0.9rem;
+    }
+
+    .suggestions {
+      position: absolute;
+      top: 50px;
+      right: 0.5rem;
+      background: rgba(0, 0, 0, 0.95);
+      color: #C2C2C2;
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 999;
+      width: 240px;
+      font-family: "Times New Roman", serif;
+      padding: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .suggestions div {
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    .suggestions div:last-child {
+      margin-bottom: 0;
+    }
+
+    .suggestions div:hover {
+      background: rgba(212, 175, 55, 0.08);
+      border-color: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+    }
+
+    .suggestions div > div:first-child {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .suggestions div > div:nth-child(2) {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 2px;
+    }
+
+    /* Custom scrollbar styling */
+    .suggestions::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .suggestions::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+    }
+
+    .suggestions::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+    }
+
+    .suggestions::-webkit-scrollbar-thumb:hover {
+      background: rgba(212, 175, 55, 0.5);
+    }
+
+    /* Page title */
+    .results-title {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 42px;
+      margin: 24px 0 10px;
+    }
+
+    .results-sub {
+      text-align: center;
+      opacity: 0.8;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    /* Results grid */
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto 60px;
+    }
+
+    .card {
+      background: #1b1b1b;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      cursor: pointer;
+      border: 1px solid #2a2a2a;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.45);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #111;
+    }
+
+    .card h3 {
+      font-size: 0.98rem;
+      margin: 10px 0 0;
+      color: #fff;
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .no-results {
+      text-align: center;
+      font-size: 1.2rem;
+      padding: 60px 20px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .results-title { font-size: 34px; }
+    }
+
+    /* Community signal line on search cards */
+    .card-community {
+      margin-top: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.67rem;
+      color: rgba(194,194,194,0.55);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-community .cc-gold {
+      color: rgba(212,175,55,0.8);
+    }
+  </style>
+<link rel="stylesheet" href="navbar.css">
+</head>
+<body>
+	  <!-- Navbar (loaded from navbar.html) -->
+	  <div id="navbar-container"></div>
+
+  <!-- Notifications dropdown -->
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">
+      <h3 class="notifications-title">Notifications</h3>
+      <button class="mark-all-read-btn" id="mark-all-read-btn">Mark all as read</button>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      <div class="notifications-loading">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Overlay Search Panel -->
+  <div id="mobile-search-overlay">
+    <div id="overlay-close">&times;</div>
+    <input type="text" id="mobile-search-input" placeholder="Search fragrance..." />
+    <div id="mobile-suggestions"></div>
+  </div>
+
+  <div class="results-title">Search Results</div>
+  <div id="results" class="results"></div>
+  <div id="no-results" class="no-results" style="display:none;"></div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase.js';
+import { fetchWithCache } from './cache-utils.js';
+import { getAutocompleteSuggestions, searchFragrances } from './search-utils.js';
+import { loadAllImageOverrides, makeOverrideKey } from './fragrance-image-override.js';
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Load ALL fragrances from fragrances_merged.json for search functionality
+    let allFragrances = [];
+    let imageOverrideMap = new Map();
+    let searchTimeout = null;
+    let loadError = false;
+
+    // Helper function to capitalize first letter of each word
+    function capitalizeWords(str) {
+      if (!str) return '';
+      return String(str).replace(/\b\w/g, letter => letter.toUpperCase());
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function normalizeText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
+function normalizeFragranceKey(fragrance) {
+  return `${normalizeText(fragrance?.brand)}::${normalizeText(fragrance?.name)}`;
+}
+
+function ensureArray(value) {
+  if (Array.isArray(value)) return value;
+  if (typeof value === 'string' && value.trim() !== '') {
+    return value.split(/[,;|]/).map(x => x.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+function normalizeFragranceRecord(fragrance) {
+  return {
+    ...fragrance,
+    top_notes: ensureArray(fragrance.top_notes),
+    middle_notes: ensureArray(fragrance.middle_notes),
+    base_notes: ensureArray(fragrance.base_notes),
+    main_accords: ensureArray(fragrance.main_accords),
+    dupes: ensureArray(fragrance.dupes),
+    matched_by: fragrance.matched_by || 'none'
+  };
+}
+
+function mergeFragranceSources(jsonFragrances, liveFragrances) {
+  const mergedMap = new Map();
+
+  (jsonFragrances || []).forEach(fragrance => {
+    const normalized = normalizeFragranceRecord(fragrance);
+    mergedMap.set(normalizeFragranceKey(normalized), normalized);
+  });
+
+  (liveFragrances || []).forEach(fragrance => {
+    const normalized = normalizeFragranceRecord(fragrance);
+    mergedMap.set(normalizeFragranceKey(normalized), normalized);
+  });
+
+  return Array.from(mergedMap.values());
+}
+
+    // Lazy-load fragrances_merged.json
+    let loadPromise = null;
+
+   function loadFragrances() {
+  if (loadPromise) return loadPromise;
+
+  loadPromise = Promise.all([
+    fetchWithCache('fragrances_merged.json', 'fragrances_full_search'),
+    supabase.from('fragrances').select('*'),
+    loadAllImageOverrides()
+  ])
+    .then(([jsonData, liveResponse, overrides]) => {
+      if (liveResponse.error) {
+        throw liveResponse.error;
+      }
+
+      imageOverrideMap = overrides || new Map();
+      const liveData = liveResponse.data || [];
+      allFragrances = mergeFragranceSources(jsonData, liveData);
+
+      console.log(`✅ Loaded ${allFragrances.length} fragrances for search (${jsonData.length} JSON + ${liveData.length} live Supabase)`);
+      loadError = false;
+      return allFragrances;
+    })
+    .catch(async error => {
+      console.error('Failed to load live Supabase fragrances, falling back to JSON only:', error);
+
+      try {
+        const [jsonOnlyData, overrides] = await Promise.all([
+          fetchWithCache('fragrances_merged.json', 'fragrances_full_search'),
+          loadAllImageOverrides().catch(() => new Map())
+        ]);
+        imageOverrideMap = overrides || new Map();
+        allFragrances = jsonOnlyData.map(normalizeFragranceRecord);
+        console.log(`✅ Loaded ${allFragrances.length} fragrances for search (JSON fallback only)`);
+        loadError = false;
+        return allFragrances;
+      } catch (jsonError) {
+        console.error('Failed to load fragrances for search:', jsonError);
+        loadError = true;
+        throw jsonError;
+      }
+    });
+
+  return loadPromise;
+}
+
+    // Pre-load on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+      loadFragrances();
+    });
+
+    // Search functionality for desktop and mobile
+    const searchInput = document.getElementById('search');
+    const suggestions = document.getElementById('suggestions');
+    const mobileInput = document.getElementById('mobile-search-input');
+    const mobileSuggestions = document.getElementById('mobile-suggestions');
+
+    function createSuggestionBoxHandler(inputEl, suggestionEl) {
+      if (!inputEl || !suggestionEl) return;
+
+      inputEl.addEventListener('focus', function () {
+        // Trigger load on first focus if not already loaded
+        if (!loadPromise) {
+          loadFragrances();
+        }
+      });
+
+      inputEl.addEventListener('input', function () {
+        const query = this.value.trim();
+        suggestionEl.innerHTML = '';
+
+        // Clear previous timeout
+        if (searchTimeout) {
+          clearTimeout(searchTimeout);
+        }
+
+        if (!query || query.length < 2) return;
+
+        // Trigger load if not started
+        if (!loadPromise) {
+          loadFragrances();
+        }
+
+        if (loadError) {
+          const errorDiv = document.createElement('div');
+          errorDiv.textContent = 'Search unavailable, please refresh';
+          errorDiv.style.padding = '10px';
+          errorDiv.style.color = '#ff4444';
+          suggestionEl.appendChild(errorDiv);
+          return;
+        }
+
+        if (allFragrances.length === 0) {
+          const loadingDiv = document.createElement('div');
+          loadingDiv.textContent = 'Loading...';
+          loadingDiv.style.padding = '10px';
+          loadingDiv.style.color = '#999';
+          suggestionEl.appendChild(loadingDiv);
+          return;
+        }
+
+        // Debounce search for better performance
+        searchTimeout = setTimeout(() => {
+          // Use brand-aware autocomplete (searches ALL fragrances from fragrances_merged.json)
+          const matches = getAutocompleteSuggestions(allFragrances, query, 15);
+
+          if (matches.length === 0) {
+            const noResults = document.createElement('div');
+            noResults.textContent = 'No fragrances found';
+            noResults.style.padding = '10px';
+            noResults.style.color = '#999';
+            suggestionEl.appendChild(noResults);
+            return;
+          }
+
+          matches.forEach(item => {
+            const div = document.createElement('div');
+           
+
+            // Display brand prominently with name
+            div.innerHTML = `
+              <div>${capitalizeWords(escapeHtml(item.brand))}</div>
+              <div>${capitalizeWords(escapeHtml(item.name))}</div>
+            `;
+
+            div.addEventListener('click', () => {
+  sessionStorage.setItem('mp:selectedFragrance', JSON.stringify(item));
+window.location.href = `fragrance.html?brand=${encodeURIComponent(item.brand || '')}&name=${encodeURIComponent(item.name || '')}`;
+});
+            suggestionEl.appendChild(div);
+          });
+        }, 200); // 200ms debounce
+      });
+
+      // Handle Enter key - ALWAYS go to search.html
+      inputEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const query = this.value.trim();
+          if (!query) return;
+
+          // Clear timeout
+          if (searchTimeout) {
+            clearTimeout(searchTimeout);
+          }
+
+          // Always navigate to search results page
+          window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        }
+      });
+    }
+
+    createSuggestionBoxHandler(searchInput, suggestions);
+    createSuggestionBoxHandler(mobileInput, mobileSuggestions);
+
+    // Mobile search overlay handlers
+    const mobileSearchIcon = document.getElementById('mobile-search-icon');
+    const mobileSearchOverlay = document.getElementById('mobile-search-overlay');
+    const overlayClose = document.getElementById('overlay-close');
+
+    if (mobileSearchIcon && mobileSearchOverlay) {
+      mobileSearchIcon.addEventListener('click', () => {
+        mobileSearchOverlay.classList.add('active');
+        if (mobileInput) mobileInput.focus();
+      });
+    }
+
+    if (overlayClose && mobileSearchOverlay) {
+      overlayClose.addEventListener('click', () => {
+        mobileSearchOverlay.classList.remove('active');
+        if (mobileInput) mobileInput.value = '';
+        if (mobileSuggestions) mobileSuggestions.innerHTML = '';
+      });
+    }
+
+    // Close overlay when clicking outside the search input
+    if (mobileSearchOverlay) {
+      mobileSearchOverlay.addEventListener('click', (e) => {
+        if (e.target === mobileSearchOverlay) {
+          mobileSearchOverlay.classList.remove('active');
+          if (mobileInput) mobileInput.value = '';
+          if (mobileSuggestions) mobileSuggestions.innerHTML = '';
+        }
+      });
+    }
+
+	    // Navbar interactions, profile and notifications are handled centrally
+	    // via navbar-loader.js + nav_profile.js + notifications_nav.js.
+
+    // Close suggestions if clicking outside
+    document.addEventListener('click', (ev) => {
+      if (!ev.target.closest('#suggestions') && !ev.target.closest('#search')) suggestions.innerHTML = '';
+      if (!ev.target.closest('#mobile-suggestions') && !ev.target.closest('#mobile-search-input')) mobileSuggestions.innerHTML = '';
+    });
+
+    // Read query
+    var urlParams = new URLSearchParams(window.location.search);
+    var raw = urlParams.get('q');
+    var query = raw ? raw.trim() : '';
+
+    // Load ALL fragrances from fragrances_merged.json and perform brand-aware search
+    loadFragrances()
+  .then(function(data) {
+    var resultsDiv = document.getElementById('results');
+    var noResultsDiv = document.getElementById('no-results');
+
+    if (!query) {
+      noResultsDiv.style.display = 'block';
+      noResultsDiv.innerHTML = 'Please enter a search query. <a href="/" style="color: #C2C2C2; text-decoration: underline;">Return to home</a>';
+      return;
+    }
+
+    console.log(`🔍 Searching ${data.length} fragrances for: "${query}"`);
+
+    const matches = searchFragrances(data, query, {
+      maxResults: 40,
+      minScore: 100
+    });
+
+    if (matches.length > 0) {
+      console.log(`✅ Found ${matches.length} matches`);
+
+      // Map card DOM nodes by brand|||name key so community signals can update them later
+      const cardNodeMap = new Map();
+
+      matches.forEach(function(item) {
+        var card = document.createElement('div');
+        card.className = 'card';
+
+        const overrideKey = makeOverrideKey(item.brand || '', item.name || '');
+        const resolvedImage = imageOverrideMap.get(overrideKey) || item.image || 'https://via.placeholder.com/200';
+        card.innerHTML =
+          '<img src="' + resolvedImage + '" alt="' + escapeHtml(item.name || '') + '">' +
+          '<h3>' + capitalizeWords(escapeHtml(item.brand || '')) + ' – ' + capitalizeWords(escapeHtml(item.name || '')) + '</h3>';
+
+        card.addEventListener('click', function() {
+          sessionStorage.setItem('mp:selectedFragrance', JSON.stringify(item));
+          window.location.href =
+            `fragrance.html?brand=${encodeURIComponent(item.brand || '')}&name=${encodeURIComponent(item.name || '')}`;
+        });
+
+        resultsDiv.appendChild(card);
+        const mapKey = `${(item.brand || '').toLowerCase()}|||${(item.name || '').toLowerCase()}`;
+        cardNodeMap.set(mapKey, card);
+      });
+
+      // Load community signals asynchronously without blocking the render
+      import('./community-activity.js').then(function(mod) {
+        mod.getSearchActivityStats(matches).then(function(statsMap) {
+          statsMap.forEach(function(stats, key) {
+            const cardNode = cardNodeMap.get(key);
+            if (!cardNode || !stats.ratingCount) return;
+            const signal = document.createElement('p');
+            signal.className = 'card-community';
+            let text = `<span class="cc-gold">⭐ ${stats.ratingCount}</span> rating${stats.ratingCount !== 1 ? 's' : ''}`;
+            if (stats.topRater) text += ` · recently by <span class="cc-gold">${stats.topRater}</span>`;
+            signal.innerHTML = text;
+            cardNode.appendChild(signal);
+          });
+        }).catch(function() { /* silently ignore */ });
+      }).catch(function() { /* silently ignore if module unavailable */ });
+    } else {
+      console.log('❌ No matches found');
+      noResultsDiv.style.display = 'block';
+      noResultsDiv.innerHTML = 'No results found for "' + escapeHtml(raw || '') + '". Try different keywords or check spelling. <a href="/" style="color: #C2C2C2; text-decoration: underline; margin-left: 10px;">Return to home</a>';
+    }
+  })
+  .catch(function(error) {
+    console.error('Failed to load results:', error);
+    var noResultsDiv = document.getElementById('no-results');
+    noResultsDiv.style.display = 'block';
+    noResultsDiv.innerHTML = 'Search unavailable, please refresh. <a href="/" style="color: #C2C2C2; text-decoration: underline; margin-left: 10px;">Return to home</a>';
+  });
+  </script>
+  <script src="navbar-loader.js"></script>
+  <script type="module" src="notifications_nav.js"></script>
+  <script type="module" src="nav_profile.js"></script>
+</body>
+</html>
