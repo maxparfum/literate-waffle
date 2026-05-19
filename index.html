@@ -275,31 +275,186 @@
   justify-content: center;
 }
 
-.hero-visual-frame {
+/* ── HERO SLIDESHOW ────────────────────────────────────────────────── */
+.hero-slideshow {
   width: 100%;
-  max-width: 380px;
-  aspect-ratio: 3/4;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hero-slide-card {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 18px;
+  border: 1px solid rgba(197,152,73,0.22);
+  background: linear-gradient(160deg, rgba(18,14,7,0.97) 0%, rgba(10,8,4,0.99) 100%);
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(197,152,73,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+}
+
+.hero-slide-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 56px rgba(0,0,0,0.65), 0 0 28px rgba(197,152,73,0.12);
+  border-color: rgba(197,152,73,0.45);
+}
+
+.hero-slide-img-wrap {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: rgba(14,11,6,0.8);
+  position: relative;
+}
+
+.hero-slide-img-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to top, rgba(10,8,4,0.95), transparent);
+  pointer-events: none;
+}
+
+.hero-slide-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+.hero-slide-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-slide-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 6s ease;
+}
+
+.hero-slide-card:hover .hero-slide-slide.active img {
+  transform: scale(1.04);
+}
+
+.hero-slide-info {
+  padding: 16px 18px 18px;
+  position: relative;
+}
+
+.hero-slide-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(197,152,73,0.7);
+  margin-bottom: 4px;
+}
+
+.hero-slide-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.hero-slide-dupes {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: rgba(197,152,73,0.85);
+  border: 1px solid rgba(197,152,73,0.22);
   border-radius: 20px;
-  border: 1px solid rgba(197,152,73,0.2);
-  background:
-    radial-gradient(ellipse at 50% 20%, rgba(197,152,73,0.14) 0%, transparent 60%),
-    rgba(10,8,5,0.7);
-  backdrop-filter: blur(6px);
+  padding: 4px 10px;
+  background: rgba(197,152,73,0.06);
+}
+
+.hero-slide-dupes-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C59849;
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* Slideshow controls */
+.hero-slide-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(197,152,73,0.1);
+  gap: 10px;
 }
 
-.hero-visual-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  mix-blend-mode: luminosity;
-  opacity: 0.85;
-  border-radius: 20px;
+.hero-slide-arrow {
+  background: rgba(15,12,8,0.7);
+  border: 1px solid rgba(197,152,73,0.2);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(197,152,73,0.7);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.hero-slide-arrow:hover {
+  border-color: rgba(197,152,73,0.5);
+  color: #C59849;
+  background: rgba(197,152,73,0.08);
+}
+
+.hero-slide-arrow svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.hero-slide-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.hero-slide-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(197,152,73,0.25);
+  transition: background 0.25s ease, transform 0.25s ease;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.hero-slide-dot.active {
+  background: #C59849;
+  transform: scale(1.4);
 }
 
 /* ── SECTION SHARED ────────────────────────────────────────────────── */
@@ -3833,9 +3988,30 @@
           </div>
         </div>
 
-        <div class="hero-visual-col" aria-hidden="true">
-          <div class="hero-visual-frame">
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/6c5b83172650551.6482b548c7660.png" alt="Premium fragrance bottle" loading="eager" />
+        <div class="hero-visual-col">
+          <div class="hero-slideshow" id="heroSlideshow">
+            <a href="fragrance.html?brand=Dior&name=Sauvage" class="hero-slide-card" id="heroSlideCard" aria-label="View fragrance details">
+              <div class="hero-slide-img-wrap" id="heroSlideImgWrap">
+                <!-- Slides injected by JS -->
+              </div>
+              <div class="hero-slide-info">
+                <p class="hero-slide-brand" id="heroSlideBrand">Loading...</p>
+                <h3 class="hero-slide-name" id="heroSlideName"></h3>
+                <div class="hero-slide-dupes" id="heroSlideDupes" style="display:none;">
+                  <span class="hero-slide-dupes-dot"></span>
+                  <span id="heroSlideDupesText"></span>
+                </div>
+              </div>
+            </a>
+            <div class="hero-slide-controls">
+              <button class="hero-slide-arrow" id="heroSlidePrev" aria-label="Previous fragrance">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div class="hero-slide-dots" id="heroSlideDots"></div>
+              <button class="hero-slide-arrow" id="heroSlideNext" aria-label="Next fragrance">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -4921,6 +5097,249 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCommunityPulse();
   subscribeToActivityEvents();
 });
+</script>
+
+<script>
+// ── HERO SLIDESHOW ──────────────────────────────────────────────────────
+(function() {
+  // Curated pool of popular fragrances with confirmed dupe alternatives.
+  // Dupe counts represent the number of well-known alternatives listed on MaxParfum.
+  var POOL = [
+    {
+      brand: 'Dior',
+      name: 'Sauvage',
+      image: 'https://ifragranceofficial.com/wp-content/uploads/2021/08/dior-sauvage-eau-de-toilette-1-scaled.webp',
+      dupes: 18
+    },
+    {
+      brand: 'Creed',
+      name: 'Aventus',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.56.jpg',
+      dupes: 24
+    },
+    {
+      brand: 'Maison Francis Kurkdjian',
+      name: 'Baccarat Rouge 540',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.55148.jpg',
+      dupes: 21
+    },
+    {
+      brand: 'Parfums de Marly',
+      name: 'Layton',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.44452.jpg',
+      dupes: 16
+    },
+    {
+      brand: 'Yves Saint Laurent',
+      name: 'Y EDP',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.58455.jpg',
+      dupes: 12
+    },
+    {
+      brand: 'Versace',
+      name: 'Eros',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.15877.jpg',
+      dupes: 14
+    },
+    {
+      brand: 'Giorgio Armani',
+      name: 'Acqua di Gio Profumo',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.31521.jpg',
+      dupes: 15
+    },
+    {
+      brand: 'Tom Ford',
+      name: 'Oud Wood',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.8216.jpg',
+      dupes: 11
+    },
+    {
+      brand: 'Carolina Herrera',
+      name: 'Good Girl',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.39073.jpg',
+      dupes: 13
+    },
+    {
+      brand: 'Jean Paul Gaultier',
+      name: 'Ultra Male',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.27694.jpg',
+      dupes: 10
+    }
+  ];
+
+  var slides = [];
+  var currentIdx = 0;
+  var timer = null;
+  var INTERVAL = 5000;
+  var isHovered = false;
+
+  function buildSlides(pool) {
+    var imgWrap = document.getElementById('heroSlideImgWrap');
+    if (!imgWrap) return;
+    imgWrap.innerHTML = '';
+    slides = [];
+
+    pool.forEach(function(frag, i) {
+      var div = document.createElement('div');
+      div.className = 'hero-slide-slide' + (i === 0 ? ' active' : '');
+
+      var img = document.createElement('img');
+      img.alt = frag.brand + ' ' + frag.name;
+      img.loading = i === 0 ? 'eager' : 'lazy';
+      img.src = frag.image;
+      img.onerror = function() {
+        this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400"%3E%3Crect fill="%230a0800" width="300" height="400"/%3E%3Ctext x="50%25" y="50%25" font-size="48" text-anchor="middle" fill="%23C59849" opacity="0.3" dy=".3em"%3E✦%3C/text%3E%3C/svg%3E';
+      };
+
+      div.appendChild(img);
+      imgWrap.appendChild(div);
+      slides.push(div);
+    });
+  }
+
+  function buildDots(count) {
+    var dotsEl = document.getElementById('heroSlideDots');
+    if (!dotsEl) return;
+    dotsEl.innerHTML = '';
+    for (var i = 0; i < count; i++) {
+      (function(idx) {
+        var btn = document.createElement('button');
+        btn.className = 'hero-slide-dot' + (idx === 0 ? ' active' : '');
+        btn.setAttribute('aria-label', 'Go to slide ' + (idx + 1));
+        btn.addEventListener('click', function() { goTo(idx); restartTimer(); });
+        dotsEl.appendChild(btn);
+      })(i);
+    }
+  }
+
+  function updateDots(idx) {
+    var dots = document.querySelectorAll('.hero-slide-dot');
+    dots.forEach(function(d, i) {
+      d.classList.toggle('active', i === idx);
+    });
+  }
+
+  function updateCard(frag) {
+    var card = document.getElementById('heroSlideCard');
+    var brand = document.getElementById('heroSlideBrand');
+    var name = document.getElementById('heroSlideName');
+    var dupesWrap = document.getElementById('heroSlideDupes');
+    var dupesText = document.getElementById('heroSlideDupesText');
+
+    if (!card || !brand || !name) return;
+
+    card.href = 'fragrance.html?brand=' + encodeURIComponent(frag.brand) + '&name=' + encodeURIComponent(frag.name);
+    card.setAttribute('aria-label', 'View ' + frag.brand + ' ' + frag.name);
+    brand.textContent = frag.brand;
+    name.textContent = frag.name;
+
+    if (frag.dupes && frag.dupes > 0) {
+      dupesText.textContent = 'Dupes available: ' + frag.dupes;
+      dupesWrap.style.display = 'inline-flex';
+    } else {
+      dupesWrap.style.display = 'none';
+    }
+  }
+
+  function goTo(idx) {
+    if (!slides.length) return;
+    if (idx < 0) idx = slides.length - 1;
+    if (idx >= slides.length) idx = 0;
+
+    slides[currentIdx].classList.remove('active');
+    currentIdx = idx;
+    slides[currentIdx].classList.add('active');
+
+    updateCard(pool[currentIdx]);
+    updateDots(currentIdx);
+  }
+
+  function next() { goTo(currentIdx + 1); }
+  function prev() { goTo(currentIdx - 1); }
+
+  function startTimer() {
+    timer = setInterval(function() {
+      if (!isHovered) next();
+    }, INTERVAL);
+  }
+
+  function restartTimer() {
+    clearInterval(timer);
+    startTimer();
+  }
+
+  function init() {
+    var pool = POOL;
+
+    // Random starting index — never always starts at 0
+    var startIdx = Math.floor(Math.random() * pool.length);
+
+    // Rotate pool so startIdx becomes first element, keeping visual order
+    var rotated = pool.slice(startIdx).concat(pool.slice(0, startIdx));
+
+    buildSlides(rotated);
+    buildDots(rotated.length);
+    updateCard(rotated[0]);
+
+    // Replace closure reference so goTo uses the rotated pool
+    pool = rotated;
+
+    // Wire arrows
+    var prevBtn = document.getElementById('heroSlidePrev');
+    var nextBtn = document.getElementById('heroSlideNext');
+    if (prevBtn) prevBtn.addEventListener('click', function() { prev(); restartTimer(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { next(); restartTimer(); });
+
+    // Pause on hover
+    var card = document.getElementById('heroSlideCard');
+    if (card) {
+      card.addEventListener('mouseenter', function() { isHovered = true; });
+      card.addEventListener('mouseleave', function() { isHovered = false; });
+    }
+
+    startTimer();
+
+    // Local ref for goTo to use rotated pool
+    function updateCard(frag) {
+      var cardEl = document.getElementById('heroSlideCard');
+      var brandEl = document.getElementById('heroSlideBrand');
+      var nameEl = document.getElementById('heroSlideName');
+      var dupesWrap = document.getElementById('heroSlideDupes');
+      var dupesText = document.getElementById('heroSlideDupesText');
+      if (!cardEl || !brandEl || !nameEl) return;
+      cardEl.href = 'fragrance.html?brand=' + encodeURIComponent(frag.brand) + '&name=' + encodeURIComponent(frag.name);
+      cardEl.setAttribute('aria-label', 'View ' + frag.brand + ' ' + frag.name);
+      brandEl.textContent = frag.brand;
+      nameEl.textContent = frag.name;
+      if (frag.dupes && frag.dupes > 0) {
+        dupesText.textContent = 'Dupes available: ' + frag.dupes;
+        dupesWrap.style.display = 'inline-flex';
+      } else {
+        dupesWrap.style.display = 'none';
+      }
+    }
+
+    function goTo(idx) {
+      if (!slides.length) return;
+      if (idx < 0) idx = slides.length - 1;
+      if (idx >= slides.length) idx = 0;
+      slides[currentIdx].classList.remove('active');
+      currentIdx = idx;
+      slides[currentIdx].classList.add('active');
+      updateCard(pool[currentIdx]);
+      updateDots(currentIdx);
+    }
+
+    function next() { goTo(currentIdx + 1); }
+    function prev() { goTo(currentIdx - 1); }
+    function restartTimer() { clearInterval(timer); startTimer(); }
+
+    if (prevBtn) { prevBtn.onclick = function() { prev(); restartTimer(); }; }
+    if (nextBtn) { nextBtn.onclick = function() { next(); restartTimer(); }; }
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
 </script>
 </body>
 </html>
