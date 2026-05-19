@@ -5102,68 +5102,70 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 // ── HERO SLIDESHOW ──────────────────────────────────────────────────────
 (function() {
-  // Curated pool of popular fragrances with confirmed dupe alternatives.
-  // Dupe counts represent the number of well-known alternatives listed on MaxParfum.
+  // Curated pool: brand/name/dupes only. Images resolved at runtime from
+  // the same sources used everywhere on MaxParfum (Supabase overrides →
+  // fragrances_merged.json → verified fallback URL). Never hardcode image
+  // IDs that could point to the wrong fragrance on a third-party CDN.
   var POOL = [
     {
       brand: 'Dior',
       name: 'Sauvage',
-      image: 'https://ifragranceofficial.com/wp-content/uploads/2021/08/dior-sauvage-eau-de-toilette-1-scaled.webp',
-      dupes: 18
+      dupes: 18,
+      _fallback: 'https://ifragranceofficial.com/wp-content/uploads/2021/08/dior-sauvage-eau-de-toilette-1-scaled.webp'
     },
     {
       brand: 'Creed',
       name: 'Aventus',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.56.jpg',
-      dupes: 24
+      dupes: 24,
+      _fallback: 'https://www.notino.co.uk/fs/images/cache/product_detail_2x/1/creed-aventus-edp-50-ml-for-men~p5073900.jpg'
     },
     {
       brand: 'Maison Francis Kurkdjian',
       name: 'Baccarat Rouge 540',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.55148.jpg',
-      dupes: 21
+      dupes: 21,
+      _fallback: 'https://www.mfkparfums.com/media/catalog/product/cache/a/image/9df78eab33525d08d6e5fb8d27136e95/b/a/baccarat_rouge_540_-_extrait_de_parfum_200ml.jpg'
     },
     {
       brand: 'Parfums de Marly',
       name: 'Layton',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.44452.jpg',
-      dupes: 16
+      dupes: 16,
+      _fallback: 'https://cdn.shopify.com/s/files/1/0581/7714/5232/files/Layton.jpg'
     },
     {
       brand: 'Yves Saint Laurent',
       name: 'Y EDP',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.58455.jpg',
-      dupes: 12
+      dupes: 12,
+      _fallback: 'https://www.yslbeauty.co.uk/media/catalog/product/cache/3/image/700x/17f82f742ffe127f42dca9de82fb58b1/y/s/ysl-y-edp.jpg'
     },
     {
       brand: 'Versace',
       name: 'Eros',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.15877.jpg',
-      dupes: 14
+      dupes: 14,
+      _fallback: 'https://www.versace.com/medias/sys_master/images/images/hc8/hc8/8846792073246/8011003819810_1_1.jpg'
     },
     {
       brand: 'Giorgio Armani',
       name: 'Acqua di Gio Profumo',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.31521.jpg',
-      dupes: 15
+      dupes: 15,
+      _fallback: 'https://www.giorgioarmanibeauty-usa.com/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-armanibeauty-master-catalog/default/dw9e87d8ac/productimages/FRAGRANCE/A-X0Y46380000/A-X0Y46380000_packshot_001.jpg'
     },
     {
       brand: 'Tom Ford',
       name: 'Oud Wood',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.8216.jpg',
-      dupes: 11
+      dupes: 11,
+      _fallback: 'https://www.tomford.com/dw/image/v2/BGRT_PRD/on/demandware.static/-/Sites-tomford-master/default/dw5b7b3e29/images/fragrance/T5YB01PP_oud-wood-eau-de-parfum_1.jpg'
     },
     {
       brand: 'Carolina Herrera',
       name: 'Good Girl',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.39073.jpg',
-      dupes: 13
+      dupes: 13,
+      _fallback: 'https://www.carolinaherrera.com/medias/original/Good-Girl-Eau-de-Parfum-Legere-80ml-Carolina-Herrera-pack-shot.jpg'
     },
     {
       brand: 'Jean Paul Gaultier',
       name: 'Ultra Male',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.27694.jpg',
-      dupes: 10
+      dupes: 10,
+      _fallback: 'https://www.jeanpaulgaultier.com/cdn/shop/products/Packshot_Ultra_Male_2019_200ml_transparent_1.png'
     }
   ];
 
@@ -5172,6 +5174,8 @@ document.addEventListener('DOMContentLoaded', () => {
   var timer = null;
   var INTERVAL = 5000;
   var isHovered = false;
+  var _goTo = null;
+  var _restart = null;
 
   function buildSlides(pool) {
     var imgWrap = document.getElementById('heroSlideImgWrap');
@@ -5206,7 +5210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var btn = document.createElement('button');
         btn.className = 'hero-slide-dot' + (idx === 0 ? ' active' : '');
         btn.setAttribute('aria-label', 'Go to slide ' + (idx + 1));
-        btn.addEventListener('click', function() { goTo(idx); restartTimer(); });
+        btn.addEventListener('click', function() { if (_goTo) _goTo(idx); if (_restart) _restart(); });
         dotsEl.appendChild(btn);
       })(i);
     }
@@ -5219,87 +5223,82 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function updateCard(frag) {
-    var card = document.getElementById('heroSlideCard');
-    var brand = document.getElementById('heroSlideBrand');
-    var name = document.getElementById('heroSlideName');
-    var dupesWrap = document.getElementById('heroSlideDupes');
-    var dupesText = document.getElementById('heroSlideDupesText');
-
-    if (!card || !brand || !name) return;
-
-    card.href = 'fragrance.html?brand=' + encodeURIComponent(frag.brand) + '&name=' + encodeURIComponent(frag.name);
-    card.setAttribute('aria-label', 'View ' + frag.brand + ' ' + frag.name);
-    brand.textContent = frag.brand;
-    name.textContent = frag.name;
-
-    if (frag.dupes && frag.dupes > 0) {
-      dupesText.textContent = 'Dupes available: ' + frag.dupes;
-      dupesWrap.style.display = 'inline-flex';
-    } else {
-      dupesWrap.style.display = 'none';
-    }
-  }
-
-  function goTo(idx) {
-    if (!slides.length) return;
-    if (idx < 0) idx = slides.length - 1;
-    if (idx >= slides.length) idx = 0;
-
-    slides[currentIdx].classList.remove('active');
-    currentIdx = idx;
-    slides[currentIdx].classList.add('active');
-
-    updateCard(pool[currentIdx]);
-    updateDots(currentIdx);
-  }
-
-  function next() { goTo(currentIdx + 1); }
-  function prev() { goTo(currentIdx - 1); }
-
-  function startTimer() {
+  function startTimer(nextFn) {
+    clearInterval(timer);
     timer = setInterval(function() {
-      if (!isHovered) next();
+      if (!isHovered) nextFn();
     }, INTERVAL);
   }
 
-  function restartTimer() {
-    clearInterval(timer);
-    startTimer();
+  var SUPABASE_URL = 'https://moazswfklpvoperkarlk.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vYXpzd2ZrbHB2b3BlcmthcmxrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3MDc2MTYsImV4cCI6MjA3OTI4MzYxNn0.7_xrCWwV_elxQ0i4bdQ9Hsv-HGB-qz30a__1aeJ4QiM';
+
+  function normKey(str) {
+    if (!str) return '';
+    return str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase().trim().replace(/\u2019|\u2018|'/g, '').replace(/['"]/g, '')
+      .replace(/\s*&\s*/g, ' and ').replace(/\s+/g, ' ');
   }
 
-  function init() {
-    var pool = POOL;
+  function makeKey(brand, name) {
+    return normKey(brand) + '::' + normKey(name);
+  }
+
+  async function resolvePoolImages(pool) {
+    var overrideMap = new Map();
+    var jsonMap = new Map();
+
+    // Fetch Supabase image overrides
+    try {
+      var oRes = await fetch(
+        SUPABASE_URL + '/rest/v1/fragrance_image_overrides?select=brand_normalized,name_normalized,image_url,brand,name',
+        { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY } }
+      );
+      if (oRes.ok) {
+        var rows = await oRes.json();
+        if (Array.isArray(rows)) {
+          rows.forEach(function(row) {
+            var k1 = makeKey(row.brand || row.brand_normalized, row.name || row.name_normalized);
+            var k2 = (row.brand_normalized || '') + '::' + (row.name_normalized || '');
+            overrideMap.set(k1, row.image_url);
+            if (k1 !== k2) overrideMap.set(k2, row.image_url);
+          });
+        }
+      }
+    } catch (e) {}
+
+    // Fetch fragrances_merged.json
+    try {
+      var jRes = await fetch('/fragrances_merged.json');
+      if (jRes.ok) {
+        var frags = await jRes.json();
+        if (Array.isArray(frags)) {
+          frags.forEach(function(f) {
+            if (f.image) jsonMap.set(makeKey(f.brand, f.name), f.image);
+          });
+        }
+      }
+    } catch (e) {}
+
+    return pool.map(function(item) {
+      var k = makeKey(item.brand, item.name);
+      var image = overrideMap.get(k) || jsonMap.get(k) || item._fallback || '';
+      return { brand: item.brand, name: item.name, dupes: item.dupes, image: image };
+    });
+  }
+
+  async function init() {
+    var resolved = await resolvePoolImages(POOL);
 
     // Random starting index — never always starts at 0
-    var startIdx = Math.floor(Math.random() * pool.length);
+    var startIdx = Math.floor(Math.random() * resolved.length);
 
     // Rotate pool so startIdx becomes first element, keeping visual order
-    var rotated = pool.slice(startIdx).concat(pool.slice(0, startIdx));
+    var pool = resolved.slice(startIdx).concat(resolved.slice(0, startIdx));
 
-    buildSlides(rotated);
-    buildDots(rotated.length);
-    updateCard(rotated[0]);
+    buildSlides(pool);
+    buildDots(pool.length);
 
-    // Replace closure reference so goTo uses the rotated pool
-    pool = rotated;
-
-    // Wire arrows
-    var prevBtn = document.getElementById('heroSlidePrev');
-    var nextBtn = document.getElementById('heroSlideNext');
-    if (prevBtn) prevBtn.addEventListener('click', function() { prev(); restartTimer(); });
-    if (nextBtn) nextBtn.addEventListener('click', function() { next(); restartTimer(); });
-
-    // Pause on hover
-    var card = document.getElementById('heroSlideCard');
-    if (card) {
-      card.addEventListener('mouseenter', function() { isHovered = true; });
-      card.addEventListener('mouseleave', function() { isHovered = false; });
-    }
-
-    startTimer();
-
-    // Local ref for goTo to use rotated pool
     function updateCard(frag) {
       var cardEl = document.getElementById('heroSlideCard');
       var brandEl = document.getElementById('heroSlideBrand');
@@ -5332,10 +5331,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function next() { goTo(currentIdx + 1); }
     function prev() { goTo(currentIdx - 1); }
-    function restartTimer() { clearInterval(timer); startTimer(); }
+    function restart() { startTimer(next); }
 
-    if (prevBtn) { prevBtn.onclick = function() { prev(); restartTimer(); }; }
-    if (nextBtn) { nextBtn.onclick = function() { next(); restartTimer(); }; }
+    _goTo = goTo;
+    _restart = restart;
+
+    updateCard(pool[0]);
+
+    var prevBtn = document.getElementById('heroSlidePrev');
+    var nextBtn = document.getElementById('heroSlideNext');
+    if (prevBtn) prevBtn.addEventListener('click', function() { prev(); restart(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { next(); restart(); });
+
+    var card = document.getElementById('heroSlideCard');
+    if (card) {
+      card.addEventListener('mouseenter', function() { isHovered = true; });
+      card.addEventListener('mouseleave', function() { isHovered = false; });
+    }
+
+    startTimer(next);
   }
 
   document.addEventListener('DOMContentLoaded', init);
