@@ -60,22 +60,2039 @@
   max-width: 100vw;
   overflow-x: hidden;
   font-family: 'Cinzel', serif;
-  background: #000000;
+  background: #050505;
   color: #C2C2C2;
 }
-   .main-content {
-  min-height: calc(100vh - 80px);
+
+/* ── HERO ──────────────────────────────────────────────────────────── */
+.main-content {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   text-align: center;
-  padding-top: 15rem;
-  padding-bottom: 5rem;
-  gap: 2.8rem;
-  background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/6c5b83172650551.6482b548c7660.png') no-repeat center center;
-  background-size: 120%;
-  background-position: center 28%;
+  padding-top: 0;
+  padding-bottom: 0;
+  gap: 0;
+  background: none;
+  min-height: 0;
+}
+
+.hero-section {
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 24px 60px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(197,152,73,0.12) 0%, transparent 65%),
+    url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/6c5b83172650551.6482b548c7660.png') no-repeat center 30%;
+  background-size: auto, 110%;
+  border-bottom: 1px solid rgba(197,152,73,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5,5,5,0.35) 0%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.92) 100%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-text-col {
+  text-align: left;
+}
+
+.hero-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C59849;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: #C59849;
+  flex-shrink: 0;
+}
+
+.hero-headline {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.22;
+  color: #ffffff;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.hero-headline .accent {
+  background: linear-gradient(90deg, #C59849 0%, #e8c96a 50%, #C59849 100%);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subheading {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(194,194,194,0.8);
+  margin-bottom: 32px;
+  max-width: 520px;
+  letter-spacing: 0.01em;
+}
+
+.hero-search-wrap {
+  position: relative;
+  max-width: 520px;
+  margin-bottom: 18px;
+}
+
+.hero-search-wrap #search-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative;
+}
+
+.hero-search-wrap #search {
+  width: 100% !important;
+  padding: 16px 50px 16px 20px !important;
+  font-size: 0.9rem !important;
+  border: 1px solid rgba(197,152,73,0.35) !important;
+  border-radius: 12px !important;
+  background: rgba(15,12,8,0.85) !important;
+  color: #fff !important;
+  font-family: 'Cinzel', serif !important;
+  text-align: left !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-search-wrap #search::placeholder {
+  color: rgba(194,194,194,0.45) !important;
+}
+
+.hero-search-wrap #search:focus {
+  outline: none;
+  border-color: rgba(197,152,73,0.7) !important;
+  box-shadow: 0 0 0 3px rgba(197,152,73,0.12);
+}
+
+.hero-search-wrap #search-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(197,152,73,0.7);
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.hero-search-wrap #search-btn:hover {
+  color: #C59849;
+}
+
+.hero-search-wrap #search-btn svg {
+  stroke: currentColor;
+  width: 20px;
+  height: 20px;
+}
+
+.hero-popular {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hero-popular-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(194,194,194,0.5);
+  white-space: nowrap;
+}
+
+.popular-chip {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid rgba(197,152,73,0.22);
+  border-radius: 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: rgba(220,220,220,0.75);
+  text-decoration: none;
+  background: rgba(15,12,8,0.5);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.popular-chip:hover {
+  border-color: rgba(197,152,73,0.6);
+  color: #e0c880;
+  background: rgba(197,152,73,0.08);
+}
+
+.hero-visual-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-visual-frame {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 3/4;
+  border-radius: 20px;
+  border: 1px solid rgba(197,152,73,0.2);
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(197,152,73,0.14) 0%, transparent 60%),
+    rgba(10,8,5,0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(197,152,73,0.1);
+}
+
+.hero-visual-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  mix-blend-mode: luminosity;
+  opacity: 0.85;
+  border-radius: 20px;
+}
+
+/* ── SECTION SHARED ────────────────────────────────────────────────── */
+.hp-section {
+  width: 100%;
+  padding: 64px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.hp-section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hp-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  gap: 16px;
+}
+
+.hp-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.hp-section-title-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C59849;
+  margin-bottom: 8px;
+}
+
+.hp-view-all {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #C59849;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(197,152,73,0.3);
+  padding-bottom: 1px;
+  transition: border-color 0.2s;
+}
+
+.hp-view-all:hover {
+  border-color: #C59849;
+}
+
+/* ── FEATURE STRIP ─────────────────────────────────────────────────── */
+.feature-strip-section {
+  background: #080808;
+  padding: 40px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.feature-strip-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-strip-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(197,152,73,0.6);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  background: rgba(12,10,6,0.7);
+  border: 1px solid rgba(197,152,73,0.15);
+  border-radius: 12px;
+  padding: 16px 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  background: rgba(25,18,5,0.9);
+  border-color: rgba(197,152,73,0.5);
+  box-shadow: 0 6px 20px rgba(197,152,73,0.15);
+}
+
+.feature-card-icon {
+  color: #C59849;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(197,152,73,0.08);
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.feature-card-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.feature-card:hover .feature-card-icon {
+  background: rgba(197,152,73,0.16);
+  transform: scale(1.08);
+}
+
+.feature-card-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(220,220,220,0.75);
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.feature-card:hover .feature-card-label {
+  color: #C59849;
+}
+
+/* ── TRENDING SECTION ──────────────────────────────────────────────── */
+.trending-section {
+  background: #050505;
+  padding: 64px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.trending-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  margin-bottom: 0;
+}
+
+.trending-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trending-card {
+  background: linear-gradient(160deg, rgba(18,14,7,0.95) 0%, rgba(10,8,4,0.98) 100%);
+  border: 1px solid rgba(197,152,73,0.14);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.trending-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(197,152,73,0.18), 0 4px 16px rgba(0,0,0,0.5);
+  border-color: rgba(197,152,73,0.45);
+}
+
+.trending-card-image {
+  width: 100%;
+  height: 185px;
+  overflow: hidden;
+  background: rgba(18,14,7,0.8);
+  position: relative;
+}
+
+.trending-card-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, rgba(10,8,4,0.9), transparent);
+}
+
+.trending-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.trending-card:hover .trending-card-image img {
+  transform: scale(1.06);
+}
+
+.trending-card-content {
+  padding: 18px 20px 20px;
+  text-align: left;
+}
+
+.trending-card-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(197,152,73,0.7);
+  margin-bottom: 4px;
+}
+
+.trending-card-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.trending-card-rating {
+  margin-bottom: 12px;
+}
+
+.star-rating {
+  color: #C59849;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trending-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 12px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: rgba(194,194,194,0.7);
+}
+
+.stat-item.gold {
+  color: rgba(197,152,73,0.85);
+  font-weight: 600;
+}
+
+.stat-icon {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.stat-value, .stat-label {
+  flex: 1;
+  font-size: 0.78rem;
+}
+
+.trending-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #C59849;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: gap 0.2s ease;
+}
+
+.trending-card:hover .trending-card-link {
+  gap: 9px;
+}
+
+/* Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, rgba(20,16,8,0.8) 25%, rgba(35,28,12,0.8) 50%, rgba(20,16,8,0.8) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-text {
+  height: 14px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.skeleton-text.large {
+  height: 20px;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 185px;
+  border-radius: 0;
+}
+
+/* ── COMPARE CTA BLOCK ─────────────────────────────────────────────── */
+.compare-cta-section {
+  background: #050505;
+  padding: 56px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.compare-cta-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(18,14,7,0.95) 0%, rgba(12,9,4,0.98) 100%);
+  border: 1px solid rgba(197,152,73,0.28);
+  border-radius: 20px;
+  padding: 44px 48px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(197,152,73,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.compare-cta-inner::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(197,152,73,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.compare-cta-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C59849;
+  margin-bottom: 12px;
+}
+
+.compare-cta-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+
+.compare-cta-body {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: rgba(194,194,194,0.75);
+}
+
+.compare-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  background: linear-gradient(135deg, #C59849, #e8c96a);
+  color: #0a0700;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(197,152,73,0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.compare-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(197,152,73,0.45);
+}
+
+.compare-cta-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ── CREATORS SECTION ──────────────────────────────────────────────── */
+.creator-spotlight-section {
+  background: #080808;
+  padding: 64px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  text-align: left;
+}
+
+.creator-spotlight-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  margin-bottom: 0;
+}
+
+.creator-spotlight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.maxparfum-brand-card {
+  background: linear-gradient(160deg, rgba(18,14,7,0.95) 0%, rgba(10,8,4,0.98) 100%);
+  border: 1px solid rgba(197,152,73,0.18);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  text-align: center;
+}
+
+.maxparfum-brand-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(197,152,73,0.18);
+  border-color: rgba(197,152,73,0.4);
+}
+
+.brand-logo {
+  height: 52px;
+  width: auto;
+  margin-bottom: 18px;
+}
+
+.brand-stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.brand-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: rgba(194,194,194,0.7);
+}
+
+.brand-stat.gold {
+  color: rgba(197,152,73,0.85);
+  font-weight: 600;
+}
+
+.brand-tagline {
+  font-size: 0.8rem;
+  color: rgba(194,194,194,0.65);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.brand-social-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.social-icon-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: 1.5px solid rgba(255,255,255,0.15);
+}
+
+.social-icon-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.social-icon-link.instagram {
+  background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737);
+  border-color: transparent;
+}
+
+.social-icon-link.tiktok {
+  background: linear-gradient(135deg, #000000, #00f2ea, #ff0050);
+  border-color: transparent;
+}
+
+.social-icon-link.facebook {
+  background: linear-gradient(135deg, #1877F2, #0d5dbf);
+  border-color: transparent;
+}
+
+.social-icon-link:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 6px 16px rgba(197,152,73,0.3);
+}
+
+.social-icon-link svg {
+  color: #ffffff;
+}
+
+.creator-placeholder-card {
+  background: rgba(12,10,5,0.6);
+  border: 1.5px dashed rgba(197,152,73,0.18);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+}
+
+.creator-placeholder-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(197,152,73,0.4);
+  border-style: solid;
+  box-shadow: 0 8px 24px rgba(197,152,73,0.1);
+}
+
+.placeholder-icon {
+  font-size: 2.4rem;
+  margin-bottom: 14px;
+  opacity: 0.45;
+}
+
+.placeholder-title {
+  font-size: 1.1rem;
+  color: rgba(197,152,73,0.8);
+  margin-bottom: 6px;
+  font-family: 'Cinzel', serif;
+}
+
+.placeholder-subtitle {
+  font-size: 0.8rem;
+  color: rgba(194,194,194,0.55);
+  margin-bottom: 6px;
+}
+
+.placeholder-note {
+  font-size: 0.72rem;
+  color: rgba(194,194,194,0.35);
+  margin-bottom: 18px;
+  font-style: italic;
+}
+
+.creator-placeholder-btn {
+  background: transparent;
+  border: 1px solid rgba(197,152,73,0.35);
+  color: #C59849;
+  padding: 9px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.creator-placeholder-btn:hover {
+  background: rgba(197,152,73,0.1);
+  border-color: #C59849;
+}
+
+.creator-cta {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding: 22px 28px;
+  background: rgba(18,14,7,0.5);
+  border: 1px solid rgba(197,152,73,0.12);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.creator-cta-text {
+  color: rgba(194,194,194,0.7);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.creator-cta-button {
+  display: inline-block;
+  padding: 10px 24px;
+  background: transparent;
+  border: 1px solid rgba(197,152,73,0.4);
+  color: #C59849;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.creator-cta-button:hover {
+  background: rgba(197,152,73,0.1);
+  border-color: #C59849;
+}
+
+/* ── RETAIL SECTION ────────────────────────────────────────────────── */
+.retail-partners-section {
+  background: #050505;
+  padding: 64px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  text-align: left;
+}
+
+.retail-partners-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  margin-bottom: 0;
+}
+
+.retail-partners-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.retail-partner-card {
+  background: linear-gradient(160deg, rgba(18,14,7,0.95) 0%, rgba(10,8,4,0.98) 100%);
+  border: 1px solid rgba(197,152,73,0.14);
+  border-radius: 16px;
+  padding: 26px 22px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+}
+
+.retail-partner-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(197,152,73,0.15);
+  border-color: rgba(197,152,73,0.38);
+}
+
+.retail-partner-card.maxparfum-retail {
+  text-align: center;
+}
+
+.retail-brand-logo {
+  height: 52px;
+  width: auto;
+  margin-bottom: 16px;
+}
+
+.retail-brand-description {
+  font-size: 0.8rem;
+  color: rgba(194,194,194,0.65);
+  margin-bottom: 16px;
+  line-height: 1.55;
+}
+
+.retail-partner-card.placeholder-card {
+  background: rgba(12,10,5,0.6);
+  border: 1.5px dashed rgba(197,152,73,0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+}
+
+.retail-partner-card.placeholder-card:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border-color: rgba(197,152,73,0.22);
+}
+
+.placeholder-content {
+  text-align: center;
+}
+
+.placeholder-text {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: rgba(194,194,194,0.35);
+  margin: 0;
+  font-weight: 400;
+}
+
+.retail-partner-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: #ffffff;
+}
+
+.retail-partner-category {
+  font-size: 0.75rem;
+  color: rgba(197,152,73,0.65);
+  margin-bottom: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.retail-partner-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.retail-stat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.76rem;
+  color: rgba(194,194,194,0.6);
+}
+
+.retail-stat.gold {
+  color: rgba(197,152,73,0.75);
+  font-weight: 600;
+}
+
+.retail-partner-card.featured-retail {
+  text-align: center;
+  border-color: rgba(197,152,73,0.24);
+}
+
+.retail-partner-card.featured-retail .retail-brand-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 16px;
+}
+
+.retail-website-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 18px auto 14px;
+  padding: 10px 24px;
+  min-width: 180px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: #0a0700;
+  background: linear-gradient(135deg, #C59849, #e8c96a);
+  box-shadow: 0 3px 12px rgba(197,152,73,0.2);
+  transition: all 0.2s ease;
+}
+
+.retail-website-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(197,152,73,0.35);
+}
+
+.retail-website-link svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.retail-social-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.retail-social-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1.5px solid transparent;
+}
+
+.retail-social-link.instagram {
+  background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737);
+}
+
+.retail-social-link.tiktok {
+  background: linear-gradient(135deg, #000000, #00f2ea, #ff0050);
+}
+
+.retail-social-link:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 6px 16px rgba(197,152,73,0.3);
+}
+
+.retail-social-link svg {
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.retail-cta {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding: 22px 28px;
+  background: rgba(18,14,7,0.5);
+  border: 1px solid rgba(197,152,73,0.12);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.retail-cta-text {
+  color: rgba(194,194,194,0.7);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.retail-cta-button {
+  display: inline-block;
+  padding: 10px 24px;
+  background: transparent;
+  border: 1px solid rgba(197,152,73,0.4);
+  color: #C59849;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.retail-cta-button:hover {
+  background: rgba(197,152,73,0.1);
+  border-color: #C59849;
+}
+
+.contact-button {
+  margin-top: 15px;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #000;
+  background-color: #C2C2C2;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.contact-button:hover {
+  background-color: #ffffff;
+}
+
+/* ── TRUST SECTION ─────────────────────────────────────────────────── */
+.trust-section {
+  background: #080808;
+  padding: 64px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  text-align: center;
+}
+
+.trust-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trust-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C59849;
+  margin-bottom: 10px;
+}
+
+.trust-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 48px;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.trust-card {
+  background: linear-gradient(160deg, rgba(18,14,7,0.92) 0%, rgba(10,8,4,0.96) 100%);
+  border: 1px solid rgba(197,152,73,0.12);
+  border-radius: 16px;
+  padding: 28px 22px;
+  text-align: left;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trust-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(197,152,73,0.32);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.4);
+}
+
+.trust-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(197,152,73,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: #C59849;
+}
+
+.trust-card-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.trust-card-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.trust-card-body {
+  font-size: 0.78rem;
+  color: rgba(194,194,194,0.6);
+  line-height: 1.65;
+}
+
+/* ── NEWSLETTER ────────────────────────────────────────────────────── */
+.newsletter-section {
+  background: linear-gradient(135deg, rgba(18,14,7,0.98) 0%, rgba(10,8,4,0.99) 100%);
+  padding: 64px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(197,152,73,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.newsletter-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.newsletter-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C59849;
+  margin-bottom: 12px;
+}
+
+.newsletter-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.newsletter-sub {
+  font-size: 0.82rem;
+  color: rgba(194,194,194,0.65);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 10px;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 13px 18px;
+  background: rgba(15,12,8,0.8);
+  border: 1px solid rgba(197,152,73,0.25);
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.newsletter-input::placeholder {
+  color: rgba(194,194,194,0.35);
+}
+
+.newsletter-input:focus {
+  border-color: rgba(197,152,73,0.55);
+}
+
+.newsletter-btn {
+  padding: 13px 24px;
+  background: linear-gradient(135deg, #C59849, #e8c96a);
+  color: #0a0700;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.newsletter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(197,152,73,0.35);
+}
+
+/* ── SEASONAL SECTION ──────────────────────────────────────────────── */
+.seasonal-section {
+  background-color: #050505;
+  padding: 64px 24px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.seasonal-title {
+  color: #FFFFFF;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.seasonal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.seasonal-card {
+  background: linear-gradient(160deg, rgba(18,14,7,0.95) 0%, rgba(10,8,4,0.98) 100%);
+  border: 1px solid rgba(197,152,73,0.14);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.seasonal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(197,152,73,0.15);
+  border-color: rgba(197,152,73,0.38);
+}
+
+.seasonal-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.seasonal-card:hover img {
+  transform: scale(1.05);
+}
+
+.seasonal-content {
+  padding: 16px;
+}
+
+.seasonal-content h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: #ffffff;
+}
+
+.seasonal-content p {
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: rgba(194,194,194,0.6);
+  margin: 0;
+}
+
+/* ── DESKTOP SIDE ADS ──────────────────────────────────────────────── */
+.desktop-side-ads {
+  display: block;
+}
+
+.vertical-ad {
+  width: 120px;
+  margin-top: 70px;
+}
+
+.left-ad {
+  float: left;
+}
+
+.right-ad {
+  float: right;
+}
+
+.main-content-wrapper {
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .desktop-side-ads,
+  .desktop-side-ads * {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    float: none !important;
+    position: absolute !important;
+    pointer-events: none !important;
+    max-width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+  }
+}
+
+.mobile-horizontal-ad {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-horizontal-ad {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}
+
+.bottom-ad {
+  margin: 0 auto;
+  max-width: 100%;
+  text-align: center;
+}
+
+#search-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(197,152,73,0.7);
+  padding: 4px;
+}
+
+#search-btn svg {
+  stroke: currentColor;
+  width: 20px;
+  height: 20px;
+}
+
+/* ── SUGGESTIONS ───────────────────────────────────────────────────── */
+#suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: rgba(8,6,3,0.97);
+  border: 1px solid rgba(197,152,73,0.22);
+  border-radius: 14px;
+  max-height: 340px;
+  overflow-y: auto;
+  z-index: 200;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.7);
+  padding: 8px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: none;
+}
+
+#suggestions.show {
+  display: block;
+}
+
+#suggestions > div {
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.02);
+  border-radius: 10px;
+  border: 1px solid rgba(197,152,73,0.06);
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#suggestions > div:last-child {
+  margin-bottom: 0;
+}
+
+#suggestions > div:hover {
+  background: rgba(197,152,73,0.07);
+  border-color: rgba(197,152,73,0.2);
+}
+
+#suggestions > div img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.04);
+}
+
+#suggestions::-webkit-scrollbar { width: 6px; }
+#suggestions::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 6px; }
+#suggestions::-webkit-scrollbar-thumb { background: rgba(197,152,73,0.25); border-radius: 6px; }
+#suggestions::-webkit-scrollbar-thumb:hover { background: rgba(197,152,73,0.45); }
+
+.highlight {
+  background-color: rgba(197,152,73,0.35);
+  color: #fff;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* ── COMMUNITY PULSE ───────────────────────────────────────────────── */
+.community-pulse {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px 0;
+}
+
+.cp-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.cp-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #C59849;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.cp-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  color: rgba(194,194,194,0.5);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.cp-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.cp-skeleton {
+  height: 108px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(20,16,8,0.7) 25%, rgba(35,28,12,0.7) 50%, rgba(20,16,8,0.7) 75%);
+  background-size: 200% 100%;
+  animation: cp-shimmer 1.6s infinite;
+}
+
+@keyframes cp-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.cp-card {
+  background:
+    radial-gradient(circle at top left, rgba(197,152,73,0.15), transparent 40%),
+    linear-gradient(145deg, rgba(28,22,10,0.9), rgba(10,8,4,0.88));
+  border: 1px solid rgba(197,152,73,0.28);
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  cursor: default;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.cp-card[href] { cursor: pointer; }
+
+.cp-card[href]:hover {
+  border-color: rgba(197,152,73,0.6);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 14px rgba(197,152,73,0.1);
+}
+
+.cp-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cp-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  border: 1px solid rgba(197,152,73,0.2);
+}
+
+.cp-avatar-initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #fff;
+  background: hsl(var(--av-hue, 38), 50%, 28%);
+  border: 1px solid rgba(197,152,73,0.2);
+}
+
+.cp-actor {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #C59849;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cp-action {
+  font-family: 'Cinzel', serif;
+  font-size: 0.74rem;
+  color: rgba(240,240,240,0.85);
+  line-height: 1.42;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cp-time {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  color: rgba(197,152,73,0.45);
+  margin-top: auto;
+  letter-spacing: 0.04em;
+}
+
+.cp-card-fallback {
+  border-style: dashed;
+  border-color: rgba(197,152,73,0.12);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cp-card-fallback:hover {
+  border-color: rgba(197,152,73,0.3);
+}
+
+.cp-fallback-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.cp-fallback-text {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: rgba(197,152,73,0.65);
+  line-height: 1.35;
+}
+
+/* ── SECTION HEADER SHARED WRAPPER ─────────────────────────────────── */
+.trending-section-inner,
+.creator-section-inner,
+.retail-section-inner,
+.seasonal-section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trending-section-header,
+.creator-section-header,
+.retail-section-header,
+.seasonal-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+/* ── FOOTER ────────────────────────────────────────────────────────── */
+.site-footer {
+  background-color: #030303;
+  color: #ffffff;
+  padding: 56px 0 28px;
+  margin: 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #ffffff;
+}
+
+.footer-tagline {
+  font-size: 0.82rem;
+  color: rgba(194,194,194,0.55);
+  margin: 0;
+  font-style: italic;
+}
+
+.footer-heading {
+  font-family: 'Cinzel', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 9px;
+}
+
+.footer-links a {
+  color: rgba(194,194,194,0.6);
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(194,194,194,0.6);
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: color 0.2s ease;
+}
+
+.social-link:hover {
+  color: #ffffff;
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 26px;
+  text-align: center;
+}
+
+.footer-disclaimer {
+  font-size: 0.76rem;
+  color: rgba(194,194,194,0.4);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.footer-copyright {
+  font-size: 0.78rem;
+  color: rgba(194,194,194,0.5);
+  margin: 0;
+}
+
+.footer-support-wrap {
+  margin-bottom: 22px;
+}
+
+.footer-support-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #c4a050 0%, #e8c96a 50%, #c4a050 100%);
+  background-size: 200% 100%;
+  color: #111;
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(196,160,80,0.28);
+  transition: box-shadow 0.3s ease, background-position 0.4s ease;
+  animation: footer-btn-shine 4s ease infinite;
+}
+
+@keyframes footer-btn-shine {
+  0%   { background-position: 100% 0; }
+  50%  { background-position: 0% 0; box-shadow: 0 4px 28px rgba(196,160,80,0.5); }
+  100% { background-position: 100% 0; }
+}
+
+.footer-support-btn:hover {
+  box-shadow: 0 6px 28px rgba(196,160,80,0.5);
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .feature-cards {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 820px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual-col {
+    display: none;
+  }
+
+  .hero-text-col {
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    justify-content: center;
+  }
+
+  .hero-subheading {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-popular {
+    justify-content: center;
+  }
+
+  .hero-search-wrap {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .trending-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .creator-spotlight-grid {
+    grid-template-columns: 1fr 1fr;
+    max-width: 600px;
+  }
+
+  .retail-partners-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .compare-cta-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 36px 28px;
+  }
+
+  .compare-cta-btn {
+    margin: 0 auto;
+  }
+
+  .seasonal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cp-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .creator-cta,
+  .retail-cta {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding: 86px 20px 48px;
+    min-height: 0;
+  }
+
+  .feature-cards {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  .trending-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .creator-spotlight-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .retail-partners-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seasonal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cp-cards {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .cp-cards::-webkit-scrollbar { display: none; }
+
+  .cp-card, .cp-skeleton {
+    flex: 0 0 200px;
+    min-width: 200px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .footer-columns {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .social-links {
+    flex-direction: row;
+    justify-content: center;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  .feature-cards {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+
+  .feature-card {
+    padding: 12px 8px;
+  }
+
+  .feature-card-label {
+    font-size: 0.54rem;
+  }
 }
 
   .hero-content-block {
@@ -1783,86 +3800,111 @@
 </div>
 
   <main class="main-content" role="main">
-    <div class="hero-content-block">
-    <div id="search-container">
-      <input type="text" id="search" placeholder="Search fragrance..." autocomplete="off" aria-label="Search for fragrances" />
-      <button type="button" id="search-btn" aria-label="Search for fragrances">
-        <!-- Simple magnifying glass outline SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </button>
-      <div id="suggestions" role="listbox" aria-label="Search suggestions"></div>
-    </div>
-    <p class="subtitle">SPEND LESS, SMELL EXPENSIVE</p>
 
-    <div class="feature-discovery">
-      <div class="feature-discovery-header">
-        <p class="feature-discovery-heading">More Than a Dupe Finder</p>
-        <p class="feature-discovery-sub">Explore games, rankings, articles and the fragrance community</p>
-      </div>
-      <div class="feature-cards">
-        <a href="battle.html" class="feature-card">
-          <span class="feature-card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M2 2l20 20"/><path d="M3 18l4-4"/></svg>
-          </span>
-          <span class="feature-card-label">Battle</span>
-        </a>
-        <a href="scentle.html" class="feature-card">
-          <span class="feature-card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg>
-          </span>
-          <span class="feature-card-label">Scentle</span>
-        </a>
-        <a href="blogs.html" class="feature-card">
-          <span class="feature-card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          </span>
-          <span class="feature-card-label">Articles</span>
-        </a>
-        <a href="leaderboard.html" class="feature-card">
-          <span class="feature-card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg>
-          </span>
-          <span class="feature-card-label">Leaderboard</span>
-        </a>
-        <a href="forum.html" class="feature-card">
-          <span class="feature-card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </span>
-          <span class="feature-card-label">Forum</span>
-        </a>
-        <a href="#seasonal-picks" class="feature-card" onclick="event.preventDefault(); document.getElementById('seasonal-picks').scrollIntoView({behavior:'smooth'});">
-          <span class="feature-card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
-          </span>
-          <span class="feature-card-label">Seasonal</span>
-        </a>
-        <a href="blindrank.html" class="feature-card">
-          <span class="feature-card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
-          </span>
-          <span class="feature-card-label">Blind Rank</span>
-        </a>
-        <a href="comparison.html" class="feature-card">
-          <span class="feature-card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
-          </span>
-          <span class="feature-card-label">Compare</span>
-        </a>
-      </div>
-    </div>
-    </div>
+    <!-- SECTION 1: HERO -->
+    <section class="hero-section" aria-label="Hero">
+      <div class="hero-inner">
+        <div class="hero-text-col">
+          <p class="hero-eyebrow">The World's Fragrance Community</p>
+          <h1 class="hero-headline">Find Fragrances. Discover Dupes.<br><span class="accent">Compare Smarter.</span></h1>
+          <p class="hero-subheading">Search perfumes, uncover similar scents, compare favourites, and explore fragrance discussions from the MaxParfum community.</p>
 
-    <!-- Community Pulse -->
-    <section class="community-pulse" id="community-pulse" aria-label="Community Pulse">
+          <div class="hero-search-wrap">
+            <div id="search-container">
+              <input type="text" id="search" placeholder="Search fragrances, brands, notes, or dupes..." autocomplete="off" aria-label="Search for fragrances" />
+              <button type="button" id="search-btn" aria-label="Search for fragrances">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+              <div id="suggestions" role="listbox" aria-label="Search suggestions"></div>
+            </div>
+          </div>
+
+          <div class="hero-popular">
+            <span class="hero-popular-label">Popular:</span>
+            <a href="search.html?q=Dior+Sauvage" class="popular-chip">Dior Sauvage</a>
+            <a href="search.html?q=Creed+Aventus" class="popular-chip">Creed Aventus</a>
+            <a href="search.html?q=Baccarat+Rouge+540" class="popular-chip">Baccarat Rouge 540</a>
+            <a href="search.html?q=YSL+Y+EDP" class="popular-chip">YSL Y EDP</a>
+            <a href="search.html?q=Louis+Vuitton+Imagination" class="popular-chip">LV Imagination</a>
+            <a href="search.html?q=PDM+Layton" class="popular-chip">PDM Layton</a>
+          </div>
+        </div>
+
+        <div class="hero-visual-col" aria-hidden="true">
+          <div class="hero-visual-frame">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/6c5b83172650551.6482b548c7660.png" alt="Premium fragrance bottle" loading="eager" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: FEATURE STRIP -->
+    <section class="feature-strip-section" aria-label="Quick links">
+      <div class="feature-strip-inner">
+        <p class="feature-strip-label">Explore MaxParfum</p>
+        <div class="feature-cards">
+          <a href="battle.html" class="feature-card">
+            <span class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M2 2l20 20"/><path d="M3 18l4-4"/></svg>
+            </span>
+            <span class="feature-card-label">Battle</span>
+          </a>
+          <a href="scentle.html" class="feature-card">
+            <span class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg>
+            </span>
+            <span class="feature-card-label">Scentle</span>
+          </a>
+          <a href="blogs.html" class="feature-card">
+            <span class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </span>
+            <span class="feature-card-label">Articles</span>
+          </a>
+          <a href="leaderboard.html" class="feature-card">
+            <span class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/></svg>
+            </span>
+            <span class="feature-card-label">Leaderboard</span>
+          </a>
+          <a href="forum.html" class="feature-card">
+            <span class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            <span class="feature-card-label">Forum</span>
+          </a>
+          <a href="#seasonal-picks" class="feature-card" onclick="event.preventDefault(); document.getElementById('seasonal-picks').scrollIntoView({behavior:'smooth'});">
+            <span class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
+            </span>
+            <span class="feature-card-label">Seasonal</span>
+          </a>
+          <a href="blindrank.html" class="feature-card">
+            <span class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+            </span>
+            <span class="feature-card-label">Blind Rank</span>
+          </a>
+          <a href="comparison.html" class="feature-card">
+            <span class="feature-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+            </span>
+            <span class="feature-card-label">Compare</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Pulse (inside main for layout continuity) -->
+    <section class="community-pulse" id="community-pulse" aria-label="Community Pulse" style="padding-bottom:56px;">
       <div class="cp-header">
         <h2 class="cp-title">What the community's into</h2>
         <p class="cp-sub">Live activity from MaxParfum members</p>
       </div>
       <div class="cp-cards" id="cp-cards">
-        <!-- Skeleton / fallback cards rendered by JS -->
         <div class="cp-skeleton"></div>
         <div class="cp-skeleton"></div>
         <div class="cp-skeleton"></div>
@@ -2155,9 +4197,8 @@ function mergeFragranceSources(jsonFragrances, liveFragrances) {
 
   </script>
 
-  <!-- MOBILE-ONLY AD: shown only on small screens -->
+  <!-- MOBILE-ONLY AD -->
 <div class="mobile-horizontal-ad">
-  <!-- horizontal1 -->
   <ins class="adsbygoogle"
        style="display:block"
        data-ad-client="ca-pub-8658912763856657"
@@ -2168,249 +4209,345 @@ function mergeFragranceSources(jsonFragrances, liveFragrances) {
        (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 </div>
-<section id="retail-partners" class="retail-partners-section" aria-labelledby="retail-partners-title">
-  <h2 id="retail-partners-title" class="retail-partners-title">Retail Partners</h2>
-  <div class="retail-partners-grid">
-    <div class="retail-partner-card featured-retail">
-      <img src="hayek-essence.jpg" alt="Hayek Essence" class="retail-brand-logo">
-  <h3 class="retail-partner-name">Hayek Essence</h3>
-  <p class="retail-partner-category">Premium Niche Fragrance Retailer</p>
-  <p class="retail-brand-description">Premium fragrance retailer offering curated scents for fragrance lovers.</p>
-  <div class="retail-partner-stats">
-    <div class="retail-stat">
-      <span class="stat-icon">✨</span>
-      <span class="stat-value">Niche fragrance destination</span>
-    </div>
-    <div class="retail-stat gold">
-      <span class="stat-icon">📈</span>
-      <span class="stat-value">Growing retailer presence</span>
-    </div>
-  </div>
 
-  <a href="https://hayekessence.com/" target="_blank" rel="noopener noreferrer" class="retail-website-link">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="2" y1="12" x2="22" y2="12"></line>
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-    </svg>
-    Visit Store
-  </a>
-
-  <div class="retail-social-links">
-    <a href="https://www.instagram.com/hayekessence/" target="_blank" rel="noopener noreferrer" class="retail-social-link instagram" aria-label="Hayek Essence Instagram">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-      </svg>
-    </a>
-
-    <a href="https://www.tiktok.com/@hayek_essence" target="_blank" rel="noopener noreferrer" class="retail-social-link tiktok" aria-label="Hayek Essence TikTok">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-      </svg>
-    </a>
-  </div>
-</div>
-    <div class="retail-partner-card maxparfum-retail">
-      <img src="logo.png" alt="MaxParfum" class="retail-brand-logo">
-      <p class="retail-brand-description">Fragrance discovery platform driving high-intent traffic.</p>
-      <div class="retail-partner-stats">
-        <div class="retail-stat">
-          <span class="stat-icon">🎯</span>
-          <span class="stat-value">Fragrance-focused audience</span>
-        </div>
-        <div class="retail-stat gold">
-          <span class="stat-icon">📈</span>
-          <span class="stat-value">Growing referral traffic</span>
-        </div>
+<!-- SECTION 3: TRENDING FRAGRANCES -->
+<section id="trending" class="trending-section" aria-labelledby="trending-title">
+  <div class="trending-section-inner">
+    <div class="trending-section-header">
+      <div>
+        <p class="hp-section-title-eyebrow">Community Favourites</p>
+        <h2 id="trending-title" class="trending-title">Trending on MaxParfum</h2>
       </div>
+      <a href="search.html?q=" class="hp-view-all">View All</a>
     </div>
-    <div class="retail-partner-card placeholder-card">
-      <div class="placeholder-content">
-        <h3 class="placeholder-text">Your Brand Here</h3>
-      </div>
+    <div class="trending-grid">
+      <a href="fragrance.html?brand=Dior&name=Sauvage" class="trending-card" data-fragrance="sauvage">
+        <div class="trending-card-image">
+          <img src="https://ifragranceofficial.com/wp-content/uploads/2021/08/dior-sauvage-eau-de-toilette-1-scaled.webp" alt="Dior Sauvage" loading="lazy">
+        </div>
+        <div class="trending-card-content">
+          <p class="trending-card-brand">Dior</p>
+          <h3 class="trending-card-name">Sauvage</h3>
+          <div class="trending-card-rating">
+            <span class="star-rating">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span class="rating-value">--</span>/10
+            </span>
+          </div>
+          <div class="trending-card-stats">
+            <div class="stat-item">
+              <span class="stat-icon">🔥</span>
+              <span class="stat-value">1,284 views</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-icon">🎯</span>
+              <span class="stat-label">Top Dupe: Armaf Ventana</span>
+            </div>
+            <div class="stat-item gold">
+              <span class="stat-icon">📊</span>
+              <span class="stat-value">Match Score: 87%</span>
+            </div>
+          </div>
+          <div class="trending-card-link">View Details
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </a>
+      <a href="fragrance.html?brand=Maison%20Crivelli&name=Oud%20Maracuja" class="trending-card" data-fragrance="oud-maracuja">
+        <div class="trending-card-image">
+          <img src="https://skinlife.pt/wp-content/uploads/Oud-MaracuJa-Maison-Crivelli.jpg" alt="Oud Maracuja" loading="lazy">
+        </div>
+        <div class="trending-card-content">
+          <p class="trending-card-brand">Maison Crivelli</p>
+          <h3 class="trending-card-name">Oud Maracuja</h3>
+          <div class="trending-card-rating">
+            <span class="star-rating">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span class="rating-value">--</span>/10
+            </span>
+          </div>
+          <div class="trending-card-stats">
+            <div class="stat-item">
+              <span class="stat-icon">🔥</span>
+              <span class="stat-value">1,102 views</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-icon">🎯</span>
+              <span class="stat-label">Top Dupe: Armaf Club De Nuit Intense</span>
+            </div>
+            <div class="stat-item gold">
+              <span class="stat-icon">📊</span>
+              <span class="stat-value">Match Score: 82%</span>
+            </div>
+          </div>
+          <div class="trending-card-link">View Details
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </a>
+      <a href="fragrance.html?brand=Versace&name=Bright%20Crystal" class="trending-card" data-fragrance="bright-crystal">
+        <div class="trending-card-image">
+          <img src="https://www.myperfumeshop.com.au/cdn/shop/products/versace-bright-crystal-edt-perfume-for-her-198589.jpg?v=1609925614&width=1600" alt="Versace Bright Crystal" loading="lazy">
+        </div>
+        <div class="trending-card-content">
+          <p class="trending-card-brand">Versace</p>
+          <h3 class="trending-card-name">Bright Crystal</h3>
+          <div class="trending-card-rating">
+            <span class="star-rating">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span class="rating-value">--</span>/10
+            </span>
+          </div>
+          <div class="trending-card-stats">
+            <div class="stat-item">
+              <span class="stat-icon">🔥</span>
+              <span class="stat-value">864 views</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-icon">🎯</span>
+              <span class="stat-label">Top Dupe: Lattafa Yara</span>
+            </div>
+            <div class="stat-item gold">
+              <span class="stat-icon">📊</span>
+              <span class="stat-value">Match Score: 79%</span>
+            </div>
+          </div>
+          <div class="trending-card-link">View Details
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </a>
     </div>
-  </div>
-  <div class="retail-cta">
-    <p class="retail-cta-text">Partner with MaxParfum to reach a highly targeted fragrance audience actively searching for reviews and alternatives.</p>
-    <a href="about.html" class="retail-cta-button">Become a Retail Partner</a>
   </div>
 </section>
 
+<!-- SECTION 4: COMPARE CTA -->
+<section class="compare-cta-section" aria-label="Compare fragrances">
+  <div class="compare-cta-inner">
+    <div>
+      <p class="compare-cta-eyebrow">New Feature</p>
+      <h2 class="compare-cta-title">Compare Fragrances Side-by-Side</h2>
+      <p class="compare-cta-body">See how two scents differ in notes, accords, performance, seasons, occasions, and value. Make smarter fragrance decisions.</p>
+    </div>
+    <a href="comparison.html" class="compare-cta-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+      Compare Now
+    </a>
+  </div>
+</section>
 
-
-<!-- Creator Spotlight Section -->
+<!-- SECTION 5: FEATURED CREATORS -->
 <section id="creator-spotlight" class="creator-spotlight-section" aria-labelledby="creator-spotlight-title">
-  <h2 id="creator-spotlight-title" class="creator-spotlight-title">Creator Spotlight</h2>
-  <div class="creator-spotlight-grid">
-    <div class="maxparfum-brand-card">
-      <img src="logo.png" alt="MaxParfum" class="brand-logo">
-      <div class="brand-stats">
-        <div class="brand-stat">
-          <span class="stat-icon">👥</span>
-          <span class="stat-value">1,800+ followers</span>
-        </div>
-        <div class="brand-stat gold">
-          <span class="stat-icon">📈</span>
-          <span class="stat-value">15K+ monthly views</span>
-        </div>
-      </div>
-      <p class="brand-tagline">Helping fragrance lovers discover hidden gems and luxury alternatives.</p>
-      <div class="brand-social-links">
-        <a href="https://www.instagram.com/maxparfum_/" target="_blank" rel="noopener noreferrer" class="social-icon-link instagram" aria-label="Instagram">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
-        </a>
-        <a href="https://www.tiktok.com/@maxparfum.net" target="_blank" rel="noopener noreferrer" class="social-icon-link tiktok" aria-label="TikTok">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-          </svg>
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61578772200644" target="_blank" rel="noopener noreferrer" class="social-icon-link facebook" aria-label="Facebook">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-          </svg>
-        </a>
+  <div class="creator-section-inner">
+    <div class="creator-section-header">
+      <div>
+        <p class="hp-section-title-eyebrow">Featured Creators</p>
+        <h2 id="creator-spotlight-title" class="creator-spotlight-title">Creator Spotlight</h2>
       </div>
     </div>
-
-    <div class="creator-placeholder-card">
-      <div class="placeholder-icon">🎬</div>
-      <h3 class="placeholder-title">Your Brand Here</h3>
-      <p class="placeholder-subtitle">Sponsor a Creator Spotlight slot</p>
-      <p class="placeholder-note">Limited placements • Weekly rotation</p>
-      <a href="about.html" class="creator-placeholder-btn">Enquire / Buy a Spot</a>
+    <div class="creator-spotlight-grid">
+      <div class="maxparfum-brand-card">
+        <img src="logo.png" alt="MaxParfum" class="brand-logo">
+        <div class="brand-stats">
+          <div class="brand-stat">
+            <span class="stat-icon">👥</span>
+            <span class="stat-value">1,800+ followers</span>
+          </div>
+          <div class="brand-stat gold">
+            <span class="stat-icon">📈</span>
+            <span class="stat-value">Growing monthly</span>
+          </div>
+        </div>
+        <p class="brand-tagline">Helping fragrance lovers discover hidden gems and luxury alternatives.</p>
+        <div class="brand-social-links">
+          <a href="https://www.instagram.com/maxparfum_/" target="_blank" rel="noopener noreferrer" class="social-icon-link instagram" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@maxparfum.net" target="_blank" rel="noopener noreferrer" class="social-icon-link tiktok" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61578772200644" target="_blank" rel="noopener noreferrer" class="social-icon-link facebook" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="creator-placeholder-card">
+        <div class="placeholder-icon">🎬</div>
+        <h3 class="placeholder-title">Your Brand Here</h3>
+        <p class="placeholder-subtitle">Sponsor a Creator Spotlight slot</p>
+        <p class="placeholder-note">Limited placements • Weekly rotation</p>
+        <a href="about.html" class="creator-placeholder-btn">Enquire / Buy a Spot</a>
+      </div>
+      <div class="creator-placeholder-card">
+        <div class="placeholder-icon">✨</div>
+        <h3 class="placeholder-title">Your Brand Here</h3>
+        <p class="placeholder-subtitle">Sponsor a Creator Spotlight slot</p>
+        <p class="placeholder-note">Limited placements • Weekly rotation</p>
+        <a href="about.html" class="creator-placeholder-btn">Enquire / Buy a Spot</a>
+      </div>
     </div>
-
-    <div class="creator-placeholder-card">
-      <div class="placeholder-icon">✨</div>
-      <h3 class="placeholder-title">Your Brand Here</h3>
-      <p class="placeholder-subtitle">Sponsor a Creator Spotlight slot</p>
-      <p class="placeholder-note">Limited placements • Weekly rotation</p>
-      <a href="about.html" class="creator-placeholder-btn">Enquire / Buy a Spot</a>
+    <div class="creator-cta">
+      <p class="creator-cta-text">Join our creator network and get featured to fragrance enthusiasts weekly.</p>
+      <a href="about.html" class="creator-cta-button">Apply to Join</a>
     </div>
-  </div>
-  <div class="creator-cta">
-    <p class="creator-cta-text">Join our creator network and get featured to thousands of fragrance enthusiasts weekly.</p>
-    <a href="about.html" class="creator-cta-button">Apply to Join the Creator Network</a>
-  </div>
-</section>
-<!-- Creator Spotlight Section -->
-  <section id="trending" class="trending-section" aria-labelledby="trending-title">
-  <h2 id="trending-title" class="trending-title">Trending on MaxParfum</h2>
-  <div class="trending-grid">
-    <a href="fragrance.html?brand=Dior&name=Sauvage" class="trending-card" data-fragrance="sauvage">
-      <div class="trending-card-image">
-        <img src="https://ifragranceofficial.com/wp-content/uploads/2021/08/dior-sauvage-eau-de-toilette-1-scaled.webp" alt="Dior Sauvage">
-      </div>
-      <div class="trending-card-content">
-        <h3 class="trending-card-name">Dior Sauvage</h3>
-        <div class="trending-card-rating">
-          <span class="star-rating">⭐ <span class="rating-value">--</span></span>
-        </div>
-        <div class="trending-card-stats">
-          <div class="stat-item">
-            <span class="stat-icon">🔥</span>
-            <span class="stat-value">1,284 views</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-icon">🎯</span>
-            <span class="stat-label">Top Dupe: Armaf Ventana</span>
-          </div>
-          <div class="stat-item gold">
-            <span class="stat-icon">📊</span>
-            <span class="stat-value">Match Score: 87%</span>
-          </div>
-        </div>
-        <div class="trending-card-link">View Details →</div>
-      </div>
-    </a>
-    <a href="fragrance.html?brand=Maison%20Crivelli&name=Oud%20Maracuja" class="trending-card" data-fragrance="oud-maracuja">
-      <div class="trending-card-image">
-        <img src="https://skinlife.pt/wp-content/uploads/Oud-MaracuJa-Maison-Crivelli.jpg" alt="Oud Maracuja">
-      </div>
-      <div class="trending-card-content">
-        <h3 class="trending-card-name">Maison Crivelli Oud Maracuja</h3>
-        <div class="trending-card-rating">
-          <span class="star-rating">⭐ <span class="rating-value">--</span></span>
-        </div>
-        <div class="trending-card-stats">
-          <div class="stat-item">
-            <span class="stat-icon">🔥</span>
-            <span class="stat-value">1,102 views</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-icon">🎯</span>
-            <span class="stat-label">Top Dupe: Armaf Club De Nuit Intense</span>
-          </div>
-          <div class="stat-item gold">
-            <span class="stat-icon">📊</span>
-            <span class="stat-value">Match Score: 82%</span>
-          </div>
-        </div>
-        <div class="trending-card-link">View Details →</div>
-      </div>
-    </a>
-    <a href="fragrance.html?brand=Versace&name=Bright%20Crystal" class="trending-card" data-fragrance="bright-crystal">
-      <div class="trending-card-image">
-        <img src="https://www.myperfumeshop.com.au/cdn/shop/products/versace-bright-crystal-edt-perfume-for-her-198589.jpg?v=1609925614&width=1600" alt="Versace Bright Crystal">
-      </div>
-      <div class="trending-card-content">
-        <h3 class="trending-card-name">Versace Bright Crystal</h3>
-        <div class="trending-card-rating">
-          <span class="star-rating">⭐ <span class="rating-value">--</span></span>
-        </div>
-        <div class="trending-card-stats">
-          <div class="stat-item">
-            <span class="stat-icon">🔥</span>
-            <span class="stat-value">864 views</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-icon">🎯</span>
-            <span class="stat-label">Top Dupe: Lattafa Yara</span>
-          </div>
-          <div class="stat-item gold">
-            <span class="stat-icon">📊</span>
-            <span class="stat-value">Match Score: 79%</span>
-          </div>
-        </div>
-        <div class="trending-card-link">View Details →</div>
-      </div>
-    </a>
   </div>
 </section>
 
+<!-- SECTION 6: FEATURED RETAILERS -->
+<section id="retail-partners" class="retail-partners-section" aria-labelledby="retail-partners-title">
+  <div class="retail-section-inner">
+    <div class="retail-section-header">
+      <div>
+        <p class="hp-section-title-eyebrow">Featured Retailers</p>
+        <h2 id="retail-partners-title" class="retail-partners-title">Retail Partners</h2>
+      </div>
+    </div>
+    <div class="retail-partners-grid">
+      <div class="retail-partner-card featured-retail">
+        <img src="hayek-essence.jpg" alt="Hayek Essence" class="retail-brand-logo">
+        <h3 class="retail-partner-name">Hayek Essence</h3>
+        <p class="retail-partner-category">Niche Fragrance Retailer</p>
+        <p class="retail-brand-description">Premium fragrance retailer offering curated niche scents for fragrance lovers.</p>
+        <div class="retail-partner-stats">
+          <div class="retail-stat">
+            <span class="stat-icon">✨</span>
+            <span class="stat-value">Niche fragrance destination</span>
+          </div>
+          <div class="retail-stat gold">
+            <span class="stat-icon">📈</span>
+            <span class="stat-value">Growing retailer presence</span>
+          </div>
+        </div>
+        <a href="https://hayekessence.com/" target="_blank" rel="noopener noreferrer" class="retail-website-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          Visit Store
+        </a>
+        <div class="retail-social-links">
+          <a href="https://www.instagram.com/hayekessence/" target="_blank" rel="noopener noreferrer" class="retail-social-link instagram" aria-label="Hayek Essence Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@hayek_essence" target="_blank" rel="noopener noreferrer" class="retail-social-link tiktok" aria-label="Hayek Essence TikTok">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="retail-partner-card maxparfum-retail">
+        <img src="logo.png" alt="MaxParfum" class="retail-brand-logo">
+        <p class="retail-brand-description">Fragrance discovery platform driving high-intent traffic to fragrance retailers.</p>
+        <div class="retail-partner-stats">
+          <div class="retail-stat">
+            <span class="stat-icon">🎯</span>
+            <span class="stat-value">Fragrance-focused audience</span>
+          </div>
+          <div class="retail-stat gold">
+            <span class="stat-icon">📈</span>
+            <span class="stat-value">Growing referral traffic</span>
+          </div>
+        </div>
+      </div>
+      <div class="retail-partner-card placeholder-card">
+        <div class="placeholder-content">
+          <h3 class="placeholder-text">Your Brand Here</h3>
+        </div>
+      </div>
+    </div>
+    <div class="retail-cta">
+      <p class="retail-cta-text">Partner with MaxParfum to reach a targeted fragrance audience actively searching for reviews and alternatives.</p>
+      <a href="about.html" class="retail-cta-button">Become a Partner</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: WHY MAXPARFUM -->
+<section class="trust-section" aria-label="Why MaxParfum">
+  <div class="trust-inner">
+    <p class="trust-eyebrow">Why Choose MaxParfum</p>
+    <h2 class="trust-title">Why MaxParfum?</h2>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <h3 class="trust-card-title">Fragrance &amp; Dupe Discovery</h3>
+        <p class="trust-card-body">Explore scents, alternatives, and similar fragrance profiles in one place — without the clutter.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+        </div>
+        <h3 class="trust-card-title">Side-by-Side Comparisons</h3>
+        <p class="trust-card-body">Compare notes, performance, seasons, occasions, and value before choosing your next fragrance.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="trust-card-title">Community Ratings &amp; Discussions</h3>
+        <p class="trust-card-body">Learn from fragrance lovers through reviews, comments, forums, and community rankings.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="trust-card-title">Independent Fragrance Exploration</h3>
+        <p class="trust-card-body">Discover fragrances without the clutter, pressure, or heavy ads. Just honest discovery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: NEWSLETTER -->
+<section class="newsletter-section" aria-label="Newsletter">
+  <div class="newsletter-inner">
+    <p class="newsletter-eyebrow">Stay in the Loop</p>
+    <h2 class="newsletter-title">Get Fragrance Updates</h2>
+    <p class="newsletter-sub">New scent picks, community highlights, and discovery guides — straight to your inbox.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault();" novalidate>
+      <input type="email" class="newsletter-input" placeholder="Your email address" aria-label="Email address" />
+      <button type="submit" class="newsletter-btn">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- SECTION 9 (Seasonal) -->
 <section id="seasonal-picks" class="seasonal-section" aria-labelledby="seasonal-title">
-  <h2 id="seasonal-title" class="seasonal-title">Seasonal Picks</h2>
-  <div class="seasonal-grid">
-    <a href="summer.html" class="seasonal-card">
-      <img src="https://miro.medium.com/v2/resize:fit:1400/0*1DtL639ZXJQj8ZDA.jpg" alt="Summer Fragrances">
-      <div class="seasonal-content">
-        <h3>Summer</h3>
-        <p>Fresh, light, and energising scents perfect for hot weather and sunny days.</p>
+  <div class="seasonal-section-inner">
+    <div class="seasonal-section-header">
+      <div>
+        <p class="hp-section-title-eyebrow">By Season &amp; Occasion</p>
+        <h2 id="seasonal-title" class="seasonal-title">Seasonal Picks</h2>
       </div>
-    </a>
-    <a href="winter.html" class="seasonal-card">
-      <img src="https://www.christmascentral.com/product_images/uploaded_images/sunny-winter-scene-lars-eberhardt-bcg-yva8tha-unsplash-960x600.jpg" alt="Winter Fragrances">
-      <div class="seasonal-content">
-        <h3>Winter</h3>
-        <p>Warm, cozy, and rich fragrances that complement the cold season.</p>
-      </div>
-    </a>
-    <a href="office.html" class="seasonal-card">
-      <img src="https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Office Fragrances">
-      <div class="seasonal-content">
-        <h3>Office</h3>
-        <p>Professional, subtle, and sophisticated scents for the workplace.</p>
-      </div>
-    </a>
-    <a href="datenight.html" class="seasonal-card">
-      <img src="https://hips.hearstapps.com/hmg-prod/images/date-night-ideas-244-660c4867ade7a.jpg?crop=0.599xw:0.981xh;0.401xw,0&resize=1200:*" alt="Date Night Fragrances">
-      <div class="seasonal-content">
-        <h3>Date Night</h3>
-        <p>Alluring, romantic, and captivating fragrances for special evenings.</p>
-      </div>
-    </a>
+    </div>
+    <div class="seasonal-grid">
+      <a href="summer.html" class="seasonal-card">
+        <img src="https://miro.medium.com/v2/resize:fit:1400/0*1DtL639ZXJQj8ZDA.jpg" alt="Summer Fragrances" loading="lazy">
+        <div class="seasonal-content">
+          <h3>Summer</h3>
+          <p>Fresh, light, and energising scents perfect for hot weather and sunny days.</p>
+        </div>
+      </a>
+      <a href="winter.html" class="seasonal-card">
+        <img src="https://www.christmascentral.com/product_images/uploaded_images/sunny-winter-scene-lars-eberhardt-bcg-yva8tha-unsplash-960x600.jpg" alt="Winter Fragrances" loading="lazy">
+        <div class="seasonal-content">
+          <h3>Winter</h3>
+          <p>Warm, cozy, and rich fragrances that complement the cold season.</p>
+        </div>
+      </a>
+      <a href="office.html" class="seasonal-card">
+        <img src="https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Office Fragrances" loading="lazy">
+        <div class="seasonal-content">
+          <h3>Office</h3>
+          <p>Professional, subtle, and sophisticated scents for the workplace.</p>
+        </div>
+      </a>
+      <a href="datenight.html" class="seasonal-card">
+        <img src="https://hips.hearstapps.com/hmg-prod/images/date-night-ideas-244-660c4867ade7a.jpg?crop=0.599xw:0.981xh;0.401xw,0&resize=1200:*" alt="Date Night Fragrances" loading="lazy">
+        <div class="seasonal-content">
+          <h3>Date Night</h3>
+          <p>Alluring, romantic, and captivating fragrances for special evenings.</p>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
 
