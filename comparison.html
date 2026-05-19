@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fragrance Comparison Tool | Compare Perfumes Side-by-Side | MaxParfum</title>
+  <meta name="description" content="Compare popular fragrances side-by-side or search any two perfumes to compare notes, accords, performance, seasons, occasions, ratings, and dupes.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.maxparfum.net/comparison.html">
+
+  <meta property="og:title" content="Fragrance Comparison Tool | Compare Perfumes Side-by-Side | MaxParfum">
+  <meta property="og:description" content="Compare popular fragrances side-by-side or search any two perfumes to compare notes, accords, performance, seasons, occasions, ratings, and dupes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.maxparfum.net/comparison.html">
+  <meta property="og:site_name" content="MaxParfum">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fragrance Comparison Tool | MaxParfum">
+  <meta name="twitter:description" content="Compare any two fragrances side-by-side: notes, accords, performance, seasons, and dupes.">
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="navbar.css">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      padding-top: 70px;
+    }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 80px 24px 64px;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(197,152,73,.12) 0%, transparent 70%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(44,19,11,.25) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C59849;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .hero h1 .gold { color: #C59849; }
+
+    .hero-sub {
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      color: #aaa;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #C59849, transparent);
+      margin: 0 auto;
+    }
+
+    /* ── PAGE WRAPPER ──────────────────────────────────── */
+    .page-wrap {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── SECTION HEADERS ───────────────────────────────── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C59849;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+
+    .section-head { margin-bottom: 32px; }
+
+    /* ── FEATURED CARDS ────────────────────────────────── */
+    .featured-section { margin-bottom: 72px; }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .featured-card {
+      background: linear-gradient(145deg, #111, #1a1a1a);
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 28px 24px 24px;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #C59849, transparent);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .featured-card:hover {
+      border-color: rgba(197,152,73,.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.6);
+    }
+
+    .featured-card:hover::before { opacity: 1; }
+
+    .featured-card-vs {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #C59849;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .featured-card-names {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .featured-card-desc {
+      font-size: 0.83rem;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .featured-card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      background: rgba(44,19,11,.6);
+      border: 1px solid rgba(197,152,73,.5);
+      border-radius: 8px;
+      color: #C59849;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+
+    .featured-card-btn:hover {
+      background: rgba(197,152,73,.15);
+      border-color: #C59849;
+      color: #fff;
+    }
+
+    .featured-card-btn svg { flex-shrink: 0; }
+
+    /* ── TOOL SECTION ──────────────────────────────────── */
+    .tool-section { margin-bottom: 48px; }
+
+    .search-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 32px;
+    }
+
+    .vs-divider {
+      display: none; /* hidden on desktop — gap handles spacing */
+    }
+
+    .search-panel {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 20px;
+      transition: border-color .25s;
+    }
+
+    .search-panel:focus-within { border-color: rgba(197,152,73,.5); }
+
+    .search-panel-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #C59849;
+      margin-bottom: 12px;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .search-input-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #555;
+      pointer-events: none;
+    }
+
+    .frag-search-input {
+      width: 100%;
+      padding: 11px 12px 11px 38px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .frag-search-input:focus { border-color: #C59849; }
+    .frag-search-input::placeholder { color: #555; }
+
+    .search-results-dropdown {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+      margin-top: 2px;
+    }
+
+    .search-results-dropdown.open { display: block; }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid #1a1a1a;
+      transition: background .15s;
+    }
+
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: rgba(197,152,73,.08); }
+
+    .search-result-thumb {
+      width: 38px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #1a1a1a;
+      flex-shrink: 0;
+    }
+
+    .search-result-thumb-placeholder {
+      width: 38px;
+      height: 38px;
+      background: #1a1a1a;
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .search-result-info { flex: 1; min-width: 0; }
+    .search-result-name { font-size: 0.88rem; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .search-result-brand { font-size: 0.76rem; color: #777; }
+
+    /* selected fragrance chip */
+    .selected-frag {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: rgba(44,19,11,.4);
+      border: 1px solid rgba(197,152,73,.3);
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+
+    .selected-frag-img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #1a1a1a;
+      flex-shrink: 0;
+    }
+
+    .selected-frag-info { flex: 1; min-width: 0; }
+    .selected-frag-brand { font-size: 0.72rem; color: #999; }
+    .selected-frag-name { font-size: 0.9rem; font-weight: 700; color: #fff; }
+
+    .selected-frag-clear {
+      background: none;
+      border: none;
+      color: #555;
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+      padding: 4px;
+      transition: color .2s;
+      flex-shrink: 0;
+    }
+
+    .selected-frag-clear:hover { color: #ff6666; }
+
+    .compare-btn-wrap { text-align: center; margin-bottom: 40px; }
+
+    .compare-btn {
+      padding: 14px 52px;
+      background: linear-gradient(135deg, #2C130B, #4a2619);
+      border: 1px solid #C59849;
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .25s, transform .2s, box-shadow .2s;
+      letter-spacing: 0.5px;
+    }
+
+    .compare-btn:hover {
+      background: linear-gradient(135deg, #4a2619, #6b3829);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(44,19,11,.5);
+    }
+
+    .compare-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* ── COMPARISON RESULT ─────────────────────────────── */
+    #comparison-result { display: none; }
+
+    .result-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .result-card {
+      background: linear-gradient(145deg, #0d0d0d, #161616);
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .result-card-img-wrap {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 16px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+
+    .result-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .result-card-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: #333;
+    }
+
+    .result-card-brand { font-size: 0.76rem; color: #888; margin-bottom: 4px; letter-spacing: 0.5px; }
+
+    .result-card-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .result-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      color: #C59849;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .result-card-link:hover { color: #fff; }
+
+    .result-accords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .accord-chip {
+      background: rgba(44,19,11,.5);
+      border: 1px solid #333;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.72rem;
+      color: #C2C2C2;
+      text-transform: capitalize;
+    }
+
+    .result-vs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .result-vs-badge {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #2C130B, #4a2619);
+      border: 2px solid #C59849;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #C59849;
+      align-self: center;
+    }
+
+    /* ── COMPARISON TABLE ──────────────────────────────── */
+    .comparison-table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid #2a2a2a;
+      margin-bottom: 32px;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+    }
+
+    .comparison-table th {
+      background: #0d0d0d;
+      padding: 14px 20px;
+      text-align: left;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: #C59849;
+      border-bottom: 1px solid #2a2a2a;
+      white-space: nowrap;
+    }
+
+    .comparison-table th:first-child {
+      width: 140px;
+      color: #555;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .comparison-table td {
+      padding: 12px 20px;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 0.88rem;
+      color: #ccc;
+      vertical-align: top;
+    }
+
+    .comparison-table td:first-child {
+      color: #666;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+
+    .notes-list { display: flex; flex-wrap: wrap; gap: 4px; }
+
+    .note-chip {
+      background: rgba(255,255,255,.06);
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      padding: 2px 9px;
+      font-size: 0.72rem;
+      color: #bbb;
+    }
+
+    .na-text { color: #444; font-style: italic; }
+
+    .rating-stars { color: #C59849; font-size: 0.9rem; }
+
+    /* ── VERDICT ───────────────────────────────────────── */
+    .verdict-section {
+      background: linear-gradient(145deg, #0d0d0d, #161616);
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 32px 28px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .verdict-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #C59849, transparent);
+    }
+
+    .verdict-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: #C59849;
+      margin-bottom: 14px;
+    }
+
+    .verdict-text {
+      font-size: 0.92rem;
+      color: #bbb;
+      line-height: 1.75;
+    }
+
+    .verdict-text p { margin-bottom: 10px; }
+    .verdict-text p:last-child { margin-bottom: 0; }
+
+    /* ── RESET ─────────────────────────────────────────── */
+    .reset-btn-wrap { text-align: center; margin-top: 24px; }
+
+    .reset-btn {
+      background: none;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #888;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      padding: 9px 24px;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+
+    .reset-btn:hover { border-color: #C59849; color: #C59849; }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 680px) {
+      .search-panels { grid-template-columns: 1fr; }
+
+      .vs-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 0;
+      }
+
+      .vs-divider span {
+        font-family: 'Cinzel', serif;
+        font-size: 0.8rem;
+        color: #C59849;
+        background: #111;
+        padding: 4px 12px;
+        border: 1px solid rgba(197,152,73,.3);
+        border-radius: 20px;
+      }
+
+      .result-cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .result-vs { display: none; }
+
+      .featured-grid { grid-template-columns: 1fr; }
+
+      .comparison-table-wrap { border-radius: 10px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 56px 20px 48px; }
+      .page-wrap { padding: 0 16px 60px; }
+      .verdict-section { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+  <div class="notifications-dropdown hidden" id="notifications-dropdown">
+    <div class="notifications-header">Notifications</div>
+    <div class="notifications-list" id="notifications-list">Loading...</div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Fragrance Comparison Tool">
+    <div class="hero-eyebrow">MaxParfum</div>
+    <h1>Compare Fragrances <span class="gold">Side-by-Side</span></h1>
+    <p class="hero-sub">Explore popular fragrance matchups or compare any two perfumes from the MaxParfum database — notes, accords, performance, seasons, and dupes.</p>
+    <div class="hero-divider"></div>
+  </section>
+
+  <div class="page-wrap">
+
+    <!-- FEATURED COMPARISONS -->
+    <section class="featured-section" aria-label="Popular Fragrance Comparisons">
+      <div class="section-head">
+        <div class="section-label">Curated</div>
+        <h2 class="section-title">Popular Fragrance Comparisons</h2>
+        <p class="section-sub">Explore the most-debated fragrance matchups in the community.</p>
+      </div>
+
+      <div class="featured-grid">
+        <article class="featured-card">
+          <div class="featured-card-vs">VS</div>
+          <div class="featured-card-names">Dior Sauvage vs Bleu de Chanel</div>
+          <p class="featured-card-desc">Two of the world's best-selling men's fragrances clash. Fresh-spicy power vs sleek woody elegance — which reigns supreme?</p>
+          <a href="compare/dior-sauvage-vs-bleu-de-chanel.html" class="featured-card-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            View Comparison
+          </a>
+        </article>
+
+        <article class="featured-card">
+          <div class="featured-card-vs">VS</div>
+          <div class="featured-card-names">Creed Aventus vs Club de Nuit Intense Man</div>
+          <p class="featured-card-desc">The legendary vs its famous dupe. Birch smoke, pineapple, and musk — is CDNIM really Aventus in disguise?</p>
+          <a href="compare/creed-aventus-vs-club-de-nuit-intense-man.html" class="featured-card-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            View Comparison
+          </a>
+        </article>
+
+        <article class="featured-card">
+          <div class="featured-card-vs">VS</div>
+          <div class="featured-card-names">Baccarat Rouge 540 vs Ariana Grande Cloud</div>
+          <p class="featured-card-desc">A luxury icon vs an affordable cult favourite. Jasmine-amber-cedar meets lavender-coconut-musk. Sweet, but which wins?</p>
+          <a href="compare/baccarat-rouge-540-vs-ariana-grande-cloud.html" class="featured-card-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            View Comparison
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE TOOL -->
+    <section class="tool-section" aria-label="Compare Any Two Fragrances">
+      <div class="section-head">
+        <div class="section-label">Interactive Tool</div>
+        <h2 class="section-title">Compare Any Two Fragrances</h2>
+        <p class="section-sub">Search the MaxParfum database and compare any two perfumes instantly.</p>
+      </div>
+
+      <div class="search-panels">
+        <!-- LEFT -->
+        <div class="search-panel" id="panel-left">
+          <div class="search-panel-label">First Fragrance</div>
+          <div class="search-input-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="frag-search-input" id="search-left" placeholder="Search first fragrance…" autocomplete="off" />
+          </div>
+          <div class="search-results-dropdown" id="results-left"></div>
+          <div id="selected-left" style="display:none;"></div>
+        </div>
+
+        <div class="vs-divider"><span>VS</span></div>
+
+        <!-- RIGHT -->
+        <div class="search-panel" id="panel-right">
+          <div class="search-panel-label">Second Fragrance</div>
+          <div class="search-input-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="frag-search-input" id="search-right" placeholder="Search second fragrance…" autocomplete="off" />
+          </div>
+          <div class="search-results-dropdown" id="results-right"></div>
+          <div id="selected-right" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="compare-btn-wrap">
+        <button class="compare-btn" id="compare-btn" disabled>Compare Fragrances</button>
+      </div>
+
+      <!-- RESULT -->
+      <div id="comparison-result" aria-live="polite">
+        <!-- filled by JS -->
+      </div>
+    </section>
+
+  </div>
+
+  <script src="navbar-loader.js"></script>
+  <script type="module" src="nav_profile.js"></script>
+  <script type="module" src="notifications_nav.js"></script>
+  <script type="module" src="comparison.js"></script>
+</body>
+</html>
