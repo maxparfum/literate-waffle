@@ -7,8 +7,21 @@
         <span></span>
       </div>
 
-      <a href="/blogs.html" class="nav-link desktop-only">Articles</a>
-      <a href="/chat.html" class="nav-link desktop-only">AI Chatbot</a>
+      <div class="nav-discover-dropdown desktop-only">
+        <button class="nav-discover-trigger" id="discoverToggle" type="button">
+          Discover <span class="nav-chevron">▾</span>
+        </button>
+        <div class="nav-discover-menu" id="discoverMenu">
+          <a href="/comparison.html" class="nav-discover-item">Compare Fragrances</a>
+          <a href="/blogs.html" class="nav-discover-item">Articles</a>
+          <a href="/index.html#seasonal-picks" class="nav-discover-item">Seasonal Picks</a>
+        </div>
+      </div>
+
+      <a href="/chat.html" class="nav-link sillage-ai-link desktop-only">
+        <span class="sillage-spark">✦</span>
+        <span>Sillage AI</span>
+      </a>
 
       <div class="nav-games-dropdown desktop-only">
         <button class="nav-games-trigger" id="gamesToggle" type="button">
@@ -65,8 +78,22 @@
         </div>
 
         <nav class="mobile-menu-nav">
-          <a href="/blogs.html" class="mobile-menu-link">Articles</a>
-          <a href="/chat.html" class="mobile-menu-link">AI Chatbot</a>
+          <a href="/chat.html" class="mobile-menu-link mobile-sillage-link">
+            <span class="mobile-sillage-spark">✦</span>
+            <span>Sillage AI</span>
+          </a>
+
+          <div class="mobile-discover-section">
+            <button class="mobile-discover-trigger" id="mobileDiscoverToggle" type="button">
+              <span>Discover</span>
+              <span class="mobile-discover-chevron">▾</span>
+            </button>
+            <div class="mobile-discover-menu" id="mobileDiscoverMenu">
+              <a href="/comparison.html" class="mobile-discover-item">Compare Fragrances</a>
+              <a href="/blogs.html" class="mobile-discover-item">Articles</a>
+              <a href="/index.html#seasonal-picks" class="mobile-discover-item">Seasonal Picks</a>
+            </div>
+          </div>
 
           <div class="mobile-games-section">
             <button class="mobile-games-trigger" id="mobileGamesToggle" type="button">

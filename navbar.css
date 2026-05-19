@@ -71,13 +71,33 @@
   font-size: 0.75rem;
 }
 
-/* Fragrance Games & Community Dropdowns */
+/* Sillage AI link */
+#mp-navbar .sillage-ai-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#mp-navbar .sillage-spark {
+  color: #d6b46a;
+  font-size: 0.8rem;
+  text-shadow: 0 0 8px rgba(214, 180, 106, 0.35);
+  transition: text-shadow 0.2s ease;
+}
+
+#mp-navbar .sillage-ai-link:hover .sillage-spark {
+  text-shadow: 0 0 12px rgba(214, 180, 106, 0.6);
+}
+
+/* Discover, Fragrance Games & Community Dropdowns */
+#mp-navbar .nav-discover-dropdown,
 #mp-navbar .nav-games-dropdown,
 #mp-navbar .nav-community-dropdown {
   position: relative;
   display: inline-block;
 }
 
+#mp-navbar .nav-discover-trigger,
 #mp-navbar .nav-games-trigger,
 #mp-navbar .nav-community-trigger {
   background: none;
@@ -96,6 +116,7 @@
   line-height: 1;
 }
 
+#mp-navbar .nav-discover-trigger:hover,
 #mp-navbar .nav-games-trigger:hover,
 #mp-navbar .nav-community-trigger:hover {
   text-decoration: underline;
@@ -106,6 +127,7 @@
   margin-left: 3px;
 }
 
+#mp-navbar .nav-discover-menu,
 #mp-navbar .nav-games-menu,
 #mp-navbar .nav-community-menu {
   position: absolute;
@@ -126,6 +148,8 @@
   overflow: hidden;
 }
 
+#mp-navbar .nav-discover-dropdown:hover .nav-discover-menu,
+#mp-navbar .nav-discover-dropdown:focus-within .nav-discover-menu,
 #mp-navbar .nav-games-dropdown:hover .nav-games-menu,
 #mp-navbar .nav-games-dropdown:focus-within .nav-games-menu,
 #mp-navbar .nav-community-dropdown:hover .nav-community-menu,
@@ -134,6 +158,7 @@
   visibility: visible;
 }
 
+#mp-navbar .nav-discover-item,
 #mp-navbar .nav-games-item,
 #mp-navbar .nav-community-item {
   display: block;
@@ -146,6 +171,7 @@
   transition: background 0.2s ease;
 }
 
+#mp-navbar .nav-discover-item:hover,
 #mp-navbar .nav-games-item:hover,
 #mp-navbar .nav-community-item:hover {
   background: #2C130B;
@@ -334,13 +360,28 @@
   color: #fff;
 }
 
+/* Mobile Sillage AI link */
+#mp-navbar-root .mobile-sillage-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+#mp-navbar-root .mobile-sillage-spark {
+  color: #d6b46a;
+  font-size: 0.8rem;
+  text-shadow: 0 0 8px rgba(214, 180, 106, 0.35);
+}
+
 /* Accordion sections */
+#mp-navbar-root .mobile-discover-section,
 #mp-navbar-root .mobile-games-section,
 #mp-navbar-root .mobile-community-section {
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   box-sizing: border-box;
 }
 
+#mp-navbar-root .mobile-discover-trigger,
 #mp-navbar-root .mobile-games-trigger,
 #mp-navbar-root .mobile-community-trigger {
   width: 100%;
@@ -360,18 +401,21 @@
   transition: background-color 0.18s ease, color 0.18s ease;
 }
 
+#mp-navbar-root .mobile-discover-trigger:hover,
 #mp-navbar-root .mobile-games-trigger:hover,
 #mp-navbar-root .mobile-community-trigger:hover {
   background-color: rgba(212, 175, 55, 0.07);
   color: #fff;
 }
 
+#mp-navbar-root .mobile-discover-trigger.active,
 #mp-navbar-root .mobile-games-trigger.active,
 #mp-navbar-root .mobile-community-trigger.active {
   color: #d4af37;
   background-color: rgba(212, 175, 55, 0.05);
 }
 
+#mp-navbar-root .mobile-discover-chevron,
 #mp-navbar-root .mobile-games-chevron,
 #mp-navbar-root .mobile-community-chevron {
   font-size: 0.7rem;
@@ -380,6 +424,7 @@
   flex-shrink: 0;
 }
 
+#mp-navbar-root .mobile-discover-trigger.active .mobile-discover-chevron,
 #mp-navbar-root .mobile-games-trigger.active .mobile-games-chevron,
 #mp-navbar-root .mobile-community-trigger.active .mobile-community-chevron {
   transform: rotate(180deg);
@@ -387,6 +432,7 @@
 }
 
 /* Submenu animation */
+#mp-navbar-root .mobile-discover-menu,
 #mp-navbar-root .mobile-games-menu,
 #mp-navbar-root .mobile-community-menu {
   max-height: 0;
@@ -395,12 +441,14 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
+#mp-navbar-root .mobile-discover-menu.active,
 #mp-navbar-root .mobile-games-menu.active,
 #mp-navbar-root .mobile-community-menu.active {
   max-height: 280px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+#mp-navbar-root .mobile-discover-item,
 #mp-navbar-root .mobile-games-item,
 #mp-navbar-root .mobile-community-item {
   display: block;
@@ -416,6 +464,7 @@
   transition: background-color 0.18s ease, color 0.18s ease;
 }
 
+#mp-navbar-root .mobile-discover-item::before,
 #mp-navbar-root .mobile-games-item::before,
 #mp-navbar-root .mobile-community-item::before {
   content: '';
@@ -430,17 +479,20 @@
   transition: background-color 0.18s ease;
 }
 
+#mp-navbar-root .mobile-discover-item:hover,
 #mp-navbar-root .mobile-games-item:hover,
 #mp-navbar-root .mobile-community-item:hover {
   background-color: rgba(212, 175, 55, 0.07);
   color: #fff;
 }
 
+#mp-navbar-root .mobile-discover-item:hover::before,
 #mp-navbar-root .mobile-games-item:hover::before,
 #mp-navbar-root .mobile-community-item:hover::before {
   background: #d4af37;
 }
 
+#mp-navbar-root .mobile-discover-item:last-child,
 #mp-navbar-root .mobile-games-item:last-child,
 #mp-navbar-root .mobile-community-item:last-child {
   border-bottom: none;

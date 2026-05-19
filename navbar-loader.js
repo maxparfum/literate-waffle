@@ -190,6 +190,8 @@ function initNavbarInteractions(container) {
   const mobileMenu = root.querySelector('#mobileMenu');
   const mobileMenuOverlay = root.querySelector('#mobileMenuOverlay');
   const mobileMenuClose = root.querySelector('#mobileMenuClose');
+  const mobileDiscoverToggle = root.querySelector('#mobileDiscoverToggle');
+  const mobileDiscoverMenu = root.querySelector('#mobileDiscoverMenu');
   const mobileGamesToggle = root.querySelector('#mobileGamesToggle');
   const mobileGamesMenu = root.querySelector('#mobileGamesMenu');
   const mobileCommunityToggle = root.querySelector('#mobileCommunityToggle');
@@ -206,6 +208,9 @@ function initNavbarInteractions(container) {
     mobileMenu?.classList.remove('active');
     mobileMenuOverlay?.classList.remove('active');
     mobileHamburger?.classList.remove('active');
+
+    mobileDiscoverToggle?.classList.remove('active');
+    mobileDiscoverMenu?.classList.remove('active');
 
     mobileGamesToggle?.classList.remove('active');
     mobileGamesMenu?.classList.remove('active');
@@ -235,6 +240,15 @@ function initNavbarInteractions(container) {
   if (mobileMenuOverlay && mobileMenuOverlay.dataset.bound !== '1') {
     mobileMenuOverlay.addEventListener('click', closeMobileMenu);
     mobileMenuOverlay.dataset.bound = '1';
+  }
+
+  if (mobileDiscoverToggle && mobileDiscoverMenu && mobileDiscoverToggle.dataset.bound !== '1') {
+    mobileDiscoverToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mobileDiscoverToggle.classList.toggle('active');
+      mobileDiscoverMenu.classList.toggle('active');
+    });
+    mobileDiscoverToggle.dataset.bound = '1';
   }
 
   if (mobileGamesToggle && mobileGamesMenu && mobileGamesToggle.dataset.bound !== '1') {
@@ -269,6 +283,8 @@ function initNavbarInteractions(container) {
         activeRoot?.querySelector('#mobileMenu')?.classList.remove('active');
         activeRoot?.querySelector('#mobileMenuOverlay')?.classList.remove('active');
         activeRoot?.querySelector('#mobileHamburger')?.classList.remove('active');
+        activeRoot?.querySelector('#mobileDiscoverToggle')?.classList.remove('active');
+        activeRoot?.querySelector('#mobileDiscoverMenu')?.classList.remove('active');
         activeRoot?.querySelector('#mobileGamesToggle')?.classList.remove('active');
         activeRoot?.querySelector('#mobileGamesMenu')?.classList.remove('active');
         activeRoot?.querySelector('#mobileCommunityToggle')?.classList.remove('active');
