@@ -3982,7 +3982,7 @@
             <a href="search.html?q=Dior+Sauvage" class="popular-chip">Dior Sauvage</a>
             <a href="search.html?q=Creed+Aventus" class="popular-chip">Creed Aventus</a>
             <a href="search.html?q=Baccarat+Rouge+540" class="popular-chip">Baccarat Rouge 540</a>
-            <a href="search.html?q=YSL+Y+EDP" class="popular-chip">YSL Y EDP</a>
+            <a href="search.html?q=Arabians+Tonka" class="popular-chip">Arabians Tonka</a>
             <a href="search.html?q=Louis+Vuitton+Imagination" class="popular-chip">LV Imagination</a>
             <a href="search.html?q=PDM+Layton" class="popular-chip">PDM Layton</a>
           </div>
@@ -5107,66 +5107,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // fragrances_merged.json → verified fallback URL). Never hardcode image
   // IDs that could point to the wrong fragrance on a third-party CDN.
   var POOL = [
-    {
-      brand: 'Dior',
-      name: 'Sauvage',
-      dupes: 18,
-      _fallback: 'https://ifragranceofficial.com/wp-content/uploads/2021/08/dior-sauvage-eau-de-toilette-1-scaled.webp'
-    },
-    {
-      brand: 'Creed',
-      name: 'Aventus',
-      dupes: 24,
-      _fallback: 'https://www.notino.co.uk/fs/images/cache/product_detail_2x/1/creed-aventus-edp-50-ml-for-men~p5073900.jpg'
-    },
-    {
-      brand: 'Maison Francis Kurkdjian',
-      name: 'Baccarat Rouge 540',
-      dupes: 21,
-      _fallback: 'https://www.mfkparfums.com/media/catalog/product/cache/a/image/9df78eab33525d08d6e5fb8d27136e95/b/a/baccarat_rouge_540_-_extrait_de_parfum_200ml.jpg'
-    },
-    {
-      brand: 'Parfums de Marly',
-      name: 'Layton',
-      dupes: 16,
-      _fallback: 'https://cdn.shopify.com/s/files/1/0581/7714/5232/files/Layton.jpg'
-    },
-    {
-      brand: 'Yves Saint Laurent',
-      name: 'Y EDP',
-      dupes: 12,
-      _fallback: 'https://www.yslbeauty.co.uk/media/catalog/product/cache/3/image/700x/17f82f742ffe127f42dca9de82fb58b1/y/s/ysl-y-edp.jpg'
-    },
-    {
-      brand: 'Versace',
-      name: 'Eros',
-      dupes: 14,
-      _fallback: 'https://www.versace.com/medias/sys_master/images/images/hc8/hc8/8846792073246/8011003819810_1_1.jpg'
-    },
-    {
-      brand: 'Giorgio Armani',
-      name: 'Acqua di Gio Profumo',
-      dupes: 15,
-      _fallback: 'https://www.giorgioarmanibeauty-usa.com/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-armanibeauty-master-catalog/default/dw9e87d8ac/productimages/FRAGRANCE/A-X0Y46380000/A-X0Y46380000_packshot_001.jpg'
-    },
-    {
-      brand: 'Tom Ford',
-      name: 'Oud Wood',
-      dupes: 11,
-      _fallback: 'https://www.tomford.com/dw/image/v2/BGRT_PRD/on/demandware.static/-/Sites-tomford-master/default/dw5b7b3e29/images/fragrance/T5YB01PP_oud-wood-eau-de-parfum_1.jpg'
-    },
-    {
-      brand: 'Carolina Herrera',
-      name: 'Good Girl',
-      dupes: 13,
-      _fallback: 'https://www.carolinaherrera.com/medias/original/Good-Girl-Eau-de-Parfum-Legere-80ml-Carolina-Herrera-pack-shot.jpg'
-    },
-    {
-      brand: 'Jean Paul Gaultier',
-      name: 'Ultra Male',
-      dupes: 10,
-      _fallback: 'https://www.jeanpaulgaultier.com/cdn/shop/products/Packshot_Ultra_Male_2019_200ml_transparent_1.png'
-    }
+    { brand: 'Dior', name: 'Sauvage', _fallback: 'https://ifragranceofficial.com/wp-content/uploads/2021/08/dior-sauvage-eau-de-toilette-1-scaled.webp' },
+    { brand: 'Creed', name: 'Aventus', _fallback: 'https://www.notino.co.uk/fs/images/cache/product_detail_2x/1/creed-aventus-edp-50-ml-for-men~p5073900.jpg' },
+    { brand: 'Maison Francis Kurkdjian', name: 'Baccarat Rouge 540', _fallback: 'https://www.mfkparfums.com/media/catalog/product/cache/a/image/9df78eab33525d08d6e5fb8d27136e95/b/a/baccarat_rouge_540_-_extrait_de_parfum_200ml.jpg' },
+    { brand: 'Parfums de Marly', name: 'Layton', _fallback: 'https://cdn.shopify.com/s/files/1/0581/7714/5232/files/Layton.jpg' },
+    { brand: 'Versace', name: 'Eros', _fallback: 'https://www.versace.com/medias/sys_master/images/images/hc8/hc8/8846792073246/8011003819810_1_1.jpg' },
+    { brand: 'Giorgio Armani', name: 'Acqua di Gio Profumo', _fallback: 'https://www.giorgioarmanibeauty-usa.com/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-armanibeauty-master-catalog/default/dw9e87d8ac/productimages/FRAGRANCE/A-X0Y46380000/A-X0Y46380000_packshot_001.jpg' },
+    { brand: 'Tom Ford', name: 'Oud Wood', _fallback: 'https://www.tomford.com/dw/image/v2/BGRT_PRD/on/demandware.static/-/Sites-tomford-master/default/dw5b7b3e29/images/fragrance/T5YB01PP_oud-wood-eau-de-parfum_1.jpg' },
+    { brand: 'Carolina Herrera', name: 'Good Girl', _fallback: 'https://www.carolinaherrera.com/medias/original/Good-Girl-Eau-de-Parfum-Legere-80ml-Carolina-Herrera-pack-shot.jpg' },
+    { brand: 'Jean Paul Gaultier', name: 'Ultra Male', _fallback: 'https://www.jeanpaulgaultier.com/cdn/shop/products/Packshot_Ultra_Male_2019_200ml_transparent_1.png' },
+    { brand: 'Montale', name: 'Arabians Tonka', _fallback: 'https://fimgs.net/mdimg/perfume/375x500.15508.jpg' }
   ];
 
   var slides = [];
@@ -5283,7 +5233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return pool.map(function(item) {
       var k = makeKey(item.brand, item.name);
       var image = overrideMap.get(k) || jsonMap.get(k) || item._fallback || '';
-      return { brand: item.brand, name: item.name, dupes: item.dupes, image: image };
+      return { brand: item.brand, name: item.name, image: image };
     });
   }
 
@@ -5304,18 +5254,12 @@ document.addEventListener('DOMContentLoaded', () => {
       var brandEl = document.getElementById('heroSlideBrand');
       var nameEl = document.getElementById('heroSlideName');
       var dupesWrap = document.getElementById('heroSlideDupes');
-      var dupesText = document.getElementById('heroSlideDupesText');
       if (!cardEl || !brandEl || !nameEl) return;
       cardEl.href = 'fragrance.html?brand=' + encodeURIComponent(frag.brand) + '&name=' + encodeURIComponent(frag.name);
       cardEl.setAttribute('aria-label', 'View ' + frag.brand + ' ' + frag.name);
       brandEl.textContent = frag.brand;
       nameEl.textContent = frag.name;
-      if (frag.dupes && frag.dupes > 0) {
-        dupesText.textContent = 'Dupes available: ' + frag.dupes;
-        dupesWrap.style.display = 'inline-flex';
-      } else {
-        dupesWrap.style.display = 'none';
-      }
+      if (dupesWrap) dupesWrap.style.display = 'none';
     }
 
     function goTo(idx) {
